@@ -20,3 +20,5 @@ MonoBehaviour:
   def: 2
   prefab: {fileID: 0}
   nextCard: {fileID: 0}
+  ratingColor: {r: 0, g: 0, b: 0, a: 1}
+  type: 2

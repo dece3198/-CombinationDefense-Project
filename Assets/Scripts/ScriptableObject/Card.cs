@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Card", menuName = "New Card/Card")]
@@ -11,4 +12,6 @@ public class Card : ScriptableObject
     public float def;
     public GameObject prefab;
     public Card nextCard;
+    public Color ratingColor;
+    public MercenaryType type;
 }

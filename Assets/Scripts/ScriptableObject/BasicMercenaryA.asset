@@ -18,5 +18,6 @@ MonoBehaviour:
   atk: 1
   hp: 10
   def: 1
-  prefab: {fileID: 0}
-  nextCard: {fileID: 0}
+  prefab: {fileID: 5229591117039273765, guid: 1477df55e60a14142868621a62ad6ce7, type: 3}
+  nextCard: {fileID: 11400000, guid: 05e8a2fd1a060024aa5d3d95d78296f8, type: 2}
+  ratingColor: {r: 0, g: 0, b: 0, a: 1}

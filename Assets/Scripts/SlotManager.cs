@@ -14,18 +14,17 @@ public class SlotManager : MonoBehaviour
         {
             slots[i].gameObject.SetActive(false);
         }
-        gameObject.SetActive(false);
     }
 
     public void LuckyDip()
     {
-        int rand = Random.Range(0, cards.Length);
+        int rand = Random.Range(0, PlayerCard.instance.cardList.Count);
 
         for(int i = 0; i < slots.Length; i++)
         {
             if (slots[i].card == null)
             {
-                slots[i].AddCard(cards[rand]);
+                slots[i].AddCard(PlayerCard.instance.cardList[rand]);
                 return;
             }
         }
