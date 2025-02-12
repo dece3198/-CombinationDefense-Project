@@ -7,7 +7,7 @@ public class Fade : MonoBehaviour
     public static Fade instance;
     [SerializeField] private Image panel;
     float time = 0;
-    float F_time = 2;
+    float F_time = 1;
     public bool isFade = false;
 
     private void Awake()
@@ -22,7 +22,7 @@ public class Fade : MonoBehaviour
 
     private IEnumerator FadeCo()
     {
-        isFade = false;
+        isFade = true;
         Color alpha = panel.color;
         while(alpha.a < 1f)
         {
@@ -35,6 +35,7 @@ public class Fade : MonoBehaviour
         time = 0;
 
         yield return new WaitForSeconds(1f);
+        isFade = false;
 
         while (alpha.a > 0)
         {
@@ -43,7 +44,5 @@ public class Fade : MonoBehaviour
             panel.color = alpha;
             yield return null;
         }
-
-        isFade = true;
     }
 }

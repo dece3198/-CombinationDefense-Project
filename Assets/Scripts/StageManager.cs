@@ -1,6 +1,93 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+    public static StageManager instance;
+    public StageSlot curStage;
+    public int curCount = 0;
+    [SerializeField] private GameObject clear;
+    [SerializeField] private GameObject[] stars;
+    [SerializeField] private Slot slot;
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private Mercenary castle;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Update()
+    {
+        if(curStage != null)
+        {
+            if(curStage.stage.monsterCount == curCount)
+            {
+                Clear();
+            }
+        }
+    }
+
+    private void Clear()
+    {
+        clear.SetActive(true);
+
+        if(castle.Hp < 50)
+        {
+            curStage.star = 1;
+        }
+        else if(castle.Hp == castle.maxHp)
+        {
+            curStage.star = 3;
+        }
+        else
+        {
+            curStage.star = 2;
+        }
+
+
+        if (curStage.stage.compensationCard != null)
+        {
+            if(curStage.star == 3)
+            {
+                slot.gameObject.SetActive(true);
+                slot.AddCard(curStage.stage.compensationCard);
+            }
+            else
+            {
+                slot.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            slot.gameObject.SetActive(false);
+        }
+
+        castle.Hp = castle.maxHp;
+        goldText.text = curStage.stage.gold.ToString() + "°ñµå";
+        StartCoroutine(ResetCo());
+        curStage.nextStage.gameObject.SetActive(true);
+    }
+
+    public void CheckButton()
+    {
+        for (int i = 0; i < stars.Length; i++)
+        {
+            stars[i].GetComponent<Animator>().SetBool("Nothing", false);
+        }
+        GameManager.instance.NewGameButton();
+        GameManager.instance.GameReset();
+        curStage = null;
+        curCount = 0;
+    }
+
+    private IEnumerator ResetCo()
+    {
+        for(int i = 0; i < curStage.star; i++)
+        {
+            stars[i].GetComponent<Animator>().SetBool("Nothing", true);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 }

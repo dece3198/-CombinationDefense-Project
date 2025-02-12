@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CardType
+{
+    Mercenary, Monster
+}
+
 [CreateAssetMenu(fileName = "New Card", menuName = "New Card/Card")]
 public class Card : ScriptableObject
 {
@@ -13,5 +18,8 @@ public class Card : ScriptableObject
     public GameObject prefab;
     public Card nextCard;
     public Color ratingColor;
-    public MercenaryType type;
+    public Color classColor;
+    public WeaponType type;
+    public CardType cardType;
+    public int gold;
 }

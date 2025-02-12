@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
-  m_Name: ShieldMercenaryA
+  m_Name: Mercenary_Shield_A
   m_EditorClassIdentifier: 
-  cardImage: {fileID: 21300000, guid: 55939d586b7734548a287d95b276ff60, type: 3}
+  cardImage: {fileID: 21300000, guid: 1d3aef2a817ddf24fac1c39d363ce9a1, type: 3}
   cardName: "\uD558\uAE09 \uBC29\uD328 \uC6A9\uBCD1"
   rating: 1
-  atk: 0
-  hp: 20
+  atk: 2
+  hp: 100
   def: 2
-  prefab: {fileID: 0}
+  prefab: {fileID: 1075610038556216880, guid: 049fbaf75c9dd2345bd2fa06c9bcaa83, type: 3}
   nextCard: {fileID: 0}
-  ratingColor: {r: 0, g: 0, b: 0, a: 1}
+  ratingColor: {r: 0.24705882, g: 0.24705882, b: 0.24705882, a: 1}
+  classColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
   type: 2
+  cardType: 0
+  gold: 0

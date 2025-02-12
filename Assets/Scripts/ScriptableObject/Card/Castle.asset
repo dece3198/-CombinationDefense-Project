@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
-  m_Name: BowMercenaryA
+  m_Name: Castle
   m_EditorClassIdentifier: 
-  cardImage: {fileID: 21300000, guid: f36fb6991a73cac4989baadfe236779e, type: 3}
-  cardName: "\uD558\uAE09 \uD65C \uC6A9\uBCD1"
-  rating: 1
-  atk: 2
-  hp: 5
-  def: 2
+  cardImage: {fileID: 0}
+  cardName: 
+  rating: 0
+  atk: 0
+  hp: 100
+  def: 0
   prefab: {fileID: 0}
   nextCard: {fileID: 0}
-  ratingColor: {r: 0, g: 0, b: 0, a: 1}
-  type: 1
+  ratingColor: {r: 0, g: 0, b: 0, a: 0}
+  classColor: {r: 0, g: 0, b: 0, a: 0}
+  type: 0
+  cardType: 0
+  gold: 0

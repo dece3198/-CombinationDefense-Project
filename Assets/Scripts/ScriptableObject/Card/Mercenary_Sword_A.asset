@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
-  m_Name: BasicMercenaryA
+  m_Name: Mercenary_Sword_A
   m_EditorClassIdentifier: 
   cardImage: {fileID: 21300000, guid: 06f0d0405b888bd44950da156599bfc4, type: 3}
   cardName: "\uD558\uAE09 \uAC80 \uC6A9\uBCD1"
   rating: 1
-  atk: 1
-  hp: 10
-  def: 1
+  atk: 6
+  hp: 20
+  def: 2
   prefab: {fileID: 5229591117039273765, guid: 1477df55e60a14142868621a62ad6ce7, type: 3}
-  nextCard: {fileID: 11400000, guid: 05e8a2fd1a060024aa5d3d95d78296f8, type: 2}
-  ratingColor: {r: 0, g: 0, b: 0, a: 1}
+  nextCard: {fileID: 11400000, guid: 3355d05e49a0bf644b7808015759208b, type: 2}
+  ratingColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+  classColor: {r: 0.94509804, g: 0.8901961, b: 0.64705884, a: 1}
+  type: 0
+  cardType: 0
+  gold: 0

@@ -22,6 +22,7 @@ public class DragCard : MonoBehaviour
     public void AddDragSlot()
     {
         charImage.sprite = dragSlot.cardImage.sprite;
+        cardImage.color = dragSlot.card.classColor;
         ratingImage.color = dragSlot.card.ratingColor;
         SetColor(1);
     }

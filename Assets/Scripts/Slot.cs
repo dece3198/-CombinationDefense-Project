@@ -8,6 +8,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
 {
     public Card card;
     public Image cardImage;
+    [SerializeField] private Image backImage;
     [SerializeField] private Image ratingImage;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI ratingTextA;
@@ -18,6 +19,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
     [SerializeField] private Outline Outline;
     [SerializeField] private GameObject mix;
 
+    private void Awake()
+    {
+        backImage = GetComponent<Image>();
+    }
+
     public void AddCard(Card _card)
     {
         card = _card;
@@ -25,10 +31,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
         nameText.text = card.cardName;
         ratingTextA.text = card.rating.ToString();
         ratingTextB.text = card.rating.ToString();
+        ratingTextA.color = card.classColor;
+        ratingTextB.color = card.classColor;
         atkText.text = card.atk.ToString();
         hpText.text = card.hp.ToString();
         defText.text = card.def.ToString();
         ratingImage.color = card.ratingColor;
+        backImage.color = card.classColor;
         gameObject.SetActive(true);
     }
 

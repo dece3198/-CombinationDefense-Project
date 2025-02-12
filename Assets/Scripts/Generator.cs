@@ -4,6 +4,7 @@ using UnityEngine;
 public class Generator : MonoBehaviour
 {
     public static Generator instance;
+    public Card[] cards;
     [SerializeField] private List<GameObject> mercenaryList = new List<GameObject>();
 
     private void Awake()
@@ -13,11 +14,11 @@ public class Generator : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < PlayerCard.instance.cardList.Count; i++)
+        for(int i = 0; i < cards.Length; i++)
         {
             for (int j = 0; j < 5; j++)
             {
-                GameObject card = Instantiate(PlayerCard.instance.cardList[i].prefab, transform);
+                GameObject card = Instantiate(cards[i].prefab, transform);
                 mercenaryList.Add(card);
             }
         }
@@ -29,9 +30,9 @@ public class Generator : MonoBehaviour
 
         for (int i = 0; i < mercenaryList.Count; i++)
         {
-            if (card.type == mercenaryList[i].GetComponent<Mercenary>().type)
+            if (card.type == mercenaryList[i].GetComponent<Mercenary>().weaponType)
             {
-                if(card.rating == mercenaryList[i].GetComponent<Mercenary>().rating)
+                if(card.rating == mercenaryList[i].GetComponent<Mercenary>().card.rating)
                 {
                     count++;
                 }
@@ -46,9 +47,9 @@ public class Generator : MonoBehaviour
         for (int i = 0; i < mercenaryList.Count; i++)
         {
 
-            if (card.type == mercenaryList[i].GetComponent<Mercenary>().type)
+            if (card.type == mercenaryList[i].GetComponent<Mercenary>().weaponType)
             {
-                if (card.rating == mercenaryList[i].GetComponent<Mercenary>().rating)
+                if (card.rating == mercenaryList[i].GetComponent<Mercenary>().card.rating)
                 {
                     mercenaryList[i].SetActive(true);
                     mercenaryList.RemoveAt(i);

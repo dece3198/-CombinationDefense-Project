@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class SlotManager : MonoBehaviour
 {
+    public static SlotManager instance;
     public Slot[] slots;
     [SerializeField] private GameObject slotParent;
     [SerializeField] private Card[] cards;
 
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -18,6 +23,14 @@ public class SlotManager : MonoBehaviour
 
     public void LuckyDip()
     {
+        if(GameManager.instance.gold >= 2)
+        {
+            GameManager.instance.gold -= 2;
+        }
+        else
+        {
+            return;
+        }
         int rand = Random.Range(0, PlayerCard.instance.cardList.Count);
 
         for(int i = 0; i < slots.Length; i++)
