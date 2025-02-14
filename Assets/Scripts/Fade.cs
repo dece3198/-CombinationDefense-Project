@@ -23,6 +23,7 @@ public class Fade : MonoBehaviour
     private IEnumerator FadeCo()
     {
         isFade = true;
+        time = 0;
         Color alpha = panel.color;
         while(alpha.a < 1f)
         {

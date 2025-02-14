@@ -13,10 +13,18 @@ public class GameManager : MonoBehaviour
     public List<GameObject> mecrenary = new List<GameObject>();
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private GameObject mainMenu;
+    private bool isTime = false;
+
+    public bool isMix = false;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Update()
+    {
+        goldText.text = gold.ToString();
     }
 
     public void StartButton()
@@ -24,8 +32,9 @@ public class GameManager : MonoBehaviour
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(1));
         MapManager.instance.map.SetActive(false);
+        MapManager.instance.animator.SetBool("Close", true);
         MapManager.instance.animator.Play("Close");
-        StageMenu.instance.gameObject.SetActive(false);
+        StageMenu.instance.menu.SetActive(false);
         gold = StageManager.instance.curStage.stage.startGold;
     }
 
@@ -56,10 +65,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void SpeedUp()
     {
-        goldText.text = gold.ToString();
+        isTime = !isTime;
+        if (isTime)
+        {
+            Time.timeScale = 2;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+
     }
+
 
     private IEnumerator FadeCo(int number)
     {
@@ -79,6 +98,7 @@ public class GameManager : MonoBehaviour
         else
         {
             MonsterGenerator.instance.StartGame();
+            MapManager.instance.animator.SetBool("Close", true);
             MapManager.instance.mapParent.SetActive(false);
         }
     }

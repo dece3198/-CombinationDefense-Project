@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
   m_Name: Assassin
   m_EditorClassIdentifier: 
-  cardImage: {fileID: 21300000, guid: 52dd0a0a259823e449a739aa32ba3643, type: 3}
+  cardImage: {fileID: 21300000, guid: 815cfa3c45b0b244c970741cad426377, type: 3}
   cardName: "\uC554\uC0B4\uC790"
   rating: 1
-  atk: 4
-  hp: 20
-  def: 2
+  atk: 3
+  hp: 30
+  def: 4
   prefab: {fileID: 717524668864839993, guid: b3e53373600d1df4cae5f8158e2899c5, type: 3}
   nextCard: {fileID: 0}
-  ratingColor: {r: 0, g: 0, b: 0, a: 0}
+  ratingColor: {r: 0.4716981, g: 0, b: 0, a: 1}
+  classColor: {r: 0, g: 0, b: 0, a: 1}
   type: 3
   cardType: 0
   gold: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StageSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPointerClickHandler
+public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     public Stage stage;
     public StageSlot nextStage;
@@ -11,21 +11,12 @@ public class StageSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public int star = 0;
     public GameObject clear;
     private RectTransform rect;
+    private Vector2 tempSize;
 
     private void Awake()
     {
-        rect = GetComponent<RectTransform>();
         image = GetComponent<Image>();
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        rect.sizeDelta = new Vector2(rect.sizeDelta.x * 2, rect.sizeDelta.y * 2);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        rect.sizeDelta = new Vector2(rect.sizeDelta.x/2, rect.sizeDelta.y/2);
+        rect = GetComponent<RectTransform>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -37,5 +28,16 @@ public class StageSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 StageMenu.instance.AddStage(this);
             }
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        tempSize = rect.sizeDelta;
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x * 0.9f, rect.sizeDelta.y * 0.9f);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        rect.sizeDelta = tempSize;
     }
 }

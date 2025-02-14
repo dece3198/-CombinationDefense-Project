@@ -176,6 +176,7 @@ public class DieState : BaseState<Mercenary>
         yield return new WaitForSeconds(3f);
         mercenary.gameObject.layer = mercenary.curLayer;
         mercenary.Hp = mercenary.maxHp;
+        mercenary.hpBar.value = mercenary.Hp / mercenary.maxHp;
         if (mercenary.mecenaryType == MecenaryType.Mercenary)
         {
             Generator.instance.EnterCard(mercenary.gameObject);
@@ -206,7 +207,7 @@ public class Mercenary : MonoBehaviour
 
 
     private StateMachine<MercenaryState, Mercenary> stateMachine = new StateMachine<MercenaryState, Mercenary>();
-    [SerializeField] private Slider hpBar;
+    public Slider hpBar;
     [SerializeField] private GameObject arrow;
     [SerializeField] private Transform arrowPos;
     public Transform headPos;

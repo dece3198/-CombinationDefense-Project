@@ -16,7 +16,7 @@ MonoBehaviour:
   cardName: "\uD558\uAE09 \uAC80 \uC6A9\uBCD1"
   rating: 1
   atk: 6
-  hp: 20
+  hp: 50
   def: 2
   prefab: {fileID: 5229591117039273765, guid: 1477df55e60a14142868621a62ad6ce7, type: 3}
   nextCard: {fileID: 11400000, guid: 3355d05e49a0bf644b7808015759208b, type: 2}

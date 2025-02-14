@@ -29,6 +29,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
         card = _card;
         cardImage.sprite = card.cardImage;
         nameText.text = card.cardName;
+        nameText.color = card.ratingColor;
         ratingTextA.text = card.rating.ToString();
         ratingTextB.text = card.rating.ToString();
         ratingTextA.color = card.classColor;
@@ -109,10 +110,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
         {
             if(tempCard.nextCard != null)
             {
-                AddCard(tempCard.nextCard);
-                mix.transform.position = transform.position;
-                mix.GetComponent<Animator>().Play("MixAni");
-                DragCard.instance.ClearDragSlot();
+                if(GameManager.instance.isMix)
+                {
+                    AddCard(tempCard.nextCard);
+                    mix.transform.position = transform.position;
+                    mix.GetComponent<Animator>().Play("MixAni");
+                    DragCard.instance.ClearDragSlot();
+                }
             }
             else
             {

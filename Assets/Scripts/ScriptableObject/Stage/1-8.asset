@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsters: []
   monsterCount: 0
+  startGold: 0
   gold: 0
   compensationCard: {fileID: 0}
-  stageImage: {fileID: 0}
+  stageImage: {fileID: 21300000, guid: 22270c2f68449f743ae7b4d8fe9fa7ea, type: 3}
   stageText: 
   compensation: 

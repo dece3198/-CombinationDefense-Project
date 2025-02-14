@@ -52,6 +52,7 @@ public class Generator : MonoBehaviour
                 if (card.rating == mercenaryList[i].GetComponent<Mercenary>().card.rating)
                 {
                     mercenaryList[i].SetActive(true);
+                    GameManager.instance.mecrenary.Add(mercenaryList[i]);
                     mercenaryList.RemoveAt(i);
                     return;
                 }

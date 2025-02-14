@@ -53,6 +53,7 @@ public class StageManager : MonoBehaviour
             {
                 slot.gameObject.SetActive(true);
                 slot.AddCard(curStage.stage.compensationCard);
+                PlayerCard.instance.cardList.Add(curStage.stage.compensationCard);
             }
             else
             {
@@ -68,6 +69,7 @@ public class StageManager : MonoBehaviour
         goldText.text = curStage.stage.gold.ToString() + "°ñµå";
         StartCoroutine(ResetCo());
         curStage.nextStage.gameObject.SetActive(true);
+        curCount = 0;
     }
 
     public void CheckButton()
@@ -75,17 +77,20 @@ public class StageManager : MonoBehaviour
         for (int i = 0; i < stars.Length; i++)
         {
             stars[i].GetComponent<Animator>().SetBool("Nothing", false);
+            stars[i].SetActive(false);
         }
         GameManager.instance.NewGameButton();
         GameManager.instance.GameReset();
+        curStage.clear.SetActive(true);
+        clear.SetActive(false);
         curStage = null;
-        curCount = 0;
     }
 
     private IEnumerator ResetCo()
     {
         for(int i = 0; i < curStage.star; i++)
         {
+            stars[i].SetActive(true);
             stars[i].GetComponent<Animator>().SetBool("Nothing", true);
             yield return new WaitForSeconds(0.5f);
         }
