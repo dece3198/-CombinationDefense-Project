@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public int count = 0;
-    public int cash = 0;
     public int gold = 0;
-    public int gameGold = 0;
+    public int money = 0;
+    public int crystal = 0;
     public List<GameObject> monster = new List<GameObject>();
     public List<GameObject> mecrenary = new List<GameObject>();
     [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI crystalText;
     [SerializeField] private GameObject mainMenu;
     private bool isTime = false;
     public bool isMix = false;
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         goldText.text = gold.ToString();
+        moneyText.text = money.ToString();
         if (isGame)
         {
             if (gold <= 0)

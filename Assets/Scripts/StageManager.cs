@@ -40,20 +40,27 @@ public class StageManager : MonoBehaviour
         else if(castle.Hp == castle.maxHp)
         {
             curStage.star = 3;
+            curStage.isStage = true;
         }
         else
         {
             curStage.star = 2;
         }
 
-
         if (curStage.stage.compensationCard != null)
         {
-            if(curStage.star == 3)
+            if (curStage.star == 3)
             {
-                slot.gameObject.SetActive(true);
-                slot.AddCard(curStage.stage.compensationCard);
-                Inventory.instance.AcquireCard(curStage.stage.compensationCard);
+                if(curStage.isFirst)
+                {
+                    if(curStage.isStage)
+                    {
+                        slot.gameObject.SetActive(true);
+                        slot.AddCard(curStage.stage.compensationCard);
+                        Inventory.instance.AcquireCard(curStage.stage.compensationCard);
+                        curStage.isFirst = false;
+                    }
+                }
             }
             else
             {
@@ -66,10 +73,12 @@ public class StageManager : MonoBehaviour
         }
 
         castle.Hp = castle.maxHp;
-        goldText.text = curStage.stage.gold.ToString() + "°ñµå";
+        goldText.text = curStage.stage.money.ToString() + "°ñµå";
         StartCoroutine(ResetCo());
         curStage.nextStage.gameObject.SetActive(true);
         curCount = 0;
+        GameManager.instance.money += curStage.stage.money;
+        curStage.isStage = false;
     }
 
     public void CheckButton()
@@ -79,10 +88,14 @@ public class StageManager : MonoBehaviour
             stars[i].GetComponent<Animator>().SetBool("Nothing", false);
             stars[i].SetActive(false);
         }
+
+
         GameManager.instance.NewGameButton();
         GameManager.instance.GameReset();
         curStage.clear.SetActive(true);
         clear.SetActive(false);
+
+
         curStage = null;
     }
 

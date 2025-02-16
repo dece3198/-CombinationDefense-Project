@@ -80,7 +80,6 @@ public class WalkState : BaseState<Mercenary>
         {
             if(isAtkCool)
             {
-                mercenary.transform.LookAt(mercenary.viewDetector.AtkTarget.transform);
                 mercenary.StartCoroutine(AtkCo(mercenary));
             }
         }
@@ -156,7 +155,7 @@ public class DieState : BaseState<Mercenary>
 
         if(mercenary.mecenaryType == MecenaryType.Monster)
         {
-            GameManager.instance.gold += mercenary.gold;
+            GameManager.instance.gold += mercenary.card.gold;
         }
         mercenary.gameObject.layer = 0;
         mercenary.animator.Play("Die");
@@ -231,7 +230,6 @@ public class Mercenary : MonoBehaviour
     public float maxHp;
     public float atk;
     public float def;
-    public int gold;
     public float atkCool = 0;
 
 

@@ -27,7 +27,7 @@ public class StageMenu : MonoBehaviour
         menu.SetActive(true);
         characterImage.sprite = stageSlot.stage.stageImage;
         stageText.text = stageSlot.stage.stageText;
-        goldText.text = stageSlot.stage.gold.ToString();
+        goldText.text = stageSlot.stage.money.ToString();
         compensationText.text = stageSlot.stage.compensation;
         StageManager.instance.curStage = stageSlot;
         for (int i = 0; i < stars.Length; i++)

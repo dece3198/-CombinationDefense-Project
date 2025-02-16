@@ -7,7 +7,8 @@ public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandle
     public Stage stage;
     public StageSlot nextStage;
     public Image image;
-    public bool isStage;
+    public bool isFirst = true;
+    public bool isStage = false;
     public int star = 0;
     public GameObject clear;
     private RectTransform rect;

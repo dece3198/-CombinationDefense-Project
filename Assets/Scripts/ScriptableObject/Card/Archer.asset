@@ -24,4 +24,5 @@ MonoBehaviour:
   ratingColor: {r: 0.47058824, g: 0, b: 0, a: 1}
   type: 1
   cardType: 1
-  gold: 0
+  gold: 1
+  level: 0

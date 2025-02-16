@@ -18,7 +18,6 @@ public class Arrow : MonoBehaviour
     {
         if(target != null)
         {
-            transform.LookAt(target.GetComponent<Mercenary>().headPos.position);
             arrowCo = ArrowCo();
             StartCoroutine(arrowCo);
         }
@@ -26,7 +25,11 @@ public class Arrow : MonoBehaviour
 
     private void Update()
     {
-        rigid.linearVelocity = transform.forward * speed;
+        if(target != null)
+        {
+            transform.LookAt(target.GetComponent<Mercenary>().headPos.position);
+            rigid.linearVelocity = transform.forward * speed;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -22,4 +22,5 @@ public class Card : ScriptableObject
     public WeaponType type;
     public CardType cardType;
     public int gold;
+    public int level;
 }

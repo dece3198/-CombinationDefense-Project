@@ -15,7 +15,7 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI atkText;
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI defText;
-    [SerializeField] private GameObject checkImage;
+    public GameObject checkImage;
     public bool isCheck = false;
 
     public void AddCard(Card _card)
@@ -50,6 +50,26 @@ public class InventorySlot : MonoBehaviour
                 checkImage.SetActive(false);
                 Inventory.instance.RemoveSlot(card);
                 PlayerCard.instance.cardList.Remove(card);
+            }
+        }
+    }
+
+    public void UpGradeCardClick()
+    {
+        if (card != null)
+        {
+            isCheck = !isCheck;
+
+            if (isCheck)
+            {
+                checkImage.SetActive(true);
+                UpGradeManager.instance.ClickCard(card);
+                UpGradeManager.instance.curSlot = this;
+            }
+            else
+            {
+                checkImage.SetActive(false);
+                UpGradeManager.instance.ClearCard();
             }
         }
     }
