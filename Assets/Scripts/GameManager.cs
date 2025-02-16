@@ -9,13 +9,14 @@ public class GameManager : MonoBehaviour
     public int count = 0;
     public int cash = 0;
     public int gold = 0;
+    public int gameGold = 0;
     public List<GameObject> monster = new List<GameObject>();
     public List<GameObject> mecrenary = new List<GameObject>();
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private GameObject mainMenu;
     private bool isTime = false;
-
     public bool isMix = false;
+    public bool isGame = false;
 
     private void Awake()
     {
@@ -25,10 +26,21 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         goldText.text = gold.ToString();
+        if (isGame)
+        {
+            if (gold <= 0)
+            {
+                if(mecrenary.Count <= 1)
+                {
+                    gold += 2;
+                }
+            }
+        }
     }
 
     public void StartButton()
     {
+        isGame = true;
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(1));
         MapManager.instance.map.SetActive(false);
@@ -46,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     public void GameReset()
     {
+        isGame = false;
         for(int i = 0; i < monster.Count; i++)
         {
             MonsterGenerator.instance.EnterMonster(monster[i]);

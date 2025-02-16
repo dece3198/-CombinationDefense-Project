@@ -8,21 +8,23 @@ public class DragCard : MonoBehaviour
     [SerializeField] private Image cardImage;
     [SerializeField] private Image charImage;
     [SerializeField] private Image ratingImage;
+    [SerializeField] private Image[] childs;
 
     private void Awake()
     {
         instance = this;
+        cardImage = GetComponent<Image>();
     }
 
     private void Start()
     {
+        childs = gameObject.GetComponentsInChildren<Image>();
         SetColor(0);
     }
 
     public void AddDragSlot()
     {
-        charImage.sprite = dragSlot.cardImage.sprite;
-        cardImage.color = dragSlot.card.classColor;
+        charImage.sprite = dragSlot.charImage.sprite;
         ratingImage.color = dragSlot.card.ratingColor;
         SetColor(1);
     }
@@ -39,14 +41,15 @@ public class DragCard : MonoBehaviour
 
     public void SetColor(float alpha)
     {
+        for(int i = 0; i < childs.Length; i++)
+        {
+            Color color = childs[i].color;
+            color.a = alpha;
+            childs[i].color = color;
+        }
         Color colorA = cardImage.color;
-        Color colorB = charImage.color;
-        Color colorC = ratingImage.color;
         colorA.a = alpha;
-        colorB.a = alpha;
-        colorC.a = alpha;
         cardImage.color = colorA;
-        charImage.color = colorB;
-        ratingImage.color = colorC;
+
     }
 }

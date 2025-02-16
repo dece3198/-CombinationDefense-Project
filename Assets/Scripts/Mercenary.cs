@@ -210,6 +210,7 @@ public class Mercenary : MonoBehaviour
     public Slider hpBar;
     [SerializeField] private GameObject arrow;
     [SerializeField] private Transform arrowPos;
+    [SerializeField] private SkinnedMeshRenderer[] skinned;
     public Transform headPos;
     private Stack<GameObject> arrowStack = new Stack<GameObject>();
 
@@ -269,6 +270,7 @@ public class Mercenary : MonoBehaviour
         Hp = maxHp;
         ChangeState(MercenaryState.Idle);
         curLayer = gameObject.layer;
+        hpBar.value = Hp / maxHp;
     }
 
     private void Update()
@@ -308,6 +310,7 @@ public class Mercenary : MonoBehaviour
         if(Hp > 0)
         {
             Hp -= (damage - (def * 0.5f));
+            StartCoroutine(HitCo());
             hpBar.value = Hp / maxHp;
         }
     }
@@ -316,5 +319,23 @@ public class Mercenary : MonoBehaviour
     {
         state = _state;
         stateMachine.ChangeState(state);
+    }
+
+    private IEnumerator HitCo()
+    {
+        Queue<Color> tempColor = new Queue<Color>();
+
+        for(int i = 0; i < skinned.Length; i++)
+        {
+            tempColor.Enqueue(skinned[i].material.color);
+            skinned[i].material.color = Color.red;
+        }
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < skinned.Length; i++)
+        {
+            skinned[i].material.color = tempColor.Dequeue();
+        }
+
+        tempColor.Clear();
     }
 }

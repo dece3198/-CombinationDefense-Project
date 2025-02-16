@@ -854,6 +854,13 @@ MonoBehaviour:
   hpBar: {fileID: 3937569735136465009}
   arrow: {fileID: 5005480739431169694, guid: 9a79b76c291efb04b916250e271777e1, type: 3}
   arrowPos: {fileID: 8361344714289577718}
+  skinned:
+  - {fileID: 9017669857279302453}
+  - {fileID: 1519388799681896876}
+  - {fileID: 4410691869260222783}
+  - {fileID: 2289658991360223226}
+  - {fileID: 6610806599619078194}
+  - {fileID: 7338952921099430224}
   headPos: {fileID: 5915862952388706633}
   hp: 0
   maxHp: 0
@@ -955,5 +962,35 @@ CapsuleCollider:
 --- !u!4 &696891866576970687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a56cb12101998c743a0f79c030efc761, type: 3}
+  m_PrefabInstance: {fileID: 1018202780022637652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1519388799681896876 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7263015266732235272, guid: a56cb12101998c743a0f79c030efc761, type: 3}
+  m_PrefabInstance: {fileID: 1018202780022637652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2289658991360223226 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7933122972773080146, guid: a56cb12101998c743a0f79c030efc761, type: 3}
+  m_PrefabInstance: {fileID: 1018202780022637652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4410691869260222783 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3680723932289504619, guid: a56cb12101998c743a0f79c030efc761, type: 3}
+  m_PrefabInstance: {fileID: 1018202780022637652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6610806599619078194 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3053669679340262298, guid: a56cb12101998c743a0f79c030efc761, type: 3}
+  m_PrefabInstance: {fileID: 1018202780022637652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7338952921099430224 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7780057163218742532, guid: a56cb12101998c743a0f79c030efc761, type: 3}
+  m_PrefabInstance: {fileID: 1018202780022637652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &9017669857279302453 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -935533772807217311, guid: a56cb12101998c743a0f79c030efc761, type: 3}
   m_PrefabInstance: {fileID: 1018202780022637652}
   m_PrefabAsset: {fileID: 0}

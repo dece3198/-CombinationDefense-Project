@@ -7,12 +7,12 @@ using UnityEngine.UI;
 public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     public Card card;
-    public Image cardImage;
-    [SerializeField] private Image backImage;
+    public Image charImage;
+    [SerializeField] private Image typeImage;
+    [SerializeField] private Image typeBackImage;
     [SerializeField] private Image ratingImage;
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI ratingTextA;
-    [SerializeField] private TextMeshProUGUI ratingTextB;
+    [SerializeField] private TextMeshProUGUI ratingText;
     [SerializeField] private TextMeshProUGUI atkText;
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI defText;
@@ -21,31 +21,28 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
 
     private void Awake()
     {
-        backImage = GetComponent<Image>();
+        Outline = GetComponent<Outline>();
     }
 
     public void AddCard(Card _card)
     {
         card = _card;
-        cardImage.sprite = card.cardImage;
+        charImage.sprite = card.cardImage;
+        typeImage.sprite = card.typeImage;
         nameText.text = card.cardName;
-        nameText.color = card.ratingColor;
-        ratingTextA.text = card.rating.ToString();
-        ratingTextB.text = card.rating.ToString();
-        ratingTextA.color = card.classColor;
-        ratingTextB.color = card.classColor;
+        ratingText.text = card.rating.ToString();
         atkText.text = card.atk.ToString();
         hpText.text = card.hp.ToString();
         defText.text = card.def.ToString();
         ratingImage.color = card.ratingColor;
-        backImage.color = card.classColor;
+        typeBackImage.color = card.ratingColor;
         gameObject.SetActive(true);
     }
 
     public void ClearSlot()
     {
         card = null;
-        cardImage.sprite = null;
+        charImage.sprite = null;
         Outline.effectColor = Color.green;
         Outline.enabled = false;
         gameObject.SetActive(false);
@@ -53,9 +50,9 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(card != null)
+        if (card != null)
         {
-            if(eventData.button == PointerEventData.InputButton.Left)
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
                 DragCard.instance.dragSlot = this;
                 DragCard.instance.AddDragSlot();
@@ -128,6 +125,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
     public void OnEndDrag(PointerEventData eventData)
     {
         Outline.effectColor = Color.green;
+        Outline.enabled = false;
         DragCard.instance.SetColor(0);
         DragCard.instance.dragSlot = null;  
     }

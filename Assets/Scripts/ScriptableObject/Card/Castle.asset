@@ -16,7 +16,7 @@ MonoBehaviour:
   cardName: 
   rating: 0
   atk: 0
-  hp: 100
+  hp: 500
   def: 0
   prefab: {fileID: 0}
   nextCard: {fileID: 0}

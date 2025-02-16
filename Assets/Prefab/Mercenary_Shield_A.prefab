@@ -774,6 +774,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
   m_PrefabInstance: {fileID: 156566540881359713}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &511783012383532427 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 375500264721012458, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
+  m_PrefabInstance: {fileID: 156566540881359713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1075610038556216880 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
@@ -824,6 +829,13 @@ MonoBehaviour:
   hpBar: {fileID: 347285696425277483}
   arrow: {fileID: 5005480739431169694, guid: 9a79b76c291efb04b916250e271777e1, type: 3}
   arrowPos: {fileID: 3300664114506407147}
+  skinned:
+  - {fileID: 8818694371367858090}
+  - {fileID: 511783012383532427}
+  - {fileID: 2003836781398924888}
+  - {fileID: 6184462572819142165}
+  - {fileID: 2708269699052270180}
+  - {fileID: 3309823521547513640}
   headPos: {fileID: 5535297216540505778}
   hp: 0
   maxHp: 0
@@ -900,9 +912,34 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!137 &2003836781398924888 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7357981703755469511, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
+  m_PrefabInstance: {fileID: 156566540881359713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2708269699052270180 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2862469127061569797, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
+  m_PrefabInstance: {fileID: 156566540881359713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3309823521547513640 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3441566522489936969, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
+  m_PrefabInstance: {fileID: 156566540881359713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6184462572819142165 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2882405461923682956, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
+  m_PrefabInstance: {fileID: 156566540881359713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6345669352617109154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6502182839619065283, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
+  m_PrefabInstance: {fileID: 156566540881359713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8818694371367858090 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8668997994167655627, guid: 053a4580d902c9642bce9ab0c8c911b0, type: 3}
   m_PrefabInstance: {fileID: 156566540881359713}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2586427489468021066

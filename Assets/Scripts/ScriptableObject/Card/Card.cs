@@ -12,13 +12,13 @@ public class Card : ScriptableObject
     public Sprite cardImage;
     public string cardName;
     public int rating;
+    public Sprite typeImage;
     public float atk;
     public float hp;
     public float def;
     public GameObject prefab;
     public Card nextCard;
     public Color ratingColor;
-    public Color classColor;
     public WeaponType type;
     public CardType cardType;
     public int gold;

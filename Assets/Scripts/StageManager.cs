@@ -32,7 +32,7 @@ public class StageManager : MonoBehaviour
     private void Clear()
     {
         clear.SetActive(true);
-
+        Time.timeScale = 1f;
         if(castle.Hp < 50)
         {
             curStage.star = 1;
@@ -53,7 +53,7 @@ public class StageManager : MonoBehaviour
             {
                 slot.gameObject.SetActive(true);
                 slot.AddCard(curStage.stage.compensationCard);
-                PlayerCard.instance.cardList.Add(curStage.stage.compensationCard);
+                Inventory.instance.AcquireCard(curStage.stage.compensationCard);
             }
             else
             {

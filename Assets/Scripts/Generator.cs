@@ -30,12 +30,9 @@ public class Generator : MonoBehaviour
 
         for (int i = 0; i < mercenaryList.Count; i++)
         {
-            if (card.type == mercenaryList[i].GetComponent<Mercenary>().weaponType)
+            if(card == mercenaryList[i].GetComponent<Mercenary>().card)
             {
-                if(card.rating == mercenaryList[i].GetComponent<Mercenary>().card.rating)
-                {
-                    count++;
-                }
+                count++;
             }
         }
 
@@ -46,16 +43,12 @@ public class Generator : MonoBehaviour
 
         for (int i = 0; i < mercenaryList.Count; i++)
         {
-
-            if (card.type == mercenaryList[i].GetComponent<Mercenary>().weaponType)
+            if (card == mercenaryList[i].GetComponent<Mercenary>().card)
             {
-                if (card.rating == mercenaryList[i].GetComponent<Mercenary>().card.rating)
-                {
-                    mercenaryList[i].SetActive(true);
-                    GameManager.instance.mecrenary.Add(mercenaryList[i]);
-                    mercenaryList.RemoveAt(i);
-                    return;
-                }
+                mercenaryList[i].SetActive(true);
+                GameManager.instance.mecrenary.Add(mercenaryList[i]);
+                mercenaryList.RemoveAt(i);
+                return;
             }
         }
     }
