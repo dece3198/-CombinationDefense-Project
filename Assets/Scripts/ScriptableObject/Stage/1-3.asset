@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a27284aa181124d8219bed7fb3ccc1, type: 3}
   m_Name: 1-3
   m_EditorClassIdentifier: 
-  monsters: []
-  monsterCount: 0
+  monsters:
+  - {fileID: 11400000, guid: e9269fdfefc350f4a991f8a283e839c2, type: 2}
+  monsterCount: 10
   startGold: 0
-  gold: 0
+  money: 50
   compensationCard: {fileID: 0}
   stageImage: {fileID: 21300000, guid: d02f1296c453a0f4fb6b4e5771dab501, type: 3}
-  stageText: 
-  compensation: 
+  stageText: "\uB0A8\uC791\n1 - 3"
+  compensation: "\uBCF4\uC0C1 : 50\uC6D0"

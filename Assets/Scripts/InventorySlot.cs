@@ -7,6 +7,7 @@ public class InventorySlot : MonoBehaviour
 {
     public Card card;
     public Image charImage;
+    [SerializeField] private Image cardBackImage;
     [SerializeField] private Image typeImage;
     [SerializeField] private Image typeBackImage;
     [SerializeField] private Image ratingImage;
@@ -30,6 +31,7 @@ public class InventorySlot : MonoBehaviour
         defText.text = card.def.ToString();
         ratingImage.color = card.ratingColor;
         typeBackImage.color = card.ratingColor;
+        cardBackImage.color = card.ratingColor;
         gameObject.SetActive(true);
     }
 

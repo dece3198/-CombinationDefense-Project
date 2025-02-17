@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum WeaponType
 {
-    Sword, Bow, Shield, knife, Castle
+    Sword, Bow, Shield, knife, Castle, Wizard
 }
 
 public enum MercenaryState
@@ -43,14 +43,17 @@ public class IdleState : BaseState<Mercenary>
         mercenary.viewDetector.FindTarget();
         if (mercenary.viewDetector.Target != null)
         {
-            mercenary.ChangeState(MercenaryState.Wlak);
+            if(mercenary.isAtkCool)
+            {
+                mercenary.ChangeState(MercenaryState.Wlak);
+            }
         }
     }
 }
 
 public class WalkState : BaseState<Mercenary>
 {
-    private bool isAtkCool = true;
+
 
     public override void Enter(Mercenary mercenary)
     {
@@ -76,21 +79,18 @@ public class WalkState : BaseState<Mercenary>
 
         mercenary.viewDetector.FindAttackTarget();
 
-        if(mercenary.viewDetector.AtkTarget != null)
+        if (mercenary.viewDetector.AtkTarget != null)
         {
-            if(isAtkCool)
-            {
-                mercenary.StartCoroutine(AtkCo(mercenary));
-            }
+            mercenary.StartCoroutine(AtkCo(mercenary));
         }
     }
 
     private IEnumerator AtkCo(Mercenary mercenary)
     {
-        isAtkCool = false;
+        mercenary.isAtkCool = false;
         mercenary.ChangeState(MercenaryState.Attack);
         yield return new WaitForSeconds(mercenary.atkCool);
-        isAtkCool = true;
+        mercenary.isAtkCool = true;
     }
 }
 
@@ -104,6 +104,7 @@ public class AttackState : BaseState<Mercenary>
             case WeaponType.Bow: Bow(mercenary); break;
             case WeaponType.Shield: Shield(mercenary); break;
             case WeaponType.knife: mercenary.animator.Play("knife"); break;
+            case WeaponType.Wizard: MagicAttack(mercenary);  break;
         }
         mercenary.agent.ResetPath();
     }
@@ -118,6 +119,17 @@ public class AttackState : BaseState<Mercenary>
         {
             mercenary.ChangeState(MercenaryState.Idle);
         }
+    }
+
+    private void MagicAttack(Mercenary mercenary)
+    {
+        mercenary.viewDetector.FindAttackTarget();
+
+        if(mercenary.viewDetector.AtkTarget != null)
+        {
+            mercenary.animator.SetTrigger("Magic");
+            mercenary.StartCoroutine(MagicCo(mercenary));
+        } 
     }
 
     private void Bow(Mercenary mercenary)
@@ -140,13 +152,21 @@ public class AttackState : BaseState<Mercenary>
         mercenary.animator.SetBool("Shield", false);
         mercenary.def = mercenary.def / 2;
     }
+
+    private IEnumerator MagicCo(Mercenary mercenary)
+    {
+        yield return new WaitForSeconds(1f);
+        mercenary.skill.transform.position = mercenary.viewDetector.AtkTarget.transform.position;
+        mercenary.skill.gameObject.SetActive(true);
+        mercenary.skill.Play();
+    }
 }
 
 public class DieState : BaseState<Mercenary>
 {
     public override void Enter(Mercenary mercenary)
     {
-        if(mercenary.weaponType == WeaponType.Castle)
+        if(mercenary.card.type == WeaponType.Castle)
         {
             GameManager.instance.GameReset();
             mercenary.Hp = mercenary.maxHp;
@@ -213,6 +233,10 @@ public class Mercenary : MonoBehaviour
     public Transform headPos;
     private Stack<GameObject> arrowStack = new Stack<GameObject>();
 
+    public ParticleSystem skill;
+
+    public bool isAtkCool = true;
+
 
     public float hp;
     public float Hp
@@ -243,10 +267,6 @@ public class Mercenary : MonoBehaviour
         stateMachine.AddState(MercenaryState.Wlak, new WalkState());
         stateMachine.AddState(MercenaryState.Attack, new AttackState());
         stateMachine.AddState(MercenaryState.Die, new DieState());
-        atk = card.atk;
-        def = card.def;
-        maxHp = card.hp;
-        Hp = maxHp;
     }
 
     private void Start()
@@ -265,6 +285,9 @@ public class Mercenary : MonoBehaviour
 
     private void OnEnable()
     {
+        atk = card.atk;
+        def = card.def;
+        maxHp = card.hp;
         Hp = maxHp;
         ChangeState(MercenaryState.Idle);
         curLayer = gameObject.layer;

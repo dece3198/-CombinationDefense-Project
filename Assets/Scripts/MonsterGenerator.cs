@@ -32,12 +32,9 @@ public class MonsterGenerator : MonoBehaviour
 
         for (int i = 0; i < monsterList.Count; i++)
         {
-            if (card.type == monsterList[i].GetComponent<Mercenary>().weaponType)
+            if (card == monsterList[i].GetComponent<Mercenary>().card)
             {
-                if (card.rating == monsterList[i].GetComponent<Mercenary>().card.rating)
-                {
-                    count++;
-                }
+                count++;
             }
         }
 
@@ -48,16 +45,12 @@ public class MonsterGenerator : MonoBehaviour
 
         for (int i = 0; i < monsterList.Count; i++)
         {
-
-            if (card.type == monsterList[i].GetComponent<Mercenary>().weaponType)
+            if (card == monsterList[i].GetComponent<Mercenary>().card)
             {
-                if (card.rating == monsterList[i].GetComponent<Mercenary>().card.rating)
-                {
-                    monsterList[i].SetActive(true);
-                    GameManager.instance.monster.Add(monsterList[i]);
-                    monsterList.RemoveAt(i);
-                    return;
-                }
+                monsterList[i].SetActive(true);
+                GameManager.instance.monster.Add(monsterList[i]);
+                monsterList.RemoveAt(i);
+                return;
             }
         }
     }

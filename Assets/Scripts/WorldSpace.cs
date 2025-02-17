@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WorldSpace : MonoBehaviour
 {
@@ -6,9 +9,9 @@ public class WorldSpace : MonoBehaviour
 
     private void Awake()
     {
-        if(cam == null)
+        if (cam == null)
         {
-            cam = Camera.main;
+            cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         }
     }
 
@@ -18,4 +21,5 @@ public class WorldSpace : MonoBehaviour
         Vector3 hp_angle = Quaternion.RotateTowards(transform.rotation, q_hp, 200).eulerAngles;
         transform.rotation = Quaternion.Euler(0, hp_angle.y, 0);
     }
+
 }

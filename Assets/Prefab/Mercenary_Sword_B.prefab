@@ -238,7 +238,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4238307991043286394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e67cee449e541784c8c29e2e912b231f, type: 3}
+  m_Script: {fileID: 11500000, guid: a0c04c008427db148a3c1f1faeb4980d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
@@ -837,12 +837,12 @@ MonoBehaviour:
   hpBar: {fileID: 8936292346292181498}
   arrow: {fileID: 0}
   arrowPos: {fileID: 0}
+  skinned: []
   headPos: {fileID: 2488004616063328080}
   hp: 0
   maxHp: 0
   atk: 0
   def: 0
-  gold: 0
   atkCool: 1
 --- !u!114 &3725530671981510137
 MonoBehaviour:
@@ -853,7 +853,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6459203762223191458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9b6711463f883347b6954dca1705ac2, type: 3}
+  m_Script: {fileID: 11500000, guid: d048680640b5db543aa0c8923a49c416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
@@ -865,9 +865,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!195 &3426898354059434926
 NavMeshAgent:
   m_ObjectHideFlags: 0

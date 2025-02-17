@@ -218,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4371286794962224521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e67cee449e541784c8c29e2e912b231f, type: 3}
+  m_Script: {fileID: 11500000, guid: a0c04c008427db148a3c1f1faeb4980d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
@@ -841,7 +841,6 @@ MonoBehaviour:
   maxHp: 0
   atk: 0
   def: 0
-  gold: 0
   atkCool: 5
 --- !u!114 &3322710071596975231
 MonoBehaviour:
@@ -852,7 +851,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1075610038556216880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9b6711463f883347b6954dca1705ac2, type: 3}
+  m_Script: {fileID: 11500000, guid: d048680640b5db543aa0c8923a49c416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
@@ -864,9 +863,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!195 &2054438310590626416
 NavMeshAgent:
   m_ObjectHideFlags: 0

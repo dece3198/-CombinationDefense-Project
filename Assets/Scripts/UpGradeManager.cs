@@ -26,6 +26,7 @@ public class UpGradeManager : MonoBehaviour
     {
         slots = slotParent.GetComponentsInChildren<InventorySlot>();
 
+        slots[1].AddCard(PlayerCard.instance.cardList[0]);
         for(int i = 0; i < slots.Length; i++)
         {
             if (slots[i].card == null)
@@ -34,15 +35,20 @@ public class UpGradeManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void AcquireCard(Card card)
+    {
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].card == null)
             {
-                slots[i].AddCard(PlayerCard.instance.cardList[0]);
+                slots[i].AddCard(card);
                 return;
             }
         }
     }
+
 
     public void ClickCard(Card _card)
     {
@@ -85,9 +91,10 @@ public class UpGradeManager : MonoBehaviour
             curCard.atk += 1;
             curCard.hp += 25;
             curCard.def += 1;
+            curCard.level += 1;
+            GameManager.instance.money -= (curCard.level + 1);
+            TextReset();
         }
-
-        TextReset();
     }
 
     public void ClearCard()

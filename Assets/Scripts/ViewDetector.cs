@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ViewDetector : MonoBehaviour
@@ -12,7 +14,6 @@ public class ViewDetector : MonoBehaviour
     [SerializeField] private float atkRadiu;
     [SerializeField] private float atkAngle;
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private LayerMask obstacleMask;
 
     public void FindTarget()
     {
@@ -22,21 +23,16 @@ public class ViewDetector : MonoBehaviour
         foreach(Collider collider in targets)
         {
             Vector3 findTarget = (collider.transform.position - transform.position).normalized;
-            if(Vector3.Dot(transform.forward, findTarget) < Mathf.Cos(angle * 0.5f* Mathf.Deg2Rad))
+            if (Vector3.Dot(transform.forward, findTarget) < Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad))
             {
                 continue;
             }
 
             float distance = Vector3.Distance(transform.position, collider.transform.position);
 
-            if(Physics.Raycast(transform.position, findTarget, distance, obstacleMask))
-            {
-                continue;
-            }
-
             Debug.DrawRay(transform.position, findTarget * distance, Color.red);
 
-            if(distance < min)
+            if (distance < min)
             {
                 min = distance;
                 target = collider.gameObject;
@@ -47,21 +43,21 @@ public class ViewDetector : MonoBehaviour
         {
             target = null;
         }
+        
     }
+
 
     public void FindAttackTarget()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
 
-        for(int i = 0; i < targets.Length; i++)
+        for (int i = 0; i < targets.Length; i++)
         {
             Vector3 findTarget = (targets[i].transform.position - transform.position).normalized;
-
-            if(Vector3.Dot(transform.forward, findTarget) < Mathf.Cos(atkAngle * 0.5f * Mathf.Deg2Rad))
+            if (Vector3.Dot(transform.forward, findTarget) < Mathf.Cos(atkAngle * 0.5f * Mathf.Deg2Rad))
             {
                 continue;
             }
-
             float findTargetRange = Vector3.Distance(transform.position, targets[i].transform.position);
             Debug.DrawRay(transform.position, findTarget * findTargetRange, Color.red);
 
@@ -70,6 +66,28 @@ public class ViewDetector : MonoBehaviour
         }
         atkTarget = null;
     }
+
+    public void FindRangeAttack(float damage)
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
+
+        for (int i = 0; i < targets.Length; i++)
+        {
+            Vector3 findTarget = (targets[i].transform.position - transform.position).normalized;
+            if (Vector3.Dot(transform.forward, findTarget) < Mathf.Cos(atkAngle * 0.5f * Mathf.Deg2Rad))
+            {
+                continue;
+            }
+            float findTargetRange = Vector3.Distance(transform.position, targets[i].transform.position);
+            Debug.DrawRay(transform.position, findTarget * findTargetRange, Color.red);
+
+            atkTarget = targets[i].gameObject;
+
+            targets[i].GetComponent<Mercenary>().TakeHit(damage);
+        }
+        atkTarget = null;
+    }
+
 
     private void OnDrawGizmosSelected()
     {

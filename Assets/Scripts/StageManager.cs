@@ -58,6 +58,7 @@ public class StageManager : MonoBehaviour
                         slot.gameObject.SetActive(true);
                         slot.AddCard(curStage.stage.compensationCard);
                         Inventory.instance.AcquireCard(curStage.stage.compensationCard);
+                        UpGradeManager.instance.AcquireCard(curStage.stage.compensationCard);
                         curStage.isFirst = false;
                     }
                 }
@@ -73,11 +74,11 @@ public class StageManager : MonoBehaviour
         }
 
         castle.Hp = castle.maxHp;
-        goldText.text = curStage.stage.money.ToString() + "°ñµå";
+        goldText.text = curStage.stage.money.ToString() + "¿ø";
         StartCoroutine(ResetCo());
         curStage.nextStage.gameObject.SetActive(true);
-        curCount = 0;
         GameManager.instance.money += curStage.stage.money;
+        curCount = 0;
         curStage.isStage = false;
     }
 
