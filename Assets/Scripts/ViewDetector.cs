@@ -46,6 +46,45 @@ public class ViewDetector : MonoBehaviour
         
     }
 
+    public void FindMinTarget()
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
+        float min = Mathf.Infinity;
+
+        foreach (Collider collider in targets)
+        {
+            if (collider.GetComponent<Mercenary>().Hp < min)
+            {
+                min = collider.GetComponent<Mercenary>().Hp;
+                target = collider.gameObject;
+            }
+        }
+
+        if (targets.Length <= 0)
+        {
+            target = null;
+        }
+    }
+
+    public void FindMinAtkTarget()
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
+        float min = Mathf.Infinity;
+
+        foreach (Collider collider in targets)
+        {
+            if (collider.GetComponent<Mercenary>().Hp < min)
+            {
+                min = collider.GetComponent<Mercenary>().Hp;
+                atkTarget = collider.gameObject;
+            }    
+        }
+
+        if (targets.Length <= 0)
+        {
+            atkTarget = null;
+        }
+    }
 
     public void FindAttackTarget()
     {
@@ -67,6 +106,7 @@ public class ViewDetector : MonoBehaviour
         atkTarget = null;
     }
 
+
     public void FindRangeAttack(float damage)
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
@@ -87,7 +127,6 @@ public class ViewDetector : MonoBehaviour
         }
         atkTarget = null;
     }
-
 
     private void OnDrawGizmosSelected()
     {

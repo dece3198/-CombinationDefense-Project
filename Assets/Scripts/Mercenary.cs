@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum WeaponType
 {
-    Sword, Bow, Shield, knife, Castle, Wizard
+    Sword, Bow, Shield, knife, Castle, Wizard, Shielder, Healer, Warrior, Knight
 }
 
 public enum MercenaryState
@@ -40,10 +40,18 @@ public class IdleState : BaseState<Mercenary>
     public override void Update(Mercenary mercenary)
     {
 
-        mercenary.viewDetector.FindTarget();
+        if(mercenary.weaponType == WeaponType.Shielder || mercenary.weaponType == WeaponType.Healer)
+        {
+            mercenary.viewDetector.FindMinTarget();
+        }
+        else
+        {
+            mercenary.viewDetector.FindTarget();
+        }
+
         if (mercenary.viewDetector.Target != null)
         {
-            if(mercenary.isAtkCool)
+            if (mercenary.isAtkCool)
             {
                 mercenary.ChangeState(MercenaryState.Wlak);
             }
@@ -67,7 +75,19 @@ public class WalkState : BaseState<Mercenary>
 
     public override void Update(Mercenary mercenary)
     {
-        mercenary.viewDetector.FindTarget();
+        
+        if(mercenary.weaponType == WeaponType.Shielder || mercenary.weaponType == WeaponType.Healer)
+        {
+            mercenary.viewDetector.FindMinTarget();
+            mercenary.viewDetector.FindMinAtkTarget();
+        }
+        else
+        {
+            mercenary.viewDetector.FindTarget();
+            mercenary.viewDetector.FindAttackTarget();
+        }
+
+        
         if (mercenary.viewDetector.Target != null)
         {
             mercenary.agent.SetDestination(mercenary.viewDetector.Target.transform.position);
@@ -77,7 +97,6 @@ public class WalkState : BaseState<Mercenary>
             mercenary.ChangeState(MercenaryState.Idle);
         }
 
-        mercenary.viewDetector.FindAttackTarget();
 
         if (mercenary.viewDetector.AtkTarget != null)
         {
@@ -103,8 +122,12 @@ public class AttackState : BaseState<Mercenary>
             case WeaponType.Sword :mercenary.animator.Play("Attack"); break;
             case WeaponType.Bow: Bow(mercenary); break;
             case WeaponType.Shield: Shield(mercenary); break;
+            case WeaponType.Shielder: mercenary.StartCoroutine(ShielderCo(mercenary)); break;
+            case WeaponType.Healer: mercenary.StartCoroutine(HealerCo(mercenary));  break;
             case WeaponType.knife: mercenary.animator.Play("knife"); break;
-            case WeaponType.Wizard: MagicAttack(mercenary);  break;
+            case WeaponType.Wizard: mercenary.StartCoroutine(MagicCo(mercenary)); break;
+            case WeaponType.Warrior: mercenary.StartCoroutine(WarriorCo(mercenary)); break;
+            case WeaponType.Knight: mercenary.StartCoroutine(KnightCo(mercenary)); break;
         }
         mercenary.agent.ResetPath();
     }
@@ -121,15 +144,34 @@ public class AttackState : BaseState<Mercenary>
         }
     }
 
-    private void MagicAttack(Mercenary mercenary)
-    {
-        mercenary.viewDetector.FindAttackTarget();
 
-        if(mercenary.viewDetector.AtkTarget != null)
+    private IEnumerator ShielderCo(Mercenary mercenary)
+    {
+        mercenary.animator.SetTrigger("Magic");
+        mercenary.viewDetector.FindMinAtkTarget();
+        if (mercenary.viewDetector.AtkTarget != null)
         {
-            mercenary.animator.SetTrigger("Magic");
-            mercenary.StartCoroutine(MagicCo(mercenary));
-        } 
+            yield return new WaitForSeconds(1f);
+            mercenary.viewDetector.AtkTarget.GetComponent<Mercenary>().shield.Play();
+            yield return new WaitForSeconds(0.25f);
+            mercenary.viewDetector.AtkTarget.GetComponent<Mercenary>().Shield(mercenary.atk);
+        }
+
+        yield return new WaitForSeconds(3f);
+        mercenary.viewDetector.AtkTarget.GetComponent<Mercenary>().shieldBar.gameObject.SetActive(false);
+    }
+
+    private IEnumerator HealerCo(Mercenary mercenary)
+    {
+        mercenary.animator.SetTrigger("Magic");
+        mercenary.viewDetector.FindMinAtkTarget();
+        if (mercenary.viewDetector.AtkTarget != null)
+        {
+            yield return new WaitForSeconds(1f);
+            mercenary.viewDetector.AtkTarget.GetComponent<Mercenary>().heel.Play();
+            yield return new WaitForSeconds(0.25f);
+            mercenary.viewDetector.AtkTarget.GetComponent<Mercenary>().Heel(mercenary.atk);
+        }
     }
 
     private void Bow(Mercenary mercenary)
@@ -155,10 +197,34 @@ public class AttackState : BaseState<Mercenary>
 
     private IEnumerator MagicCo(Mercenary mercenary)
     {
+
+        mercenary.animator.SetTrigger("Magic");
         yield return new WaitForSeconds(1f);
-        mercenary.skill.transform.position = mercenary.viewDetector.AtkTarget.transform.position;
-        mercenary.skill.gameObject.SetActive(true);
+        mercenary.viewDetector.FindAttackTarget();
+        if (mercenary.viewDetector.AtkTarget != null)
+        {
+            mercenary.skill.transform.position = mercenary.viewDetector.AtkTarget.transform.position;
+            mercenary.skill.gameObject.SetActive(true);
+            mercenary.skill.Play();
+        }
+    }
+
+    private IEnumerator WarriorCo(Mercenary mercenary)
+    {
+        mercenary.animator.Play("Attack");
+        yield return new WaitForSeconds(1f);
+        mercenary.viewDetector.FindRangeAttack(mercenary.atk);
+    }
+
+    private IEnumerator KnightCo(Mercenary mercenary)
+    {
+        mercenary.animator.SetBool("Slash", false);
+        mercenary.animator.Play("Slash");
         mercenary.skill.Play();
+        yield return new WaitForSeconds(2f);
+        mercenary.animator.SetBool("Slash", true);
+        yield return new WaitForSeconds(0.5f);
+        mercenary.viewDetector.FindRangeAttack(mercenary.atk);
     }
 }
 
@@ -166,6 +232,7 @@ public class DieState : BaseState<Mercenary>
 {
     public override void Enter(Mercenary mercenary)
     {
+        mercenary.agent.ResetPath();
         if(mercenary.card.type == WeaponType.Castle)
         {
             GameManager.instance.GameReset();
@@ -227,6 +294,7 @@ public class Mercenary : MonoBehaviour
 
     private StateMachine<MercenaryState, Mercenary> stateMachine = new StateMachine<MercenaryState, Mercenary>();
     public Slider hpBar;
+    public Slider shieldBar;
     [SerializeField] private GameObject arrow;
     [SerializeField] private Transform arrowPos;
     [SerializeField] private SkinnedMeshRenderer[] skinned;
@@ -234,6 +302,8 @@ public class Mercenary : MonoBehaviour
     private Stack<GameObject> arrowStack = new Stack<GameObject>();
 
     public ParticleSystem skill;
+    public ParticleSystem shield;
+    public ParticleSystem heel;
 
     public bool isAtkCool = true;
 
@@ -252,6 +322,20 @@ public class Mercenary : MonoBehaviour
         }
     }
     public float maxHp;
+    private float shieldHp;
+    public float ShieldHp
+    {
+        get { return shieldHp; }
+        set 
+        {
+            shieldHp = value; 
+            if(shieldHp <= 0)
+            {
+                shieldBar.gameObject.SetActive(false);
+            }
+        }
+    }
+    public float maxShieldHp;
     public float atk;
     public float def;
     public float atkCool = 0;
@@ -271,9 +355,9 @@ public class Mercenary : MonoBehaviour
 
     private void Start()
     {
-        if(weaponType == WeaponType.Bow)
+        if (weaponType == WeaponType.Bow)
         {
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 GameObject _arrow = Instantiate(arrow, transform);
                 _arrow.transform.position = arrowPos.position;
@@ -297,6 +381,14 @@ public class Mercenary : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (weaponType == WeaponType.Shielder)
+            {
+                viewDetector.FindMinTarget();
+            }
+        }
     }
 
     public void Attack()
@@ -328,11 +420,44 @@ public class Mercenary : MonoBehaviour
 
     public void TakeHit(float damage)
     {
-        if(Hp > 0)
+        if(shieldBar.gameObject.activeSelf)
         {
-            Hp -= (damage - (def * 0.5f));
-            StartCoroutine(HitCo());
-            hpBar.value = Hp / maxHp;
+            shieldHp -= damage;
+            shieldBar.value = shieldHp / maxShieldHp;
+        }
+        else
+        {
+            if (Hp > 0)
+            {
+                Hp -= (damage - (def * 0.5f));
+                StartCoroutine(HitCo());
+                hpBar.value = Hp / maxHp;
+            }
+        }
+    }
+
+    public void Shield(float damage)
+    {
+        shieldBar.gameObject.SetActive(true);
+        shieldHp = damage;
+        maxShieldHp = damage;
+        shieldBar.value = ShieldHp / maxShieldHp;
+    }
+
+    public void Heel(float damage)
+    {
+        if(Hp < maxHp)
+        {
+            if(Hp + damage >= maxHp)
+            {
+                Hp = maxHp;
+                hpBar.value = Hp / maxHp;
+            }
+            else
+            {
+                Hp += damage;
+                hpBar.value = Hp / maxHp;
+            }
         }
     }
 

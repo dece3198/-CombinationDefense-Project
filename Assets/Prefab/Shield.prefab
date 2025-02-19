@@ -878,6 +878,7 @@ MonoBehaviour:
   mecenaryType: 1
   curLayer: 0
   hpBar: {fileID: 3810719546106542132}
+  shieldBar: {fileID: 0}
   arrow: {fileID: 0}
   arrowPos: {fileID: 0}
   skinned:
@@ -888,8 +889,13 @@ MonoBehaviour:
   - {fileID: 8847895814062690911}
   - {fileID: 1438869073102678417}
   headPos: {fileID: 7200709913304256419}
+  skill: {fileID: 0}
+  shield: {fileID: 0}
+  heel: {fileID: 0}
+  isAtkCool: 1
   hp: 0
   maxHp: 0
+  maxShieldHp: 0
   atk: 0
   def: 0
   atkCool: 5
@@ -913,7 +919,7 @@ MonoBehaviour:
   atkAngle: 360
   layerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
 --- !u!195 &1016763746433434935
 NavMeshAgent:
   m_ObjectHideFlags: 0

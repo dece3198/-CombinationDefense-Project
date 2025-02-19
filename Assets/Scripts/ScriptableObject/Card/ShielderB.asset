@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
+  m_Name: ShielderB
+  m_EditorClassIdentifier: 
+  cardImage: {fileID: 21300000, guid: 4a92b81cce0771e4cbf14c0e270a54da, type: 3}
+  cardName: 
+  rating: 0
+  typeImage: {fileID: 1274829247, guid: 26343f575f180b54287c43a606619dcc, type: 3}
+  atk: 10
+  hp: 10
+  def: 4
+  prefab: {fileID: 1731926989791797840, guid: 6e40549256e7c5e4eac041124e71aadb, type: 3}
+  nextCard: {fileID: 0}
+  ratingColor: {r: 0, g: 0, b: 0, a: 0}
+  type: 6
+  cardType: 0
+  gold: 0
+  level: 0

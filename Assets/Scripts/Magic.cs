@@ -5,6 +5,7 @@ public class Magic : MonoBehaviour
 {
     public Mercenary mercenary;
     private ViewDetector viewDetector;
+    [SerializeField] private int count = 0;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class Magic : MonoBehaviour
 
         if(viewDetector.AtkTarget != null)
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < count; i++)
             {
                 viewDetector.FindRangeAttack(mercenary.atk);
                 yield return new WaitForSeconds(0.6f);
