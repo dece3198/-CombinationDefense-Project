@@ -48,7 +48,7 @@ public class ViewDetector : MonoBehaviour
 
     public void FindMinTarget()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
+        Collider[] targets = Physics.OverlapSphere(transform.position, radiu, layerMask);
         float min = Mathf.Infinity;
 
         foreach (Collider collider in targets)
@@ -139,9 +139,9 @@ public class ViewDetector : MonoBehaviour
         Vector3 rightDir = AngleToDir(transform.eulerAngles.y + angle * 0.5f);
         Vector3 leftDir = AngleToDir(transform.eulerAngles.y - angle * 0.5f);
 
-        Debug.DrawRay(transform.position, lookDir * radiu, Color.red);
-        Debug.DrawRay(transform.position, rightDir * radiu, Color.red);
-        Debug.DrawRay(transform.position, leftDir * radiu, Color.red);
+        Debug.DrawRay(transform.position, lookDir * radiu, Color.green);
+        Debug.DrawRay(transform.position, rightDir * radiu, Color.green);
+        Debug.DrawRay(transform.position, leftDir * radiu, Color.green);
 
         Vector3 atkRightDir = AngleToDir(transform.eulerAngles.y + atkAngle * 0.5f);
         Vector3 atkLeftDir = AngleToDir(transform.eulerAngles.y - atkAngle * 0.5f);

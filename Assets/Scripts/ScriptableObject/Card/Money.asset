@@ -22,7 +22,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   nextCard: {fileID: 0}
   ratingColor: {r: 1, g: 0.9685757, b: 0, a: 1}
-  type: 0
+  type: 10
   cardType: 0
   gold: 10
   level: 0

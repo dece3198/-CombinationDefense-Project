@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
   m_Name: ShielderA
   m_EditorClassIdentifier: 
-  cardImage: {fileID: 21300000, guid: 0dcd4b0fccb6fe14096b3a6bd67bbfa1, type: 3}
-  cardName: 
-  rating: 0
+  cardImage: {fileID: 21300000, guid: e8f8537458f2b214fa1d6ff90609d464, type: 3}
+  cardName: "\uD558\uAE09 \uC274\uB354"
+  rating: 3
   typeImage: {fileID: 1274829247, guid: 26343f575f180b54287c43a606619dcc, type: 3}
   atk: 10
   hp: 10
   def: 4
   prefab: {fileID: 8574163834406725103, guid: 48fc03816d0841740857ea3412a60e4b, type: 3}
   nextCard: {fileID: 0}
-  ratingColor: {r: 0, g: 0, b: 0, a: 0}
+  ratingColor: {r: 0.3254902, g: 0.36862746, b: 1, a: 1}
   type: 6
   cardType: 0
   gold: 0

@@ -17,11 +17,12 @@ MonoBehaviour:
   rating: 2
   typeImage: {fileID: 1068903411, guid: a5bdd6e5de6e6b54d9037d1e7e95f98a, type: 3}
   atk: 13
-  hp: 50
-  def: 2
+  hp: 110
+  def: 8
   prefab: {fileID: 6459203762223191458, guid: cb8bcd733cc4dd4488a6ae6ff5a40d03, type: 3}
   nextCard: {fileID: 0}
-  ratingColor: {r: 0.22745098, g: 0.34117648, b: 0.22745098, a: 1}
+  ratingColor: {r: 0.5707547, g: 1, b: 0.5707547, a: 1}
   type: 0
   cardType: 0
   gold: 0
+  level: 0

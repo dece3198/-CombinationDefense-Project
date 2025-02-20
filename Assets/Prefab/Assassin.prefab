@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5376438275196044315}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6109513803217552826}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 1529633387962607830}
   - component: {fileID: 4530417271426113524}
   - component: {fileID: 1446725442230847315}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 6035083599884489380}
   - component: {fileID: 6839631203295324400}
   - component: {fileID: 4568995867175912307}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1505552713938865597}
   - component: {fileID: 2301657325673058770}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: HpBar (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,15 +812,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a56cb12101998c743a0f79c030efc761, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 66.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a56cb12101998c743a0f79c030efc761, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.126
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a56cb12101998c743a0f79c030efc761, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.74
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a56cb12101998c743a0f79c030efc761, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1172,7 +1172,7 @@ MonoBehaviour:
   atkAngle: 360
   layerMask:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 6400
 --- !u!114 &2988718931323227663
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class Magic : MonoBehaviour
     public Mercenary mercenary;
     private ViewDetector viewDetector;
     [SerializeField] private int count = 0;
+    [SerializeField] private float skillTime = 0;
 
     private void Awake()
     {
@@ -17,16 +18,19 @@ public class Magic : MonoBehaviour
         StartCoroutine(MagicCo());
     }
 
-    private IEnumerator MagicCo()
+    private void Update()
     {
         viewDetector.FindAttackTarget();
+    }
 
+    private IEnumerator MagicCo()
+    {
         if(viewDetector.AtkTarget != null)
         {
             for (int i = 0; i < count; i++)
             {
+                yield return new WaitForSeconds(skillTime);
                 viewDetector.FindRangeAttack(mercenary.atk);
-                yield return new WaitForSeconds(0.6f);
             }
         }
 

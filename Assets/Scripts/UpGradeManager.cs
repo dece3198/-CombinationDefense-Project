@@ -14,6 +14,7 @@ public class UpGradeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI defText;
     [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private Transform cardPos;
     public InventorySlot curSlot;
     private bool isCard = true;
 
@@ -65,6 +66,7 @@ public class UpGradeManager : MonoBehaviour
                 if (isCard)
                 {
                     card[i].gameObject.SetActive(true);
+                    card[i].transform.position = cardPos.position;
                     curobj = card[i];
                     curCard = _card;
                     TextReset();

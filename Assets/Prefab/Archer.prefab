@@ -893,7 +893,7 @@ MonoBehaviour:
   atkAngle: 360
   layerMask:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 6400
 --- !u!95 &3821033523969339731
 Animator:
   serializedVersion: 7

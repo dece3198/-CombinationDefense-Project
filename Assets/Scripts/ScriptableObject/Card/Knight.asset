@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardImage: {fileID: 21300000, guid: 848146ae54dd9834fb8c7a882b4d1ce1, type: 3}
   cardName: "\uAE30\uC0AC"
-  rating: 0
+  rating: 5
   typeImage: {fileID: 2003567520, guid: 69936fa59d132954b83f13ed05a18933, type: 3}
-  atk: 40
-  hp: 200
-  def: 8
+  atk: 250
+  hp: 1000
+  def: 4
   prefab: {fileID: 4918275685447026255, guid: c7ab6cce2758bf24ab9eeef8d165bc96, type: 3}
   nextCard: {fileID: 0}
-  ratingColor: {r: 0, g: 0, b: 0, a: 0}
+  ratingColor: {r: 1, g: 0.7254902, b: 0, a: 1}
   type: 9
   cardType: 0
   gold: 0

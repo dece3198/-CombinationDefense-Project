@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum WeaponType
 {
-    Sword, Bow, Shield, knife, Castle, Wizard, Shielder, Healer, Warrior, Knight
+    Sword, Bow, Shield, knife, Castle, Wizard, Shielder, Healer, Warrior, Knight, Money, Nothing
 }
 
 public enum MercenaryState
@@ -39,7 +39,6 @@ public class IdleState : BaseState<Mercenary>
 
     public override void Update(Mercenary mercenary)
     {
-
         if(mercenary.weaponType == WeaponType.Shielder || mercenary.weaponType == WeaponType.Healer)
         {
             mercenary.viewDetector.FindMinTarget();
@@ -381,14 +380,6 @@ public class Mercenary : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (weaponType == WeaponType.Shielder)
-            {
-                viewDetector.FindMinTarget();
-            }
-        }
     }
 
     public void Attack()

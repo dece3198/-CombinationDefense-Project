@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: HealerB
   m_EditorClassIdentifier: 
   cardImage: {fileID: 21300000, guid: 4a92b81cce0771e4cbf14c0e270a54da, type: 3}
-  cardName: 
-  rating: 0
+  cardName: "\uC911\uAE09 \uD790\uB7EC"
+  rating: 4
   typeImage: {fileID: 1274829247, guid: 26343f575f180b54287c43a606619dcc, type: 3}
   atk: 5
   hp: 30
   def: 4
   prefab: {fileID: 1463429937619088607, guid: 98ae7d56be2c33743b31fe112ff99aa8, type: 3}
   nextCard: {fileID: 0}
-  ratingColor: {r: 0, g: 0, b: 0, a: 0}
+  ratingColor: {r: 0.56078434, g: 0.20392157, b: 0.8117647, a: 1}
   type: 7
   cardType: 0
   gold: 0
