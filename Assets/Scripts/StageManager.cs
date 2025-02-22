@@ -7,6 +7,7 @@ public class StageManager : MonoBehaviour
     public static StageManager instance;
     public StageSlot curStage;
     public int curCount = 0;
+    public StageSlot[] stages;
     [SerializeField] private GameObject clear;
     [SerializeField] private GameObject[] stars;
     [SerializeField] private Slot slot;
@@ -40,7 +41,6 @@ public class StageManager : MonoBehaviour
         else if(castle.Hp == castle.maxHp)
         {
             curStage.star = 3;
-            curStage.isStage = true;
         }
         else
         {
@@ -51,16 +51,17 @@ public class StageManager : MonoBehaviour
         {
             if (curStage.star == 3)
             {
-                if(curStage.isFirst)
+                if (curStage.isStage)
                 {
-                    if(curStage.isStage)
-                    {
-                        slot.gameObject.SetActive(true);
-                        slot.AddCard(curStage.stage.compensationCard);
-                        Inventory.instance.AcquireCard(curStage.stage.compensationCard);
-                        UpGradeManager.instance.AcquireCard(curStage.stage.compensationCard);
-                        curStage.isFirst = false;
-                    }
+                    slot.gameObject.SetActive(true);
+                    slot.AddCard(curStage.stage.compensationCard);
+                    Inventory.instance.AcquireCard(curStage.stage.compensationCard);
+                    UpGradeManager.instance.AcquireCard(curStage.stage.compensationCard);
+                    curStage.isStage = false;
+                }
+                else
+                {
+                    slot.gameObject.SetActive(false);
                 }
             }
             else
@@ -73,13 +74,18 @@ public class StageManager : MonoBehaviour
             slot.gameObject.SetActive(false);
         }
 
+        if(curStage.isFirst)
+        {
+            GameManager.instance.clearCount++;
+            curStage.isFirst = false;
+        }
+
         castle.Hp = castle.maxHp;
         goldText.text = curStage.stage.money.ToString() + "¿ø";
         StartCoroutine(ResetCo());
         curStage.nextStage.gameObject.SetActive(true);
         GameManager.instance.money += curStage.stage.money;
         curCount = 0;
-        curStage.isStage = false;
     }
 
     public void CheckButton()
@@ -90,14 +96,16 @@ public class StageManager : MonoBehaviour
             stars[i].SetActive(false);
         }
 
-
-        GameManager.instance.NewGameButton();
+        GameManager.instance.ClearButton();
         GameManager.instance.GameReset();
         curStage.clear.SetActive(true);
         clear.SetActive(false);
-
-
+        if(curStage.compensation != null)
+        {
+            curStage.compensation.gameObject.SetActive(false);
+        }
         curStage = null;
+        GameManager.instance.SaveData();
     }
 
     private IEnumerator ResetCo()

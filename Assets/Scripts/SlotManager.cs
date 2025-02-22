@@ -5,7 +5,6 @@ public class SlotManager : MonoBehaviour
     public static SlotManager instance;
     public Slot[] slots;
     [SerializeField] private GameObject slotParent;
-    [SerializeField] private Card[] cards;
 
     private void Awake()
     {

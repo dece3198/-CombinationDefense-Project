@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class UpGradeManager : MonoBehaviour
 {
     public static UpGradeManager instance;
-    [SerializeField] private Card curCard;
     [SerializeField] private GameObject curobj;
+    public InventorySlot curSlot;
     public InventorySlot[] slots;
     [SerializeField] private GameObject slotParent;
     [SerializeField] private GameObject[] card;
@@ -15,7 +15,6 @@ public class UpGradeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI defText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Transform cardPos;
-    public InventorySlot curSlot;
     private bool isCard = true;
 
     private void Awake()
@@ -27,7 +26,6 @@ public class UpGradeManager : MonoBehaviour
     {
         slots = slotParent.GetComponentsInChildren<InventorySlot>();
 
-        slots[1].AddCard(PlayerCard.instance.cardList[0]);
         for(int i = 0; i < slots.Length; i++)
         {
             if (slots[i].card == null)
@@ -51,9 +49,9 @@ public class UpGradeManager : MonoBehaviour
     }
 
 
-    public void ClickCard(Card _card)
+    public void ClickCard(InventorySlot slot)
     {
-        if(curCard != null)
+        if(curSlot != null)
         {
             ClearCard();
         }
@@ -61,14 +59,14 @@ public class UpGradeManager : MonoBehaviour
 
         for(int i = 0; i < card.Length; i++)
         {
-            if (card[i].GetComponent<Mercenary>().card == _card)
+            if (card[i].GetComponent<Mercenary>().card == slot.card)
             {
                 if (isCard)
                 {
                     card[i].gameObject.SetActive(true);
                     card[i].transform.position = cardPos.position;
                     curobj = card[i];
-                    curCard = _card;
+                    curSlot = slot;
                     TextReset();
                     return;
                 }
@@ -83,18 +81,23 @@ public class UpGradeManager : MonoBehaviour
 
     public void UpButton()
     {
-        if(curCard.level >= 25)
+        if(curSlot.card.level >= 100)
         {
             return;
         }
         
-        if(GameManager.instance.money >= (curCard.level + 1))
+        if(GameManager.instance.money >= (curSlot.card.level + 1))
         {
-            curCard.atk += 1;
-            curCard.hp += 25;
-            curCard.def += 1;
-            curCard.level += 1;
-            GameManager.instance.money -= (curCard.level + 1);
+            curSlot.card.level += 1;
+            curSlot.LevelUp();
+            for(int i = 0; i < Inventory.instance.slots.Length;i++)
+            {
+                if (Inventory.instance.slots[i].card == curSlot.card)
+                {
+                    Inventory.instance.slots[i].LevelUp();
+                }
+            }
+            GameManager.instance.money -= (curSlot.card.level + 1);
             TextReset();
         }
     }
@@ -108,24 +111,24 @@ public class UpGradeManager : MonoBehaviour
         atkText.text = "";
         hpText.text = "";
         defText.text = "";
-        curCard = null;
+        curSlot = null;
         curobj = null;
         isCard = true;
     }
 
     private void TextReset()
     {
-        if (curCard.level >= 24)
+        if (curSlot.card.level >= 100)
         {
             levelText.text = "Max레벨";
         }
         else
         {
-            levelText.text = curCard.level.ToString() + "레벨\n" + "비용 : " + (curCard.level + 1).ToString() + "$";
+            levelText.text = curSlot.card.level.ToString() + "레벨\n" + "비용 : " + (curSlot.card.level + 1).ToString() + "$";
         }
 
-        atkText.text = curCard.atk.ToString() + " -> " + (curCard.atk + 1).ToString();
-        hpText.text = curCard.hp.ToString() + " -> " + (curCard.hp + 25).ToString();
-        defText.text = curCard.def.ToString() + " -> " + (curCard.def + 1).ToString();
+        atkText.text = curSlot.atk.ToString("N1") + " -> " + (curSlot.atk + 0.1).ToString("N1");
+        hpText.text = curSlot.hp.ToString("N1") + " -> " + (curSlot.hp + 1).ToString("N1");
+        defText.text = curSlot.def.ToString("N1") + " -> " + (curSlot.def + 0.1).ToString("N1");
     }
 }

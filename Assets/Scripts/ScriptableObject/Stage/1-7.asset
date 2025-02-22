@@ -15,8 +15,8 @@ MonoBehaviour:
   monsters: []
   monsterCount: 0
   startGold: 0
-  gold: 0
+  money: 0
   compensationCard: {fileID: 0}
   stageImage: {fileID: 21300000, guid: ffc06daeb02057f4da61e13b041e1872, type: 3}
-  stageText: 
+  stageText: "\uACF5\uC791\n1 - 7"
   compensation: 

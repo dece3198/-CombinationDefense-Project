@@ -1172,7 +1172,7 @@ MonoBehaviour:
   atkTarget: {fileID: 0}
   radiu: 150
   angle: 360
-  atkRadiu: 40
+  atkRadiu: 15
   atkAngle: 360
   layerMask:
     serializedVersion: 2

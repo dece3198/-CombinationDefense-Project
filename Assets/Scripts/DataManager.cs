@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,18 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public string saveName;
+    public int gold = 0;
+    public int money = 0;
+    public int crystal = 0;
+    public int clearCount = 0;
+    public bool isTimeCompensation = true;
+    public bool isFirstStage = true;
+
+    public List<int> stageStarCount;
+    public List<int> inventoryCard;
+    public List<int> playerCard;
+    public List<int> upGradeCard;
+    public List<int> cardLevel;
 }
 
 public class DataManager : MonoBehaviour
@@ -29,7 +41,7 @@ public class DataManager : MonoBehaviour
 
         path = Application.persistentDataPath + "/";
 
-        if(File.Exists(path + curData.saveName))
+        if(File.Exists(path + "GuardTheCastle"))
         {
             continueText.color = Color.white;
         }
@@ -42,7 +54,7 @@ public class DataManager : MonoBehaviour
     public void SaveData()
     {
         string data = JsonUtility.ToJson(curData);
-        File.WriteAllText(path + curData.saveName, data);
+        File.WriteAllText(path + "GuardTheCastle", data);
     }
 
     public void DeleteData(string name)
@@ -50,11 +62,11 @@ public class DataManager : MonoBehaviour
         File.Delete(path + name);
     }
 
-    public void LoadData(string name)
+    public void LoadData()
     {
-        if(File.Exists(path + name))
+        if(File.Exists(path + "GuardTheCastle"))
         {
-            string data = File.ReadAllText(path + name);
+            string data = File.ReadAllText(path + "GuardTheCastle");
             curData = JsonUtility.FromJson<PlayerData>(data);
         }
     }

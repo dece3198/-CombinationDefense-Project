@@ -13,6 +13,7 @@ public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandle
     public GameObject clear;
     private RectTransform rect;
     private Vector2 tempSize;
+    public GameObject compensation;
 
     private void Awake()
     {

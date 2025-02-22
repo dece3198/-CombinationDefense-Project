@@ -211,6 +211,7 @@ public class AttackState : BaseState<Mercenary>
     private IEnumerator WarriorCo(Mercenary mercenary)
     {
         mercenary.animator.Play("Attack");
+        mercenary.skill.Play();
         yield return new WaitForSeconds(1f);
         mercenary.viewDetector.FindRangeAttack(mercenary.atk);
     }
@@ -339,6 +340,8 @@ public class Mercenary : MonoBehaviour
     public float def;
     public float atkCool = 0;
 
+    private Queue<Color> mercenaryColor = new Queue<Color>();
+
 
     private void Awake()
     {
@@ -350,6 +353,16 @@ public class Mercenary : MonoBehaviour
         stateMachine.AddState(MercenaryState.Wlak, new WalkState());
         stateMachine.AddState(MercenaryState.Attack, new AttackState());
         stateMachine.AddState(MercenaryState.Die, new DieState());
+    }
+    private void OnEnable()
+    {
+        atk = card.atk + (card.level * 0.1f);
+        def = card.def + (card.level * 0.1f);
+        maxHp = card.hp + (card.level * 1f);
+        Hp = maxHp;
+        ChangeState(MercenaryState.Idle);
+        curLayer = gameObject.layer;
+        hpBar.value = Hp / maxHp;
     }
 
     private void Start()
@@ -364,18 +377,13 @@ public class Mercenary : MonoBehaviour
                 arrowStack.Push(_arrow);
             }
         }
+
+        for(int i = 0; i < skinned.Length; i++)
+        {
+            mercenaryColor.Enqueue(skinned[i].material.color);
+        }
     }
 
-    private void OnEnable()
-    {
-        atk = card.atk;
-        def = card.def;
-        maxHp = card.hp;
-        Hp = maxHp;
-        ChangeState(MercenaryState.Idle);
-        curLayer = gameObject.layer;
-        hpBar.value = Hp / maxHp;
-    }
 
     private void Update()
     {
@@ -460,19 +468,19 @@ public class Mercenary : MonoBehaviour
 
     private IEnumerator HitCo()
     {
-        Queue<Color> tempColor = new Queue<Color>();
-
         for(int i = 0; i < skinned.Length; i++)
         {
-            tempColor.Enqueue(skinned[i].material.color);
             skinned[i].material.color = Color.red;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         for (int i = 0; i < skinned.Length; i++)
         {
-            skinned[i].material.color = tempColor.Dequeue();
+            skinned[i].material.color = mercenaryColor.Dequeue();
         }
 
-        tempColor.Clear();
+        for (int i = 0; i < skinned.Length; i++)
+        {
+            mercenaryColor.Enqueue(skinned[i].material.color);
+        }
     }
 }

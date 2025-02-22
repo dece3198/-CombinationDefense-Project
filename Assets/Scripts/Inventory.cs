@@ -17,7 +17,6 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         slots = slotParent.GetComponentsInChildren<InventorySlot>();
-        slots[0].AddCard(PlayerCard.instance.cardList[0]);
         for(int i = 0; i < slots.Length; i++)
         {
             if (slots[i].card == null)

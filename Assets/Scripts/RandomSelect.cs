@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 
 [System.Serializable]
@@ -24,6 +25,8 @@ public class RandomSelect : MonoBehaviour
     public int total = 0;
     public SpecialCard curCard;
     [SerializeField] private GameObject randCard;
+    [SerializeField] private TextMeshProUGUI lockText;
+    [SerializeField] float magnitude;
 
     public SpecialCard RandomCardSelect()
     {
@@ -72,5 +75,25 @@ public class RandomSelect : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void lockButton()
+    {
+        StartCoroutine(LockCo());
+    }
+
+    private IEnumerator LockCo()
+    {
+        lockText.gameObject.SetActive(true);
+        float time = 0.5f;
+        Vector3 origingPos = lockText.transform.position;
+        while(time > 0)
+        {
+            time -= Time.deltaTime;
+            lockText.transform.position = Random.insideUnitSphere * magnitude + origingPos;
+            yield return null;
+        }
+        lockText.transform.position = origingPos;
+        lockText.gameObject.SetActive(false);
     }
 }

@@ -20,12 +20,13 @@ public class Magic : MonoBehaviour
 
     private void Update()
     {
-        viewDetector.FindAttackTarget();
+        //viewDetector.FindAttackTarget();
     }
 
     private IEnumerator MagicCo()
     {
-        if(viewDetector.AtkTarget != null)
+        viewDetector.FindAttackTarget();
+        if (viewDetector.AtkTarget != null)
         {
             for (int i = 0; i < count; i++)
             {

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,10 +9,18 @@ public class MenuButton : MonoBehaviour, IPointerClickHandler
     public Image image;
     public Sprite pressed;
     public Sprite button;
+    private RectTransform rect;
+    private Vector2 originScale;
 
     private void Awake()
     {
         image = GetComponent<Image>();
+    }
+
+    private void Start()
+    {
+
+        originScale = menu.transform.localScale;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -23,9 +32,22 @@ public class MenuButton : MonoBehaviour, IPointerClickHandler
                 ButtonManager.instance.curButton.image.sprite = ButtonManager.instance.curButton.button;
                 ButtonManager.instance.curButton.menu.SetActive(false);
             }
+            StartCoroutine(SizeCo());
             menu.SetActive(true);
             ButtonManager.instance.curButton = this;
             image.sprite = pressed;
         }
+    }
+
+    private IEnumerator SizeCo()
+    {
+        float time = 1;
+        while(time < 1.1)
+        {
+            time += Time.deltaTime;
+            menu.transform.localScale = originScale * time;
+            yield return null;
+        }
+        menu.transform.localScale = originScale;
     }
 }

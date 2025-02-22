@@ -16,6 +16,9 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI atkText;
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI defText;
+    public float atk = 0;
+    public float hp = 0;
+    public float def = 0;
     public GameObject checkImage;
     public bool isCheck = false;
 
@@ -26,13 +29,26 @@ public class InventorySlot : MonoBehaviour
         typeImage.sprite = card.typeImage;
         nameText.text = card.cardName;
         ratingText.text = card.rating.ToString();
-        atkText.text = card.atk.ToString();
-        hpText.text = card.hp.ToString();
-        defText.text = card.def.ToString();
         ratingImage.color = card.ratingColor;
         typeBackImage.color = card.ratingColor;
         cardBackImage.color = card.ratingColor;
+        atk = card.atk + (card.level * 0.1f);
+        hp = card.hp + (card.level * 1f);
+        def = card.def + (card.level * 0.1f);
+        atkText.text = atk.ToString();
+        hpText.text = hp.ToString();
+        defText.text = def.ToString();
         gameObject.SetActive(true);
+    }
+
+    public void LevelUp()
+    {
+        atk = card.atk + (card.level * 0.1f);
+        hp = card.hp + (card.level * 1f);
+        def = card.def + (card.level * 0.1f);
+        atkText.text = atk.ToString();
+        hpText.text = hp.ToString();
+        defText.text = def.ToString();
     }
 
     public void ClickCard()
@@ -65,7 +81,7 @@ public class InventorySlot : MonoBehaviour
             if (isCheck)
             {
                 checkImage.SetActive(true);
-                UpGradeManager.instance.ClickCard(card);
+                UpGradeManager.instance.ClickCard(this);
                 UpGradeManager.instance.curSlot = this;
             }
             else

@@ -19,6 +19,9 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
     [SerializeField] private TextMeshProUGUI defText;
     [SerializeField] private Outline Outline;
     [SerializeField] private GameObject mix;
+    [SerializeField] private float atk;
+    [SerializeField] private float hp;
+    [SerializeField] private float def;
 
     private void Awake()
     {
@@ -33,9 +36,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
         typeImage.sprite = card.typeImage;
         nameText.text = card.cardName;
         ratingText.text = card.rating.ToString();
-        atkText.text = card.atk.ToString();
-        hpText.text = card.hp.ToString();
-        defText.text = card.def.ToString();
+        atk = card.atk + (card.level * 0.1f);
+        hp = card.hp + (card.level * 1f);
+        def = card.def + (card.level * 0.1f);
+        atkText.text = atk.ToString();
+        hpText.text = hp.ToString();
+        defText.text = def.ToString();
         ratingImage.color = card.ratingColor;
         typeBackImage.color = card.ratingColor;
         cardBackImage.color = card.ratingColor;
