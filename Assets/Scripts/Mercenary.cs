@@ -129,6 +129,7 @@ public class AttackState : BaseState<Mercenary>
             case WeaponType.Knight: mercenary.StartCoroutine(KnightCo(mercenary)); break;
         }
         mercenary.agent.ResetPath();
+        //mercenary.audioSource.PlayOneShot(mercenary.audioClips[0]);
     }
 
     public override void Exit(Mercenary mercenary)
@@ -298,6 +299,8 @@ public class Mercenary : MonoBehaviour
     [SerializeField] private GameObject arrow;
     [SerializeField] private Transform arrowPos;
     [SerializeField] private SkinnedMeshRenderer[] skinned;
+    public AudioClip[] audioClips;
+    public AudioSource audioSource;
     public Transform headPos;
     private Stack<GameObject> arrowStack = new Stack<GameObject>();
 
@@ -342,13 +345,13 @@ public class Mercenary : MonoBehaviour
 
     private Queue<Color> mercenaryColor = new Queue<Color>();
 
-
     private void Awake()
     {
         stateMachine.Reset(this);
         animator = GetComponent<Animator>();
         viewDetector = GetComponent<ViewDetector>();
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
         stateMachine.AddState(MercenaryState.Idle, new IdleState());
         stateMachine.AddState(MercenaryState.Wlak, new WalkState());
         stateMachine.AddState(MercenaryState.Attack, new AttackState());
@@ -468,7 +471,8 @@ public class Mercenary : MonoBehaviour
 
     private IEnumerator HitCo()
     {
-        for(int i = 0; i < skinned.Length; i++)
+        audioSource.PlayOneShot(audioClips[0]);
+        for (int i = 0; i < skinned.Length; i++)
         {
             skinned[i].material.color = Color.red;
         }

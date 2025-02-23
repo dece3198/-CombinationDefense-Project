@@ -28,6 +28,7 @@ public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandle
             if(stage != null)
             {
                 StageMenu.instance.AddStage(this);
+                StageManager.instance.ClickSound(0);
             }
         }
     }

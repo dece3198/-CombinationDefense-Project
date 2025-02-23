@@ -16,13 +16,13 @@ MonoBehaviour:
   cardName: "\uD558\uAE09 \uAC80 \uC6A9\uBCD1"
   rating: 1
   typeImage: {fileID: 1068903411, guid: a5bdd6e5de6e6b54d9037d1e7e95f98a, type: 3}
-  atk: 6
+  atk: 2
   hp: 50
-  def: 4
+  def: 0
   prefab: {fileID: 5229591117039273765, guid: 1477df55e60a14142868621a62ad6ce7, type: 3}
   nextCard: {fileID: 11400000, guid: 3355d05e49a0bf644b7808015759208b, type: 2}
   ratingColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
   type: 0
   cardType: 0
   gold: 0
-  level: 6
+  level: 0

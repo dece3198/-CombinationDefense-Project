@@ -21,13 +21,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI crystalText;
     [SerializeField] private GameObject mainMenu;
-    private bool isTime = false;
+    public bool isTime = false;
     public bool isMix = false;
     public bool isGame = false;
+    [SerializeField] private AudioClip[] audioClips;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         instance = this;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -170,6 +173,9 @@ public class GameManager : MonoBehaviour
         MapManager.instance.animator.Play("Close");
         StageMenu.instance.menu.SetActive(false);
         gold = StageManager.instance.curStage.stage.startGold;
+        audioSource.PlayOneShot(audioClips[0]);
+        audioSource.loop = true;
+        audioSource.PlayOneShot(audioClips[1]);
     }
 
     public void NewGameButton()
@@ -178,10 +184,12 @@ public class GameManager : MonoBehaviour
         LoadData();
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(0));
+        audioSource.PlayOneShot(audioClips[0]);
     }
 
     public void ClearButton()
     {
+        audioSource.Stop();
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(0));
     }
@@ -195,6 +203,7 @@ public class GameManager : MonoBehaviour
         LoadData();
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(0));
+        audioSource.PlayOneShot(audioClips[0]);
     }
 
     public void GameReset()
@@ -248,6 +257,8 @@ public class GameManager : MonoBehaviour
             MapManager.instance.animator.Play("Open");
             yield return new WaitForSeconds(0.83f);
             MapManager.instance.map.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            MapManager.instance.map.GetComponent<AudioSource>().Play();
         }
         else
         {

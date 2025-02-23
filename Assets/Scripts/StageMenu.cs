@@ -59,5 +59,6 @@ public class StageMenu : MonoBehaviour
     public void XButton()
     {
         menu.SetActive(false);
+        StageManager.instance.ClickSound(1);
     }
 }

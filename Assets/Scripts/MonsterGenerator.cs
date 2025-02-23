@@ -74,7 +74,7 @@ public class MonsterGenerator : MonoBehaviour
         
         for(int i = 0; i < StageManager.instance.curStage.stage.monsterCount; i++)
         {
-            int rand = Random.Range(3, 10);
+            int rand = Random.Range(10, 20);
             int randCard = Random.Range(0, StageManager.instance.curStage.stage.monsters.Length);
             ExitMonster(StageManager.instance.curStage.stage.monsters[randCard]);
             yield return new WaitForSeconds(rand);

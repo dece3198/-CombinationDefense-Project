@@ -15,8 +15,8 @@ MonoBehaviour:
   monsters:
   - {fileID: 11400000, guid: bad520d6d29fc3343b42efcc61eaffa2, type: 2}
   - {fileID: 11400000, guid: 71a4152d60c0a494aa5482874deec2dd, type: 2}
-  monsterCount: 20
-  startGold: 10
+  monsterCount: 10
+  startGold: 6
   money: 50
   compensationCard: {fileID: 0}
   stageImage: {fileID: 21300000, guid: 4b06c5b577297af4dadf5884ad062437, type: 3}

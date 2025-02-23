@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
+  m_Name: Money10
+  m_EditorClassIdentifier: 
+  cardImage: {fileID: 21300000, guid: cd553f2013b40e0408b6b8038c442249, type: 3}
+  cardName: 
+  rating: 0
+  typeImage: {fileID: -697539319, guid: 26343f575f180b54287c43a606619dcc, type: 3}
+  atk: 0
+  hp: 0
+  def: 0
+  prefab: {fileID: 0}
+  nextCard: {fileID: 0}
+  ratingColor: {r: 1, g: 0.96862745, b: 0, a: 1}
+  type: 10
+  cardType: 0
+  gold: 10
+  level: 0

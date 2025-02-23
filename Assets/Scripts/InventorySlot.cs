@@ -53,6 +53,7 @@ public class InventorySlot : MonoBehaviour
 
     public void ClickCard()
     {
+        Inventory.instance.clickSound();
         if(card != null)
         {
             isCheck = !isCheck;
@@ -74,6 +75,7 @@ public class InventorySlot : MonoBehaviour
 
     public void UpGradeCardClick()
     {
+        Inventory.instance.clickSound();
         if (card != null)
         {
             isCheck = !isCheck;

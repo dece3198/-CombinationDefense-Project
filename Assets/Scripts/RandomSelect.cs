@@ -27,6 +27,8 @@ public class RandomSelect : MonoBehaviour
     [SerializeField] private GameObject randCard;
     [SerializeField] private TextMeshProUGUI lockText;
     [SerializeField] float magnitude;
+    [SerializeField] private AudioClip[] audioClips;
+    private AudioSource audioSource;
 
     public SpecialCard RandomCardSelect()
     {
@@ -45,6 +47,11 @@ public class RandomSelect : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -80,6 +87,7 @@ public class RandomSelect : MonoBehaviour
     public void lockButton()
     {
         StartCoroutine(LockCo());
+        audioSource.PlayOneShot(audioClips[0]);
     }
 
     private IEnumerator LockCo()

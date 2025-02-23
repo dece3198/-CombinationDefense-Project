@@ -960,6 +960,9 @@ MonoBehaviour:
   arrow: {fileID: 0}
   arrowPos: {fileID: 0}
   skinned: []
+  audioClips:
+  - {fileID: 8300000, guid: 138f2a67d00e1a946a35d4a3dd89317f, type: 3}
+  audioSource: {fileID: 0}
   headPos: {fileID: 2488004616063328080}
   skill: {fileID: 0}
   shield: {fileID: 1302874565995694585}

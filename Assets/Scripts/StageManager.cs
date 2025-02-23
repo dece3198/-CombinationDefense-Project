@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -13,10 +14,13 @@ public class StageManager : MonoBehaviour
     [SerializeField] private Slot slot;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private Mercenary castle;
+    [SerializeField] private AudioClip[] audioClips;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         instance = this;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -32,8 +36,10 @@ public class StageManager : MonoBehaviour
 
     private void Clear()
     {
+        audioSource.PlayOneShot(audioClips[2]);
         clear.SetActive(true);
         Time.timeScale = 1f;
+        GameManager.instance.isTime = false;
         if(castle.Hp < 50)
         {
             curStage.star = 1;
@@ -108,13 +114,20 @@ public class StageManager : MonoBehaviour
         GameManager.instance.SaveData();
     }
 
+    public void ClickSound(int number)
+    {
+        audioSource.PlayOneShot(audioClips[number]);
+    }
+
     private IEnumerator ResetCo()
     {
+        yield return new WaitForSeconds(1.5f);
         for(int i = 0; i < curStage.star; i++)
         {
+            audioSource.PlayOneShot(audioClips[3]);
             stars[i].SetActive(true);
             stars[i].GetComponent<Animator>().SetBool("Nothing", true);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
         }
     }
 }

@@ -8,10 +8,13 @@ public class Inventory : MonoBehaviour
     [SerializeField] private InventorySlot[] playerSlot;
     [SerializeField] private Transform[] slotPos;
     [SerializeField] private GameObject[] mercenary;
+    [SerializeField] private AudioClip[] audioClips;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         instance = this;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -77,5 +80,10 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void clickSound()
+    {
+        audioSource.PlayOneShot(audioClips[0]);
     }
 }

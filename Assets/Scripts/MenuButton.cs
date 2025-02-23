@@ -35,6 +35,7 @@ public class MenuButton : MonoBehaviour, IPointerClickHandler
             StartCoroutine(SizeCo());
             menu.SetActive(true);
             ButtonManager.instance.curButton = this;
+            ButtonManager.instance.ButtonSound();
             image.sprite = pressed;
         }
     }
