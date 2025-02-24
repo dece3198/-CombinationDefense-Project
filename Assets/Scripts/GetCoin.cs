@@ -13,7 +13,7 @@ public class GetCoin : MonoBehaviour
         {
             if(startPos != null)
             {
-                ExplosionCoin(startPos.position, target.position, 200);
+                ExplosionCoin(startPos.position, target.position, 250);
             }
         }
     }
@@ -22,7 +22,7 @@ public class GetCoin : MonoBehaviour
     {
         transform.position = from;
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(from + Random.insideUnitCircle * range, 0.25f).SetEase(Ease.OutCubic));
+        sequence.Append(transform.DOMove(from + Random.insideUnitCircle * range, 0.5f).SetEase(Ease.OutCubic));
         sequence.Append(transform.DOMove(_target, 1f).SetEase(Ease.OutCubic));
         sequence.AppendCallback(() => { gameObject.SetActive(false); });
     }

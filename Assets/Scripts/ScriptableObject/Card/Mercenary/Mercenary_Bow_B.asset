@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
+  m_Name: Mercenary_Bow_B
+  m_EditorClassIdentifier: 
+  cardImage: {fileID: 21300000, guid: 349071338f9cf1c458cfd7591e2be179, type: 3}
+  cardName: "\uC911\uAE09 \uD65C \uC6A9\uBCD1"
+  rating: 2
+  typeImage: {fileID: 1043191592, guid: a5bdd6e5de6e6b54d9037d1e7e95f98a, type: 3}
+  atk: 2
+  hp: 15
+  def: 1
+  prefab: {fileID: 1781087197561811259, guid: 9eed55e7e8ad6f5478a3b40ae1d1bb3f, type: 3}
+  nextCard: {fileID: 11400000, guid: b0c9e2698f0890b47a64fa8acd279389, type: 2}
+  ratingColor: {r: 0.5707547, g: 1, b: 0.5707547, a: 1}
+  type: 1
+  cardType: 0
+  gold: 0
+  level: 0

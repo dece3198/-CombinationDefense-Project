@@ -8,7 +8,6 @@ public class MonsterGenerator : MonoBehaviour
     [SerializeField] private Card[] monsters;
     [SerializeField] private List<GameObject> monsterList = new List<GameObject>();
 
-
     private void Awake()
     {
         instance = this;
@@ -29,7 +28,7 @@ public class MonsterGenerator : MonoBehaviour
     public void ExitMonster(Card card)
     {
         int count = 0;
-
+        
         for (int i = 0; i < monsterList.Count; i++)
         {
             if (card == monsterList[i].GetComponent<Mercenary>().card)
@@ -57,21 +56,14 @@ public class MonsterGenerator : MonoBehaviour
 
     public void EnterMonster(GameObject monster)
     {
-        GameManager.instance.monster.Remove(monster);
         monster.transform.position = transform.position;
         monsterList.Add(monster);
         monster.SetActive(false);
         StageManager.instance.curCount++;
     }
 
-    public void StartGame()
+    public IEnumerator MonsterCo()
     {
-        StartCoroutine(MonsterCo());
-    }
-
-    private IEnumerator MonsterCo()
-    {
-        
         for(int i = 0; i < StageManager.instance.curStage.stage.monsterCount; i++)
         {
             int rand = Random.Range(10, 20);

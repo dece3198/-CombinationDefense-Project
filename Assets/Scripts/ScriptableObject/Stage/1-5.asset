@@ -19,6 +19,7 @@ MonoBehaviour:
   monsterCount: 10
   startGold: 7
   money: 100
+  stageNumber: 15
   compensationCard: {fileID: 0}
   stageImage: {fileID: 21300000, guid: 1d05ec143031f474eaad5a4092851763, type: 3}
   stageText: "\uBC31\uC791\n1 - 5"

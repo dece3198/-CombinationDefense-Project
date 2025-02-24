@@ -129,7 +129,6 @@ public class AttackState : BaseState<Mercenary>
             case WeaponType.Knight: mercenary.StartCoroutine(KnightCo(mercenary)); break;
         }
         mercenary.agent.ResetPath();
-        //mercenary.audioSource.PlayOneShot(mercenary.audioClips[0]);
     }
 
     public override void Exit(Mercenary mercenary)
@@ -234,13 +233,6 @@ public class DieState : BaseState<Mercenary>
     public override void Enter(Mercenary mercenary)
     {
         mercenary.agent.ResetPath();
-        if(mercenary.card.type == WeaponType.Castle)
-        {
-            GameManager.instance.GameReset();
-            mercenary.Hp = mercenary.maxHp;
-            return;
-        }
-
         if(mercenary.mecenaryType == MecenaryType.Monster)
         {
             GameManager.instance.gold += mercenary.card.gold;
@@ -266,10 +258,12 @@ public class DieState : BaseState<Mercenary>
         mercenary.hpBar.value = mercenary.Hp / mercenary.maxHp;
         if (mercenary.mecenaryType == MecenaryType.Mercenary)
         {
+            GameManager.instance.mecrenary.Remove(mercenary.gameObject);
             Generator.instance.EnterCard(mercenary.gameObject);
         }
         else if (mercenary.mecenaryType == MecenaryType.Monster)
         {
+            GameManager.instance.monster.Remove(mercenary.gameObject);
             MonsterGenerator.instance.EnterMonster(mercenary.gameObject);
         }
     }
@@ -320,7 +314,10 @@ public class Mercenary : MonoBehaviour
             hp = value; 
             if(hp <= 0)
             {
-                ChangeState(MercenaryState.Die);
+                if(weaponType != WeaponType.Castle)
+                {
+                    ChangeState(MercenaryState.Die);
+                }
             }
         }
     }
@@ -471,7 +468,11 @@ public class Mercenary : MonoBehaviour
 
     private IEnumerator HitCo()
     {
-        audioSource.PlayOneShot(audioClips[0]);
+        if(weaponType != WeaponType.Castle)
+        {
+            audioSource.PlayOneShot(audioClips[0]);
+        }
+
         for (int i = 0; i < skinned.Length; i++)
         {
             skinned[i].material.color = Color.red;

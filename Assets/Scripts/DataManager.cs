@@ -12,6 +12,7 @@ public class PlayerData
     public int clearCount = 0;
     public bool isTimeCompensation = true;
     public bool isFirstStage = true;
+    public bool isMix = false;
 
     public List<int> stageStarCount;
     public List<int> inventoryCard;

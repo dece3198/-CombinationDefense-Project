@@ -29,6 +29,8 @@ public class RandomSelect : MonoBehaviour
     [SerializeField] float magnitude;
     [SerializeField] private AudioClip[] audioClips;
     private AudioSource audioSource;
+    [SerializeField] private int price = 0;
+    [SerializeField] private string lockstr;
 
     public SpecialCard RandomCardSelect()
     {
@@ -64,28 +66,35 @@ public class RandomSelect : MonoBehaviour
 
     public void SelectCard()
     {
-        curCard = RandomCardSelect();
-        randCard.SetActive(true);
-        RandomCard.instance.AddCard(curCard.card);
-        if(curCard.card.type == WeaponType.Money || curCard.card.type == WeaponType.Nothing)
+        if(GameManager.instance.crystal > price)
         {
+            GameManager.instance.crystal -= price;
+            curCard = RandomCardSelect();
+            randCard.SetActive(true);
+            RandomCard.instance.AddCard(curCard.card);
+            if (curCard.card.type != WeaponType.Money)
+            {
+                for (int i = 0; i < cardList.Count; i++)
+                {
+                    if (cardList[i].card == curCard.card)
+                    {
 
+                        cardList.RemoveAt(i);
+                    }
+                }
+            }
         }
         else
         {
-            for(int i = 0; i < cardList.Count; i++)
-            {
-                if (cardList[i].card == curCard.card)
-                {
-                    
-                    cardList.RemoveAt(i);
-                }
-            }
+            lockText.text = "크리스탈이 부족합니다.";
+            StartCoroutine(LockCo());
+            audioSource.PlayOneShot(audioClips[0]);
         }
     }
 
     public void lockButton()
     {
+        lockText.text = lockstr;
         StartCoroutine(LockCo());
         audioSource.PlayOneShot(audioClips[0]);
     }

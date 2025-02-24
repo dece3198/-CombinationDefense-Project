@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public bool isGame = false;
     [SerializeField] private AudioClip[] audioClips;
     private AudioSource audioSource;
+    [SerializeField] private GameObject newGameButton;
 
     private void Awake()
     {
@@ -35,6 +36,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (File.Exists(DataManager.instance.path + "GuardTheCastle"))
+        {
+            newGameButton.SetActive(false);
+        }
         InvokeRepeating("CheckTime", 0, 60f);
     }
 
@@ -50,6 +55,7 @@ public class GameManager : MonoBehaviour
         DataManager.instance.curData.money = money;
         DataManager.instance.curData.crystal = crystal;
         DataManager.instance.curData.clearCount = clearCount;
+        DataManager.instance.curData.isMix = isMix;
 
         DataManager.instance.curData.inventoryCard.Clear();
         DataManager.instance.curData.playerCard.Clear();
@@ -96,6 +102,8 @@ public class GameManager : MonoBehaviour
         gold = DataManager.instance.curData.gold;
         money = DataManager.instance.curData.money;
         crystal = DataManager.instance.curData.crystal;
+        isMix = DataManager.instance.curData.isMix;
+
         for(int i = 0; i < DataManager.instance.curData.clearCount; i++)
         {
             StageManager.instance.stages[i].gameObject.SetActive(true);
@@ -173,9 +181,8 @@ public class GameManager : MonoBehaviour
         MapManager.instance.animator.Play("Close");
         StageMenu.instance.menu.SetActive(false);
         gold = StageManager.instance.curStage.stage.startGold;
+        StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
         audioSource.PlayOneShot(audioClips[0]);
-        audioSource.loop = true;
-        audioSource.PlayOneShot(audioClips[1]);
     }
 
     public void NewGameButton()
@@ -184,7 +191,7 @@ public class GameManager : MonoBehaviour
         LoadData();
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(0));
-        audioSource.PlayOneShot(audioClips[0]);
+        StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
     }
 
     public void ClearButton()
@@ -203,13 +210,14 @@ public class GameManager : MonoBehaviour
         LoadData();
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(0));
-        audioSource.PlayOneShot(audioClips[0]);
+        StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
     }
 
     public void GameReset()
     {
         isGame = false;
-        for(int i = 0; i < monster.Count; i++)
+
+        for (int i = 0; i < monster.Count; i++)
         {
             MonsterGenerator.instance.EnterMonster(monster[i]);
         }
@@ -226,6 +234,9 @@ public class GameManager : MonoBehaviour
                 SlotManager.instance.slots[k].ClearSlot();
             }
         }
+
+        monster.Clear();
+        mecrenary.Clear();
     }
 
     public void SpeedUp()
@@ -262,7 +273,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            MonsterGenerator.instance.StartGame();
+            StageManager.instance.StartCo();
             MapManager.instance.animator.SetBool("Close", true);
             MapManager.instance.mapParent.SetActive(false);
         }

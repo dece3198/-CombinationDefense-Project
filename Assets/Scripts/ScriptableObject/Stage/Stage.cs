@@ -7,6 +7,7 @@ public class Stage : ScriptableObject
     public int monsterCount;
     public int startGold;
     public int money;
+    public int stageNumber;
     public Card compensationCard;
     public Sprite stageImage;
     [SerializeField , TextArea(2,2)]

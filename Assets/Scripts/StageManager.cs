@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -10,12 +9,15 @@ public class StageManager : MonoBehaviour
     public int curCount = 0;
     public StageSlot[] stages;
     [SerializeField] private GameObject clear;
+    [SerializeField] private GameObject fail;
     [SerializeField] private GameObject[] stars;
     [SerializeField] private Slot slot;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private Mercenary castle;
-    [SerializeField] private AudioClip[] audioClips;
-    private AudioSource audioSource;
+    public AudioClip[] audioClips;
+    public AudioSource audioSource;
+    public IEnumerator monsterCo;
+    private bool isClear = true;
 
     private void Awake()
     {
@@ -30,6 +32,11 @@ public class StageManager : MonoBehaviour
             if(curStage.stage.monsterCount == curCount)
             {
                 Clear();
+            }
+
+            if(castle.Hp <= 0)
+            {
+                fail.SetActive(true);
             }
         }
     }
@@ -53,32 +60,6 @@ public class StageManager : MonoBehaviour
             curStage.star = 2;
         }
 
-        if (curStage.stage.compensationCard != null)
-        {
-            if (curStage.star == 3)
-            {
-                if (curStage.isStage)
-                {
-                    slot.gameObject.SetActive(true);
-                    slot.AddCard(curStage.stage.compensationCard);
-                    Inventory.instance.AcquireCard(curStage.stage.compensationCard);
-                    UpGradeManager.instance.AcquireCard(curStage.stage.compensationCard);
-                    curStage.isStage = false;
-                }
-                else
-                {
-                    slot.gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                slot.gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            slot.gameObject.SetActive(false);
-        }
 
         if(curStage.isFirst)
         {
@@ -92,26 +73,67 @@ public class StageManager : MonoBehaviour
         curStage.nextStage.gameObject.SetActive(true);
         GameManager.instance.money += curStage.stage.money;
         curCount = 0;
+
+        if (curStage.star == 3)
+        {
+            switch(curStage.stage.stageNumber)
+            {
+                case 14 : GameManager.instance.isMix = true; break;
+            }
+
+
+            if (curStage.stage.compensationCard != null)
+            {
+                if (curStage.isStage)
+                {
+                    slot.gameObject.SetActive(true);
+                    slot.AddCard(curStage.stage.compensationCard);
+                    Inventory.instance.AcquireCard(curStage.stage.compensationCard);
+                    UpGradeManager.instance.AcquireCard(curStage.stage.compensationCard);
+                    curStage.isStage = false;
+                    return;
+                }
+            }
+        }
+
+        slot.gameObject.SetActive(false);
     }
 
     public void CheckButton()
     {
-        for (int i = 0; i < stars.Length; i++)
+        if(isClear)
         {
-            stars[i].GetComponent<Animator>().SetBool("Nothing", false);
-            stars[i].SetActive(false);
-        }
+            for (int i = 0; i < stars.Length; i++)
+            {
+                stars[i].GetComponent<Animator>().SetBool("Nothing", false);
+                stars[i].SetActive(false);
+            }
 
-        GameManager.instance.ClearButton();
-        GameManager.instance.GameReset();
-        curStage.clear.SetActive(true);
-        clear.SetActive(false);
-        if(curStage.compensation != null)
-        {
-            curStage.compensation.gameObject.SetActive(false);
+            GameManager.instance.ClearButton();
+            GameManager.instance.GameReset();
+            curStage.clear.SetActive(true);
+            clear.SetActive(false);
+            if (curStage.compensation != null)
+            {
+                curStage.compensation.gameObject.SetActive(false);
+            }
+            curStage = null;
+            GameManager.instance.SaveData();
         }
+    }
+
+    public void FailCheckButton()
+    {
+        GameManager.instance.GameReset();
+        GameManager.instance.ClearButton();
+        castle.Hp = castle.maxHp;
+        castle.hpBar.value = castle.hp / castle.maxHp;
+        StopCo();
+        Time.timeScale = 1f;
+        GameManager.instance.isTime = false;
+        fail.SetActive(false);
+        curCount = 0;
         curStage = null;
-        GameManager.instance.SaveData();
     }
 
     public void ClickSound(int number)
@@ -119,8 +141,21 @@ public class StageManager : MonoBehaviour
         audioSource.PlayOneShot(audioClips[number]);
     }
 
+    public void StartCo()
+    {
+        monsterCo = MonsterGenerator.instance.MonsterCo();
+        StartCoroutine(monsterCo);
+    }
+
+    public void StopCo()
+    {
+        StopCoroutine(monsterCo);
+    }
+
+
     private IEnumerator ResetCo()
     {
+        isClear = false;
         yield return new WaitForSeconds(1.5f);
         for(int i = 0; i < curStage.star; i++)
         {
@@ -129,5 +164,6 @@ public class StageManager : MonoBehaviour
             stars[i].GetComponent<Animator>().SetBool("Nothing", true);
             yield return new WaitForSeconds(1f);
         }
+        isClear = true;
     }
 }

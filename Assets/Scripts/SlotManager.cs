@@ -5,10 +5,13 @@ public class SlotManager : MonoBehaviour
     public static SlotManager instance;
     public Slot[] slots;
     [SerializeField] private GameObject slotParent;
+    public AudioClip[] audioClips;
+    public AudioSource audioSource;
 
     private void Awake()
     {
         instance = this;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()

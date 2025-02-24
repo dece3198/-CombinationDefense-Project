@@ -8,6 +8,7 @@ public class Arrow : MonoBehaviour
     private Rigidbody rigid;
     [SerializeField] private float speed;
     private IEnumerator arrowCo;
+    private bool isArrow = false;
 
     private void Awake()
     {
@@ -18,6 +19,8 @@ public class Arrow : MonoBehaviour
     {
         if(target != null)
         {
+            rigid.isKinematic = true;
+            transform.LookAt(target.GetComponent<Mercenary>().headPos.position);
             arrowCo = ArrowCo();
             StartCoroutine(arrowCo);
         }
@@ -27,8 +30,11 @@ public class Arrow : MonoBehaviour
     {
         if(target != null)
         {
-            transform.LookAt(target.GetComponent<Mercenary>().headPos.position);
-            rigid.linearVelocity = transform.forward * speed;
+            if(isArrow)
+            {
+                transform.LookAt(target.GetComponent<Mercenary>().headPos.position);
+                rigid.linearVelocity = transform.forward * speed;
+            }
         }
     }
 
@@ -40,6 +46,7 @@ public class Arrow : MonoBehaviour
             {
                 if (other.GetComponent<Mercenary>().mecenaryType == MecenaryType.Monster)
                 {
+                    isArrow = false;
                     other.GetComponent<Mercenary>().TakeHit(mercenary.atk);
                     StopCoroutine(arrowCo);
                     target = null;
@@ -50,6 +57,7 @@ public class Arrow : MonoBehaviour
             {
                 if (other.GetComponent<Mercenary>().mecenaryType == MecenaryType.Mercenary)
                 {
+                    isArrow = false;
                     other.GetComponent<Mercenary>().TakeHit(mercenary.atk);
                     StopCoroutine(arrowCo);
                     target = null;
@@ -61,6 +69,9 @@ public class Arrow : MonoBehaviour
 
     private IEnumerator ArrowCo()
     {
+        yield return new WaitForSeconds(0.1f);
+        isArrow = true;
+        rigid.isKinematic = false;
         yield return new WaitForSeconds(3f);
         target = null;
         mercenary.EnterArrow(gameObject);

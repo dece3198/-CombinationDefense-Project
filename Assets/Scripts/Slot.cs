@@ -118,6 +118,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
             {
                 if(GameManager.instance.isMix)
                 {
+                    SlotManager.instance.audioSource.PlayOneShot(SlotManager.instance.audioClips[0]);
                     AddCard(tempCard.nextCard);
                     mix.transform.position = transform.position;
                     mix.GetComponent<Animator>().Play("MixAni");
