@@ -378,7 +378,7 @@ Transform:
   m_GameObject: {fileID: 5777440393945698021}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.319, z: 0}
+  m_LocalPosition: {x: 0, y: 1.166, z: 0}
   m_LocalScale: {x: 1.2499999, y: 1.25, z: 1.2499999}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -653,7 +653,7 @@ RectTransform:
   m_Father: {fileID: 1848085886681602029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 1.5, y: 0}
   m_SizeDelta: {x: 3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1006,6 +1006,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2708e5c71136b7a43b3f96da7d5f80c2, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 1188783085890472758, guid: 2708e5c71136b7a43b3f96da7d5f80c2, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1204,7 +1208,8 @@ MonoBehaviour:
   - {fileID: 8847895814062690911}
   - {fileID: 1438869073102678417}
   audioClips:
-  - {fileID: 8300000, guid: 138f2a67d00e1a946a35d4a3dd89317f, type: 3}
+  - {fileID: 8300000, guid: 07a8f875da8598845a92a6a42e246ee9, type: 3}
+  - {fileID: 8300000, guid: c10f119c44dfb2c45b90b841438f4c09, type: 3}
   audioSource: {fileID: 0}
   headPos: {fileID: 7200709913304256419}
   skill: {fileID: 0}
@@ -1279,10 +1284,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.8
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!82 &6462196244746086347
 AudioSource:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class StageManager : MonoBehaviour
     public StageSlot curStage;
     public int curCount = 0;
     public StageSlot[] stages;
+    public StageSlot[] bossStages;
     [SerializeField] private GameObject clear;
     [SerializeField] private GameObject fail;
     [SerializeField] private GameObject[] stars;
@@ -46,31 +47,50 @@ public class StageManager : MonoBehaviour
         audioSource.PlayOneShot(audioClips[2]);
         clear.SetActive(true);
         Time.timeScale = 1f;
-        GameManager.instance.isTime = false;
-        if(castle.Hp < 50)
-        {
-            curStage.star = 1;
-        }
-        else if(castle.Hp == castle.maxHp)
+        SlotManager.instance.isTime = false;
+
+        if(castle.Hp == castle.maxHp)
         {
             curStage.star = 3;
         }
-        else
+        else if(castle.Hp >= 25 || castle.hp < castle.maxHp)
         {
             curStage.star = 2;
+        }
+        else if(castle.Hp < 25)
+        {
+            curStage.star = 1;
         }
 
 
         if(curStage.isFirst)
         {
-            GameManager.instance.clearCount++;
+            if(curStage.stage.stageType == StageType.Normal)
+            {
+                DataManager.instance.curData.clearCount++;
+            }
+            else
+            {
+                DataManager.instance.curData.bossCount++;
+            }
             curStage.isFirst = false;
         }
 
         castle.Hp = castle.maxHp;
-        goldText.text = curStage.stage.money.ToString() + "원";
+        if(curStage.stage.money == 0)
+        {
+            goldText.text = curStage.stage.crystal.ToString() + "크리스탈";
+        }
+        else
+        {
+            goldText.text = curStage.stage.money.ToString() + "원";
+        }
         StartCoroutine(ResetCo());
         curStage.nextStage.gameObject.SetActive(true);
+        if(curStage.bossStage != null)
+        {
+            curStage.bossStage.gameObject.SetActive(true);
+        }
         GameManager.instance.money += curStage.stage.money;
         curCount = 0;
 
@@ -78,21 +98,22 @@ public class StageManager : MonoBehaviour
         {
             switch(curStage.stage.stageNumber)
             {
-                case 14 : GameManager.instance.isMix = true; break;
+                case 13 : GameManager.instance.isMix = true; break;
             }
 
-
-            if (curStage.stage.compensationCard != null)
+            if (curStage.isStage)
             {
-                if (curStage.isStage)
+                slot.gameObject.SetActive(false);
+                if (curStage.stage.compensationCard != null)
                 {
                     slot.gameObject.SetActive(true);
                     slot.AddCard(curStage.stage.compensationCard);
                     Inventory.instance.AcquireCard(curStage.stage.compensationCard);
                     UpGradeManager.instance.AcquireCard(curStage.stage.compensationCard);
-                    curStage.isStage = false;
-                    return;
                 }
+                GameManager.instance.crystal += curStage.stage.crystal;
+                curStage.isStage = false;
+                return;
             }
         }
 
@@ -111,6 +132,8 @@ public class StageManager : MonoBehaviour
 
             GameManager.instance.ClearButton();
             GameManager.instance.GameReset();
+            SlotManager.instance.isTime = true;
+            SlotManager.instance.SpeedUp();
             curStage.clear.SetActive(true);
             clear.SetActive(false);
             if (curStage.compensation != null)
@@ -126,11 +149,11 @@ public class StageManager : MonoBehaviour
     {
         GameManager.instance.GameReset();
         GameManager.instance.ClearButton();
+        SlotManager.instance.isTime = true;
+        SlotManager.instance.SpeedUp();
         castle.Hp = castle.maxHp;
         castle.hpBar.value = castle.hp / castle.maxHp;
         StopCo();
-        Time.timeScale = 1f;
-        GameManager.instance.isTime = false;
         fail.SetActive(false);
         curCount = 0;
         curStage = null;

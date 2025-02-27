@@ -17,7 +17,7 @@ MonoBehaviour:
   rating: 1
   typeImage: {fileID: 1043191592, guid: a5bdd6e5de6e6b54d9037d1e7e95f98a, type: 3}
   atk: 1
-  hp: 30
+  hp: 20
   def: 0
   prefab: {fileID: 207178610578929925, guid: 7fd3d36f8adbc9f4a8c1944149abec37, type: 3}
   nextCard: {fileID: 0}

@@ -5,7 +5,7 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
     public InventorySlot[] slots;
     [SerializeField] private GameObject slotParent;
-    [SerializeField] private InventorySlot[] playerSlot;
+    public InventorySlot[] playerSlot;
     [SerializeField] private Transform[] slotPos;
     [SerializeField] private GameObject[] mercenary;
     [SerializeField] private AudioClip[] audioClips;

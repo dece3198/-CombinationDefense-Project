@@ -40,29 +40,15 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<Mercenary>() != null)
+        if (other.GetComponent<Mercenary>() != null)
         {
-            if(mercenary.mecenaryType == MecenaryType.Mercenary)
+            if(other.transform.tag != mercenary.transform.tag)
             {
-                if (other.GetComponent<Mercenary>().mecenaryType == MecenaryType.Monster)
-                {
-                    isArrow = false;
-                    other.GetComponent<Mercenary>().TakeHit(mercenary.atk);
-                    StopCoroutine(arrowCo);
-                    target = null;
-                    mercenary.EnterArrow(gameObject);
-                }
-            }
-            else
-            {
-                if (other.GetComponent<Mercenary>().mecenaryType == MecenaryType.Mercenary)
-                {
-                    isArrow = false;
-                    other.GetComponent<Mercenary>().TakeHit(mercenary.atk);
-                    StopCoroutine(arrowCo);
-                    target = null;
-                    mercenary.EnterArrow(gameObject);
-                }
+                isArrow = false;
+                other.GetComponent<Mercenary>().TakeHit(mercenary.atk, mercenary);
+                StopCoroutine(arrowCo);
+                target = null;
+                mercenary.EnterArrow(gameObject);
             }
         }
     }

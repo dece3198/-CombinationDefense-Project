@@ -1,23 +1,28 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private AudioMixer audioMixer;
+    public static SoundManager instance;
+    public AudioMixer audioMixer;
     [SerializeField] private GameObject soundObj;
+    [SerializeField] private GameObject delete;
     [SerializeField] private GameObject bgVolume;
     [SerializeField] private GameObject sfxVolume;
+    [SerializeField] private Slider bgBar;
+    [SerializeField] private Slider sfxBar;
     private bool isSound = false;
     private bool isBg = false;
     private bool isSFX = false;
-    [SerializeField] private float bgValue = 0;
-    private float sfxValue = 0;
+    public float bgValue = 0;
+    public float sfxValue = 0;
+    private bool isDelete = false;
 
-    private void Start()
+    private void Awake()
     {
-        BGSoundVolume(0.2f);
-        SFXSoundVolume(0.2f);
+        instance = this;
     }
 
     private void Update()
@@ -26,6 +31,14 @@ public class SoundManager : MonoBehaviour
         {
             SoundSetting();
         }
+    }
+
+    public void ResetSlider()
+    {
+        audioMixer.SetFloat("BGSound", bgValue);
+        audioMixer.SetFloat("SFXVolume", sfxValue);
+        bgBar.value = Mathf.Pow(10, bgValue / 20) / 1;
+        sfxBar.value = Mathf.Pow(10, sfxValue / 20) / 1;
     }
 
     public void BGSoundVolume(float val)
@@ -91,6 +104,19 @@ public class SoundManager : MonoBehaviour
         {
             sfxVolume.SetActive(false);
             audioMixer.SetFloat("SFXVolume", sfxValue);
+        }
+    }
+
+    public void DeleteButton()
+    {
+        isDelete = !isDelete;
+        if(isDelete)
+        {
+            delete.SetActive(true);
+        }
+        else
+        {
+            delete.SetActive(false);
         }
     }
 

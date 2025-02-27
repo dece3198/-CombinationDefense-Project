@@ -9,7 +9,6 @@ public class MenuButton : MonoBehaviour, IPointerClickHandler
     public Image image;
     public Sprite pressed;
     public Sprite button;
-    private RectTransform rect;
     private Vector2 originScale;
 
     private void Awake()
@@ -19,7 +18,6 @@ public class MenuButton : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-
         originScale = menu.transform.localScale;
     }
 

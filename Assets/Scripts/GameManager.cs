@@ -14,14 +14,12 @@ public class GameManager : MonoBehaviour
     public int money = 0;
     public int crystal = 0;
     public int curStageCount = 0;
-    public int clearCount = 0;
     public List<GameObject> monster = new List<GameObject>();
     public List<GameObject> mecrenary = new List<GameObject>();
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI crystalText;
     [SerializeField] private GameObject mainMenu;
-    public bool isTime = false;
     public bool isMix = false;
     public bool isGame = false;
     [SerializeField] private AudioClip[] audioClips;
@@ -39,7 +37,9 @@ public class GameManager : MonoBehaviour
         if (File.Exists(DataManager.instance.path + "GuardTheCastle"))
         {
             newGameButton.SetActive(false);
+            LoadData();
         }
+
         InvokeRepeating("CheckTime", 0, 60f);
     }
 
@@ -47,6 +47,12 @@ public class GameManager : MonoBehaviour
     {
         goldText.text = gold.ToString();
         moneyText.text = money.ToString();
+        crystalText.text = crystal.ToString();
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Time.timeScale = 4;
+        }
+
     }
 
     public void SaveData()
@@ -54,15 +60,19 @@ public class GameManager : MonoBehaviour
         DataManager.instance.curData.gold = gold;
         DataManager.instance.curData.money = money;
         DataManager.instance.curData.crystal = crystal;
-        DataManager.instance.curData.clearCount = clearCount;
         DataManager.instance.curData.isMix = isMix;
+        DataManager.instance.curData.BGVolume = SoundManager.instance.bgValue;
+        DataManager.instance.curData.SFXVolume = SoundManager.instance.sfxValue;
 
         DataManager.instance.curData.inventoryCard.Clear();
         DataManager.instance.curData.playerCard.Clear();
         DataManager.instance.curData.upGradeCard.Clear();
         DataManager.instance.curData.cardLevel.Clear();
         DataManager.instance.curData.stageStarCount.Clear();
+        DataManager.instance.curData.bossStarCount.Clear();
 
+
+        //인벤토리 카드 저장
         for (int i = 0; i < Inventory.instance.slots.Length; i++)
         {
             if(Inventory.instance.slots[i].card != null)
@@ -71,11 +81,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //현재 장착중인 카드 저장
         for(int i = 0; i < PlayerCard.instance.cardList.Count; i++)
         {
             DataManager.instance.curData.playerCard.Add(PlayerCard.instance.cardDic[PlayerCard.instance.cardList[i]]);
         }
 
+        //업그레이드 카드 저장
         for(int i = 0; i < UpGradeManager.instance.slots.Length; i++)
         {
             if (UpGradeManager.instance.slots[i].card != null)
@@ -85,11 +97,21 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //현재 클리어한 스테이지의 별개수를 저장
         for(int i = 0; i < StageManager.instance.stages.Length; i++)
         {
             if (StageManager.instance.stages[i].star > 0)
             {
                 DataManager.instance.curData.stageStarCount.Add(StageManager.instance.stages[i].star);
+            }
+        }
+
+        //현재 클리어한 보스스테이지의 별개수를 저장
+        for(int i = 0; i <StageManager.instance.bossStages.Length;i++)
+        {
+            if (StageManager.instance.bossStages[i].star > 0)
+            {
+                DataManager.instance.curData.bossStarCount.Add(StageManager.instance.bossStages[i].star);
             }
         }
 
@@ -103,25 +125,41 @@ public class GameManager : MonoBehaviour
         money = DataManager.instance.curData.money;
         crystal = DataManager.instance.curData.crystal;
         isMix = DataManager.instance.curData.isMix;
+        SoundManager.instance.bgValue = DataManager.instance.curData.BGVolume;
+        SoundManager.instance.sfxValue = DataManager.instance.curData.SFXVolume;
 
-        for(int i = 0; i < DataManager.instance.curData.clearCount; i++)
+        SoundManager.instance.ResetSlider();
+
+        //클러이한 스테이지 로드
+        for (int i = 0; i < DataManager.instance.curData.clearCount; i++)
         {
             StageManager.instance.stages[i].gameObject.SetActive(true);
             StageManager.instance.stages[i + 1].gameObject.SetActive(true);
             StageManager.instance.stages[i].clear.SetActive(true);
         }
 
+        //클리어한 보스스테이지 로드
+        for(int i = 0; i < DataManager.instance.curData.bossCount; i++)
+        {
+            StageManager.instance.bossStages[i].gameObject.SetActive(true);
+            StageManager.instance.bossStages[i].clear.SetActive(true);
+        }
+
+        //저장한 카드 인벤토리에 로드
         for(int i = 0; i < DataManager.instance.curData.inventoryCard.Count; i++)
         {
             Inventory.instance.AcquireCard(PlayerCard.instance.cardNumberDic[DataManager.instance.curData.inventoryCard[i]]);
         }
 
+        //저장한 카드 업그레이드에 로드
         for(int i = 0; i < DataManager.instance.curData.upGradeCard.Count; i++)
         {
             UpGradeManager.instance.AcquireCard(PlayerCard.instance.cardNumberDic[DataManager.instance.curData.upGradeCard[i]]);
             UpGradeManager.instance.slots[i].card.level = DataManager.instance.curData.cardLevel[i];
             UpGradeManager.instance.slots[i].LevelUp();
         }
+        
+        //장착했던 카드들 로드
         for(int i = 0; i < DataManager.instance.curData.playerCard.Count; i++)
         {
             PlayerCard.instance.cardList.Add(PlayerCard.instance.cardNumberDic[DataManager.instance.curData.playerCard[i]]);
@@ -137,22 +175,36 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
+        //클리어한 스테이지의 별개수 로드
         for (int i = 0; i < DataManager.instance.curData.stageStarCount.Count; i++)
         {
             StageManager.instance.stages[i].star = DataManager.instance.curData.stageStarCount[i];
-            if (DataManager.instance.curData.stageStarCount[i] >= 3)
+
+            switch (StageManager.instance.stages[i].star)
             {
-                StageManager.instance.stages[i].isFirst = false;
-                StageManager.instance.stages[i].isStage = false;
+                case >= 3:
+                    StageManager.instance.stages[i].isFirst = false;
+                    StageManager.instance.stages[i].isStage = false;
+                    break;
+                case >= 1:
+                    StageManager.instance.stages[i].isFirst = false;
+                    break;
             }
-            else if (DataManager.instance.curData.stageStarCount[i] >= 1)
+        }
+
+        for(int i = 0; i < DataManager.instance.curData.bossStarCount.Count; i++)
+        {
+            StageManager.instance.bossStages[i].star = DataManager.instance.curData.bossStarCount[i];
+
+            if (StageManager.instance.bossStages[i].star >= 3)
             {
-                StageManager.instance.stages[i].isFirst = false;
+                StageManager.instance.bossStages[i].isFirst = false;
+                StageManager.instance.bossStages[i].isStage = false;
             }
         }
     }
     
+    //12시마다 초기화
     private void CheckTime()
     {
         DateTime curTime = DateTime.Now;
@@ -171,6 +223,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //스테이지 시작시 버튼
     public void StartButton()
     {
         isGame = true;
@@ -179,12 +232,12 @@ public class GameManager : MonoBehaviour
         MapManager.instance.map.SetActive(false);
         MapManager.instance.animator.SetBool("Close", true);
         MapManager.instance.animator.Play("Close");
-        StageMenu.instance.menu.SetActive(false);
+        StageMenu.instance.XButton();
         gold = StageManager.instance.curStage.stage.startGold;
-        StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
         audioSource.PlayOneShot(audioClips[0]);
     }
 
+    //게임시작 버튼
     public void NewGameButton()
     {
         DataManager.instance.SaveData();
@@ -194,6 +247,7 @@ public class GameManager : MonoBehaviour
         StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
     }
 
+    
     public void ClearButton()
     {
         audioSource.Stop();
@@ -207,7 +261,6 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        LoadData();
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(0));
         StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
@@ -239,20 +292,13 @@ public class GameManager : MonoBehaviour
         mecrenary.Clear();
     }
 
-    public void SpeedUp()
+    public void DeleteData()
     {
-        isTime = !isTime;
-        if (isTime)
-        {
-            Time.timeScale = 2;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
-
+        SoundManager.instance.SoundSetting();
+        SoundManager.instance.DeleteButton();
+        Fade.instance.FadeInOut();
+        StartCoroutine(FadeCo(2));
     }
-
 
     private IEnumerator FadeCo(int number)
     {
@@ -271,11 +317,25 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             MapManager.instance.map.GetComponent<AudioSource>().Play();
         }
-        else
+        else if(number == 1)
         {
             StageManager.instance.StartCo();
             MapManager.instance.animator.SetBool("Close", true);
             MapManager.instance.mapParent.SetActive(false);
+        }
+        else
+        {
+            MapManager.instance.animator.SetBool("Close", true);
+            MapManager.instance.animator.Play("Close");
+            newGameButton.SetActive(true);
+            mainMenu.SetActive(true);
+            isMix = false;
+            MapManager.instance.map.GetComponent<AudioSource>().Stop();
+            MapManager.instance.map.SetActive(false);
+            audioSource.Stop();
+            GameReset();
+            File.Delete(DataManager.instance.path + "GuardTheCastle");
+            DataManager.instance.ClearData();
         }
     }
 }

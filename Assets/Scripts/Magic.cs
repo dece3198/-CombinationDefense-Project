@@ -31,7 +31,7 @@ public class Magic : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 yield return new WaitForSeconds(skillTime);
-                viewDetector.FindRangeAttack(mercenary.atk);
+                viewDetector.FindRangeAttack(mercenary.atk, mercenary);
             }
         }
 

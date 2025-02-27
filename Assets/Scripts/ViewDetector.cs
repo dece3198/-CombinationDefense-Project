@@ -107,7 +107,7 @@ public class ViewDetector : MonoBehaviour
     }
 
 
-    public void FindRangeAttack(float damage)
+    public void FindRangeAttack(float damage, Mercenary mercenary)
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
 
@@ -123,7 +123,7 @@ public class ViewDetector : MonoBehaviour
 
             atkTarget = targets[i].gameObject;
 
-            targets[i].GetComponent<Mercenary>().TakeHit(damage);
+            targets[i].GetComponent<Mercenary>().TakeHit(damage, mercenary);
         }
         atkTarget = null;
     }

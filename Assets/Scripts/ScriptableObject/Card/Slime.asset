@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35dc3b2f73aab2f499b6252fe34b338d, type: 3}
+  m_Name: Slime
+  m_EditorClassIdentifier: 
+  cardImage: {fileID: 21300000, guid: 26d4948b597b183489a2be04ffad62b0, type: 3}
+  cardName: "\uD0B9\uC2AC\uB77C\uC784"
+  rating: 1
+  typeImage: {fileID: 21300000, guid: a8af1ce53c4c7524a86273d7adbdf178, type: 3}
+  atk: 10
+  hp: 500
+  def: 0
+  prefab: {fileID: 4711499832117067733, guid: 026ee5c056ec02a4c9a4469416ddcd83, type: 3}
+  nextCard: {fileID: 0}
+  ratingColor: {r: 0.15294118, g: 0.83137256, b: 0.83137256, a: 1}
+  type: 0
+  cardType: 1
+  gold: 0
+  level: 0

@@ -16,9 +16,9 @@ MonoBehaviour:
   cardName: "\uC911\uAE09 \uBC29\uD328 \uC6A9\uBCD1"
   rating: 2
   typeImage: {fileID: 239617991, guid: a5bdd6e5de6e6b54d9037d1e7e95f98a, type: 3}
-  atk: 4
-  hp: 220
-  def: 1
+  atk: 2
+  hp: 150
+  def: 2
   prefab: {fileID: 934999768733577433, guid: 00304467fa6353843aabe2cc1aced9c2, type: 3}
   nextCard: {fileID: 11400000, guid: f8ec0809fcc4c714abdcc6ca8ebbce31, type: 2}
   ratingColor: {r: 0.57254905, g: 1, b: 0.57254905, a: 1}

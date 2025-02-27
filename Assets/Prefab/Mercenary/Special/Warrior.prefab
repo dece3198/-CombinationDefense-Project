@@ -1292,6 +1292,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7176f92da0b8c0f4d9f2655a6e114061, type: 3}
+      propertyPath: m_TagString
+      value: Mercenary
+      objectReference: {fileID: 0}
     - target: {fileID: 1728280593283003582, guid: 7176f92da0b8c0f4d9f2655a6e114061, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -1469,6 +1473,10 @@ MonoBehaviour:
   - {fileID: 1982406110813835464}
   - {fileID: 8104299195491520229}
   - {fileID: 6646490780658155610}
+  audioClips:
+  - {fileID: 8300000, guid: 138f2a67d00e1a946a35d4a3dd89317f, type: 3}
+  - {fileID: 8300000, guid: c10f119c44dfb2c45b90b841438f4c09, type: 3}
+  audioSource: {fileID: 0}
   headPos: {fileID: 0}
   skill: {fileID: 6082320282249864043}
   shield: {fileID: 5206736004306055679}

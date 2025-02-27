@@ -31,6 +31,7 @@ public class IdleState : BaseState<Mercenary>
     public override void Enter(Mercenary mercenary)
     {
         mercenary.animator.SetBool("Walk", false);
+        mercenary.animator.Play("Idle");
     }
 
     public override void Exit(Mercenary mercenary)
@@ -202,7 +203,7 @@ public class AttackState : BaseState<Mercenary>
         mercenary.viewDetector.FindAttackTarget();
         if (mercenary.viewDetector.AtkTarget != null)
         {
-            mercenary.skill.transform.position = mercenary.viewDetector.AtkTarget.transform.position;
+            mercenary.skill.transform.position = mercenary.viewDetector.AtkTarget.GetComponent<Mercenary>().heel.transform.position;
             mercenary.skill.gameObject.SetActive(true);
             mercenary.skill.Play();
         }
@@ -213,7 +214,7 @@ public class AttackState : BaseState<Mercenary>
         mercenary.animator.Play("Attack");
         mercenary.skill.Play();
         yield return new WaitForSeconds(1f);
-        mercenary.viewDetector.FindRangeAttack(mercenary.atk);
+        mercenary.viewDetector.FindRangeAttack(mercenary.atk, mercenary);
     }
 
     private IEnumerator KnightCo(Mercenary mercenary)
@@ -224,7 +225,7 @@ public class AttackState : BaseState<Mercenary>
         yield return new WaitForSeconds(2f);
         mercenary.animator.SetBool("Slash", true);
         yield return new WaitForSeconds(0.5f);
-        mercenary.viewDetector.FindRangeAttack(mercenary.atk);
+        mercenary.viewDetector.FindRangeAttack(mercenary.atk, mercenary);
     }
 }
 
@@ -363,6 +364,7 @@ public class Mercenary : MonoBehaviour
         ChangeState(MercenaryState.Idle);
         curLayer = gameObject.layer;
         hpBar.value = Hp / maxHp;
+        isAtkCool = true;
     }
 
     private void Start()
@@ -395,7 +397,7 @@ public class Mercenary : MonoBehaviour
         viewDetector.FindAttackTarget();
         if (viewDetector.AtkTarget != null)
         {
-            viewDetector.AtkTarget.GetComponent<Mercenary>().TakeHit(atk);
+            viewDetector.AtkTarget.GetComponent<Mercenary>().TakeHit(atk, this);
         }
     }
 
@@ -417,7 +419,7 @@ public class Mercenary : MonoBehaviour
         _arrow.SetActive(false);
     }
 
-    public void TakeHit(float damage)
+    public void TakeHit(float damage, Mercenary mercenary)
     {
         if(shieldBar.gameObject.activeSelf)
         {
@@ -428,8 +430,15 @@ public class Mercenary : MonoBehaviour
         {
             if (Hp > 0)
             {
-                Hp -= (damage - (def * 0.5f));
-                StartCoroutine(HitCo());
+                if((damage - (def * 0.5f)) <= 0)
+                {
+                    Hp -= 0.1f;
+                }
+                else
+                {
+                    Hp -= (damage - (def * 0.5f));
+                }
+                StartCoroutine(HitCo(mercenary));
                 hpBar.value = Hp / maxHp;
             }
         }
@@ -466,11 +475,18 @@ public class Mercenary : MonoBehaviour
         stateMachine.ChangeState(state);
     }
 
-    private IEnumerator HitCo()
+    private IEnumerator HitCo(Mercenary mercenary)
     {
         if(weaponType != WeaponType.Castle)
         {
-            audioSource.PlayOneShot(audioClips[0]);
+            if(mercenary.weaponType == WeaponType.Wizard)
+            {
+                audioSource.PlayOneShot(audioClips[1]);
+            }
+            else
+            {
+                audioSource.PlayOneShot(audioClips[0]);
+            }
         }
 
         for (int i = 0; i < skinned.Length; i++)

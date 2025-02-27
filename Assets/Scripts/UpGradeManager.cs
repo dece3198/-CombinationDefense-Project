@@ -89,6 +89,8 @@ public class UpGradeManager : MonoBehaviour
         if(GameManager.instance.money >= (curSlot.card.level + 1))
         {
             curSlot.card.level += 1;
+            curSlot.card.nextCard.level += 1;
+            curSlot.card.nextCard.nextCard.level += 1;
             curSlot.LevelUp();
             for(int i = 0; i < Inventory.instance.slots.Length;i++)
             {

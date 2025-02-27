@@ -6,6 +6,7 @@ public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandle
 {
     public Stage stage;
     public StageSlot nextStage;
+    public StageSlot bossStage;
     public Image image;
     public bool isFirst = true;
     public bool isStage = false;

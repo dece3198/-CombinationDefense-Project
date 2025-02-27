@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Recall
   - PlayerCard
+  - Monster
+  - Mercenary
   layers:
   - Default
   - TransparentFX
