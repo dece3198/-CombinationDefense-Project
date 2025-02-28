@@ -62,7 +62,10 @@ public class StageMenu : MonoBehaviour
         StageManager.instance.ClickSound(1);
         for(int i = 0; i < slots.Length; i++)
         {
-            slots[i].ClearSlot();
+            if (slots[i].card != null)
+            {
+                slots[i].ClearSlot();
+            }
         }
     }
 }

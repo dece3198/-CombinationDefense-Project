@@ -13,9 +13,14 @@ public class PlayerData
     public int bossCount = 0;
     public float BGVolume = -20;
     public float SFXVolume = -20;
+
+    public string tutorialState;
+
     public bool isTimeCompensation = true;
-    public bool isFirstStage = true;
+    public bool isFirstStage = false;
+    public bool isFirstStageClear = false;
     public bool isMix = false;
+    public bool isFirstTutorial = false;
 
     public List<int> stageStarCount = new List<int>();
     public List<int> bossStarCount = new List<int>();
@@ -86,6 +91,7 @@ public class DataManager : MonoBehaviour
         curData.upGradeCard.Add(1);
         curData.cardLevel.Add(0);
         curData.cardLevel.Add(0);
+
         for(int i = 0; i < StageManager.instance.stages.Length; i++)
         {
             StageManager.instance.stages[i].gameObject.SetActive(false);

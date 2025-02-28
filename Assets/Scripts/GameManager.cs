@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip[] audioClips;
     private AudioSource audioSource;
     [SerializeField] private GameObject newGameButton;
+    public StageSlot tutorial;
 
     private void Awake()
     {
@@ -37,7 +38,6 @@ public class GameManager : MonoBehaviour
         if (File.Exists(DataManager.instance.path + "GuardTheCastle"))
         {
             newGameButton.SetActive(false);
-            LoadData();
         }
 
         InvokeRepeating("CheckTime", 0, 60f);
@@ -129,6 +129,22 @@ public class GameManager : MonoBehaviour
         SoundManager.instance.sfxValue = DataManager.instance.curData.SFXVolume;
 
         SoundManager.instance.ResetSlider();
+
+        if(DataManager.instance.curData.isFirstTutorial)
+        {
+            tutorial.gameObject.SetActive(false);
+        }
+
+        if (DataManager.instance.curData.isFirstStageClear)
+        {
+            TutorialManager.instance.ChangeState(TutorialState.First);
+            StageManager.instance.stages[0].gameObject.SetActive(true);
+        }
+
+        if (DataManager.instance.curData.tutorialState == "Two")
+        {
+            TutorialManager.instance.ChangeState(TutorialState.Two);
+        }
 
         //클러이한 스테이지 로드
         for (int i = 0; i < DataManager.instance.curData.clearCount; i++)
@@ -230,7 +246,6 @@ public class GameManager : MonoBehaviour
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(1));
         MapManager.instance.map.SetActive(false);
-        MapManager.instance.animator.SetBool("Close", true);
         MapManager.instance.animator.Play("Close");
         StageMenu.instance.XButton();
         gold = StageManager.instance.curStage.stage.startGold;
@@ -240,11 +255,10 @@ public class GameManager : MonoBehaviour
     //게임시작 버튼
     public void NewGameButton()
     {
+        StageManager.instance.curStage = tutorial;
         DataManager.instance.SaveData();
         LoadData();
-        Fade.instance.FadeInOut();
-        StartCoroutine(FadeCo(0));
-        StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
+        StartButton();
     }
 
     
@@ -259,6 +273,13 @@ public class GameManager : MonoBehaviour
     {
         if (!File.Exists(DataManager.instance.path + "GuardTheCastle"))
         {
+            return;
+        }
+        LoadData();
+
+        if (!StageManager.instance.stages[0].gameObject.activeSelf)
+        {
+            NewGameButton();
             return;
         }
         Fade.instance.FadeInOut();
@@ -319,13 +340,16 @@ public class GameManager : MonoBehaviour
         }
         else if(number == 1)
         {
+            if(StageManager.instance.curStage.stage.stageType == StageType.Tutorial)
+            {
+                mainMenu.SetActive(false);
+                TutorialManager.instance.ChangeState(TutorialState.First);
+            }
             StageManager.instance.StartCo();
-            MapManager.instance.animator.SetBool("Close", true);
             MapManager.instance.mapParent.SetActive(false);
         }
         else
         {
-            MapManager.instance.animator.SetBool("Close", true);
             MapManager.instance.animator.Play("Close");
             newGameButton.SetActive(true);
             mainMenu.SetActive(true);

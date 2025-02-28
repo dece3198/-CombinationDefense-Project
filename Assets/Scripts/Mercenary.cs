@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum WeaponType
 {
-    Sword, Bow, Shield, knife, Castle, Wizard, Shielder, Healer, Warrior, Knight, Money, Nothing
+    Sword, Bow, Shield, knife, Castle, Wizard, Shielder, Healer, Warrior, Knight, Money, Nothing, Spear
 }
 
 public enum MercenaryState
@@ -32,6 +32,7 @@ public class IdleState : BaseState<Mercenary>
     {
         mercenary.animator.SetBool("Walk", false);
         mercenary.animator.Play("Idle");
+        mercenary.agent.ResetPath();
     }
 
     public override void Exit(Mercenary mercenary)
@@ -128,6 +129,7 @@ public class AttackState : BaseState<Mercenary>
             case WeaponType.Wizard: mercenary.StartCoroutine(MagicCo(mercenary)); break;
             case WeaponType.Warrior: mercenary.StartCoroutine(WarriorCo(mercenary)); break;
             case WeaponType.Knight: mercenary.StartCoroutine(KnightCo(mercenary)); break;
+            case WeaponType.Spear: mercenary.animator.SetTrigger("Spear"); break;
         }
         mercenary.agent.ResetPath();
     }

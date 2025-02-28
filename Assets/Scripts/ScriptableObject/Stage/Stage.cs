@@ -2,7 +2,7 @@ using UnityEngine;
 
 public enum StageType
 {
-    Normal, Boss
+    Normal, Boss, Tutorial
 }
 
 

@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject[] mercenary;
     [SerializeField] private AudioClip[] audioClips;
     private AudioSource audioSource;
+    public GameObject inventory;
 
     private void Awake()
     {

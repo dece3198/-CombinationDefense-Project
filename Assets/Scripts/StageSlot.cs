@@ -28,6 +28,21 @@ public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandle
         {
             if(stage != null)
             {
+                if(stage.stageType != StageType.Tutorial)
+                {
+                    StageMenu.instance.AddStage(this);
+                    StageManager.instance.ClickSound(0);
+                }
+            }
+        }
+    }
+
+    public void tutorialClick()
+    {
+        if (stage != null)
+        {
+            if (stage.stageType != StageType.Tutorial)
+            {
                 StageMenu.instance.AddStage(this);
                 StageManager.instance.ClickSound(0);
             }

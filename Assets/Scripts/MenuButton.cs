@@ -38,6 +38,23 @@ public class MenuButton : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    public void tutorialClick()
+    {
+        if (ButtonManager.instance.curButton != null)
+        {
+            ButtonManager.instance.curButton.image.sprite = ButtonManager.instance.curButton.button;
+            ButtonManager.instance.curButton.menu.SetActive(false);
+        }
+        StartCoroutine(SizeCo());
+        menu.SetActive(true);
+        ButtonManager.instance.curButton = this;
+        ButtonManager.instance.ButtonSound();
+        image.sprite = pressed;
+        TutorialManager.instance.tutorialC.SetActive(false);
+        TutorialManager.instance.handC.SetActive(false);
+        TutorialManager.instance.handD.SetActive(true);
+    }
+
     private IEnumerator SizeCo()
     {
         float time = 1;

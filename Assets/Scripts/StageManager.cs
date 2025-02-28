@@ -49,6 +49,7 @@ public class StageManager : MonoBehaviour
         Time.timeScale = 1f;
         SlotManager.instance.isTime = false;
 
+        //성의 체력에 따라 별 개수가 달라짐
         if(castle.Hp == castle.maxHp)
         {
             curStage.star = 3;
@@ -62,22 +63,21 @@ public class StageManager : MonoBehaviour
             curStage.star = 1;
         }
 
-
+        //처음으로 스테이지를 클리어했을 때 데이터 저장
         if(curStage.isFirst)
         {
-            if(curStage.stage.stageType == StageType.Normal)
+
+            switch(curStage.stage.stageType)
             {
-                DataManager.instance.curData.clearCount++;
-            }
-            else
-            {
-                DataManager.instance.curData.bossCount++;
+                case StageType.Normal: DataManager.instance.curData.clearCount++; break;
+                case StageType.Boss: DataManager.instance.curData.bossCount++; break;
+                case StageType.Tutorial: break;
             }
             curStage.isFirst = false;
         }
 
         castle.Hp = castle.maxHp;
-        if(curStage.stage.money == 0)
+        if(curStage.stage.crystal > 0)
         {
             goldText.text = curStage.stage.crystal.ToString() + "크리스탈";
         }
@@ -85,6 +85,8 @@ public class StageManager : MonoBehaviour
         {
             goldText.text = curStage.stage.money.ToString() + "원";
         }
+
+        //별 성공 애니메이션 불러오는 코루틴
         StartCoroutine(ResetCo());
         curStage.nextStage.gameObject.SetActive(true);
         if(curStage.bossStage != null)
@@ -98,6 +100,10 @@ public class StageManager : MonoBehaviour
         {
             switch(curStage.stage.stageNumber)
             {
+                case 11 : 
+                    TutorialManager.instance.ChangeState(TutorialState.Two);
+                    DataManager.instance.curData.isFirstStageClear = false;
+                    break;
                 case 13 : GameManager.instance.isMix = true; break;
             }
 
@@ -134,7 +140,10 @@ public class StageManager : MonoBehaviour
             GameManager.instance.GameReset();
             SlotManager.instance.isTime = true;
             SlotManager.instance.SpeedUp();
-            curStage.clear.SetActive(true);
+            if(curStage.clear != null)
+            {
+                curStage.clear.SetActive(true);
+            }
             clear.SetActive(false);
             if (curStage.compensation != null)
             {
@@ -185,7 +194,7 @@ public class StageManager : MonoBehaviour
             audioSource.PlayOneShot(audioClips[3]);
             stars[i].SetActive(true);
             stars[i].GetComponent<Animator>().SetBool("Nothing", true);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
         isClear = true;
     }

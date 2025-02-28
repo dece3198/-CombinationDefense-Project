@@ -45,6 +45,7 @@ public class Generator : MonoBehaviour
         {
             if (card == mercenaryList[i].GetComponent<Mercenary>().card)
             {
+                SlotManager.instance.audioSource.PlayOneShot(SlotManager.instance.audioClips[4]);
                 mercenaryList[i].SetActive(true);
                 GameManager.instance.mecrenary.Add(mercenaryList[i]);
                 mercenaryList.RemoveAt(i);

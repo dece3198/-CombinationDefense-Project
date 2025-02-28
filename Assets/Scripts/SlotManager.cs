@@ -89,20 +89,16 @@ public class SlotManager : MonoBehaviour
     {
         if(GameManager.instance.gold >= 2)
         {
+            audioSource.PlayOneShot(audioClips[3]);
             GameManager.instance.gold -= 2;
-        }
-        else
-        {
-            return;
-        }
-        int rand = Random.Range(0, PlayerCard.instance.cardList.Count);
-
-        for(int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i].card == null)
+            int rand = Random.Range(0, PlayerCard.instance.cardList.Count);
+            for (int i = 0; i < slots.Length; i++)
             {
-                slots[i].AddCard(PlayerCard.instance.cardList[rand]);
-                return;
+                if (slots[i].card == null)
+                {
+                    slots[i].AddCard(PlayerCard.instance.cardList[rand]);
+                    return;
+                }
             }
         }
     }
