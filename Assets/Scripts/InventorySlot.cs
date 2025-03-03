@@ -89,6 +89,8 @@ public class InventorySlot : MonoBehaviour
                 Inventory.instance.RemoveSlot(card);
             }
         }
+
+        GameManager.instance.SaveData();
     }
 
     public void UpGradeCardClick()

@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -85,31 +86,29 @@ public class UpGradeManager : MonoBehaviour
 
     public void UpButton()
     {
-        if(curSlot != null)
-        {
-            if (curSlot.card.level >= 100)
-            {
-                return;
-            }
+        if (curSlot != null || curSlot.card.level >= 100) return;
 
-            if (GameManager.instance.money >= (curSlot.card.level + 1))
-            {
-                GameManager.instance.money -= (curSlot.card.level + 1);
-                curSlot.card.level += 1;
-                curSlot.card.nextCard.level += 1;
-                curSlot.card.nextCard.nextCard.level += 1;
-                curSlot.LevelUp();
-                for (int i = 0; i < Inventory.instance.slots.Length; i++)
-                {
-                    if (Inventory.instance.slots[i].card == curSlot.card)
-                    {
-                        Inventory.instance.slots[i].LevelUp();
-                    }
-                }
-                audioSource.PlayOneShot(audioClips[0]);
-                TextReset();
-            }
+        int upgrade = curSlot.card.level + 1;
+
+        if (GameManager.instance.money >= (curSlot.card.level + 1)) return;
+
+        Card curCard = curSlot.card;
+        while(curSlot != null)
+        {
+            curCard.level += 1;
+            curCard = curCard.nextCard;
         }
+
+        curSlot.LevelUp();
+
+        foreach(var slot in Inventory.instance.slots.Where(slot => slot.card == curSlot.card))
+        {
+            slot.LevelUp();
+        }
+
+        audioSource.PlayOneShot(audioClips[0]);
+        TextReset();
+        GameManager.instance.SaveData();
     }
 
     public void ClearCard()

@@ -1272,7 +1272,7 @@ MonoBehaviour:
   atkTarget: {fileID: 0}
   radiu: 150
   angle: 360
-  atkRadiu: 10
+  atkRadiu: 8
   atkAngle: 360
   layerMask:
     serializedVersion: 2
@@ -1486,7 +1486,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 898328576160968675, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 898328576160968675, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: m_LocalScale.y
@@ -1494,7 +1494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 898328576160968675, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 898328576160968675, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1649,7 +1649,7 @@ MonoBehaviour:
   atkTarget: {fileID: 0}
   radiu: 0
   angle: 0
-  atkRadiu: 5.6
+  atkRadiu: 4.5
   atkAngle: 360
   layerMask:
     serializedVersion: 2

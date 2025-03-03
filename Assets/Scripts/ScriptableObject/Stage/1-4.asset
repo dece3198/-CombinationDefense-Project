@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c4b2757493a752546820c6504bfe4f79, type: 2}
   - {fileID: 11400000, guid: 9c2d7508fd3f41748ae2845050baae7b, type: 2}
   monsterCount: 10
-  startGold: 6
+  startGold: 8
   money: 10
   crystal: 0
   stageNumber: 14

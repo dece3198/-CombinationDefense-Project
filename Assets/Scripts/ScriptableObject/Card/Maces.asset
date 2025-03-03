@@ -18,7 +18,7 @@ MonoBehaviour:
   typeImage: {fileID: -918149359167278413, guid: 0fa130f929ff66d4c81226692bc322f6, type: 3}
   atk: 6
   hp: 24
-  def: 8
+  def: 10
   prefab: {fileID: 4554069021895286290, guid: 0cd32df34e27bdf498e73c29251f6c04, type: 3}
   nextCard: {fileID: 0}
   ratingColor: {r: 0.57254905, g: 1, b: 0.57254905, a: 1}

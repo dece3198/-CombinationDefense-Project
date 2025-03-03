@@ -108,7 +108,6 @@ public class StageManager : MonoBehaviour
                 {
                     case 11:
                         TutorialManager.instance.ChangeState(TutorialState.Two);
-                        DataManager.instance.curData.isFirstStageClear = false;
                         break;
                     case 13:
                         TutorialManager.instance.ChangeState(TutorialState.Three);

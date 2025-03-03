@@ -92,6 +92,24 @@ public class RandomSelect : MonoBehaviour
         }
     }
 
+    public void FreeSelectCard()
+    {
+        curCard = RandomCardSelect();
+        randCard.SetActive(true);
+        RandomCard.instance.AddCard(curCard.card);
+        if (curCard.card.type != WeaponType.Money)
+        {
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                if (cardList[i].card == curCard.card)
+                {
+
+                    cardList.RemoveAt(i);
+                }
+            }
+        }
+    }
+
     public void lockButton()
     {
         lockText.text = lockstr;

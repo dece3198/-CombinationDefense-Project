@@ -30,7 +30,7 @@ public class FirstState : BaseState<TutorialManager>
     private bool isFirst = true;
     private bool isTwo = true;
     private bool isThree = true;
-
+    Vector3 temScale;
     public override void Enter(TutorialManager tutorial)
     {
         tutorial.isUpdate = true;
@@ -39,9 +39,10 @@ public class FirstState : BaseState<TutorialManager>
         isThree = true;
         if (GameManager.instance.isGame)
         {
+            temScale = tutorial.tutorialA.transform.localScale;
             tutorial.obstacleImage.SetActive(true);
             tutorial.tutorialA.SetActive(true);
-            tutorial.tutorialA.transform.DOScale(Vector3.one, 1f).SetEase(Ease.Linear).SetUpdate(true);
+            tutorial.tutorialA.transform.DOScale(Vector3.one, 0.75f).SetEase(Ease.Linear).SetUpdate(true);
             tutorial.StartCoroutine(tutorialCo(tutorial));
         }
     }
@@ -57,6 +58,7 @@ public class FirstState : BaseState<TutorialManager>
         {
             if(isFirst)
             {
+                tutorial.tutorialA.transform.localScale = temScale;
                 isFirst = false;
                 tutorial.obstacleImage.SetActive(false);
                 tutorial.direction.SetActive(true);
@@ -80,11 +82,12 @@ public class FirstState : BaseState<TutorialManager>
             if(isThree)
             {
                 isThree = false;
-                DataManager.instance.curData.isFirstTutorial = true;
-                DataManager.instance.curData.isFirstStageClear = true;
+                temScale = tutorial.tutorialB.transform.localScale;
+                DataManager.instance.curData.isFirstTutorial = false;
+                DataManager.instance.curData.tutorialState = tutorial.state.ToString();
                 tutorial.obstacleImage.SetActive(true);
                 tutorial.tutorialB.SetActive(true);
-                tutorial.tutorialB.transform.DOScale(Vector3.one, 1f).SetEase(Ease.Linear).SetUpdate(true);
+                tutorial.tutorialB.transform.DOScale(Vector3.one, 0.75f).SetEase(Ease.Linear).SetUpdate(true);
                 tutorial.handB.SetActive(true);
                 GameManager.instance.tutorial.gameObject.SetActive(false);
                 GameManager.instance.SaveData();
@@ -93,6 +96,7 @@ public class FirstState : BaseState<TutorialManager>
 
         if(StageMenu.instance.menu.gameObject.activeSelf)
         {
+            tutorial.tutorialB.transform.localScale = temScale;
             tutorial.obstacleImage.SetActive(false);
             tutorial.tutorialB.SetActive(false);
             tutorial.handB.SetActive(false);
@@ -113,6 +117,8 @@ public class FirstState : BaseState<TutorialManager>
 
 public class TwoState : BaseState<TutorialManager>
 {
+    Vector3 tempScale;
+
     public override void Enter(TutorialManager tutorial)
     {
         tutorial.isUpdate = true;
@@ -129,11 +135,12 @@ public class TwoState : BaseState<TutorialManager>
         {
             if(!Inventory.instance.inventory.activeSelf)
             {
+                tempScale = tutorial.tutorialC.transform.localScale;
                 DataManager.instance.curData.tutorialState = tutorial.state.ToString();
                 GameManager.instance.SaveData();
                 tutorial.obstacleImage.SetActive(true);
                 tutorial.tutorialC.SetActive(true);
-                tutorial.tutorialC.transform.DOScale(Vector3.one, 1).SetEase(Ease.Linear).SetUpdate(true);
+                tutorial.tutorialC.transform.DOScale(Vector3.one, 0.75f).SetEase(Ease.Linear).SetUpdate(true);
                 tutorial.handC.SetActive(true);
             }
         }
@@ -142,16 +149,11 @@ public class TwoState : BaseState<TutorialManager>
         {
             tutorial.obstacleImage.SetActive(false);
             tutorial.handD.SetActive(false);
+            tutorial.tutorialC.transform.localScale = tempScale;
             tutorial.ChangeState(TutorialState.None);
             DataManager.instance.curData.tutorialState = tutorial.state.ToString();
             GameManager.instance.SaveData();
         }
-    }
-
-    private IEnumerator tutorialCo(TutorialManager tutorial)
-    {
-        yield return new WaitForSeconds(1f);
-        tutorial.handA.SetActive(true);
     }
 }
 

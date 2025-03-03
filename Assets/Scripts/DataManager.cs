@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,13 +16,13 @@ public class PlayerData
     public float BGVolume = -20;
     public float SFXVolume = -20;
 
+    public DateTime lastCheckTIme;
+
     public string tutorialState;
 
     public bool isTimeCompensation = true;
-    public bool isFirstStage = false;
-    public bool isFirstStageClear = false;
     public bool isMix = false;
-    public bool isFirstTutorial = false;
+    public bool isFirstTutorial = true;
 
     public List<int> stageStarCount = new List<int>();
     public List<int> bossStarCount = new List<int>();
@@ -30,6 +31,7 @@ public class PlayerData
     public List<int> playerSpecialCard = new List<int>();
     public List<int> upGradeCard = new List<int>();
     public List<int> cardLevel = new List<int>();
+    public List<int> admobCount = new List<int>();
 }
 
 public class DataManager : MonoBehaviour
@@ -95,19 +97,17 @@ public class DataManager : MonoBehaviour
         curData.cardLevel.Add(0);
         curData.cardLevel.Add(0);
 
+        curData.isFirstTutorial = true;
+        curData.isTimeCompensation = true;
+
         SoundManager.instance.bgValue = -30f;
         SoundManager.instance.sfxValue = -30f;
         SoundManager.instance.ResetSlider();
 
         ButtonManager.instance.curButton.menu.SetActive(false);
         ButtonManager.instance.curButton.image.sprite = ButtonManager.instance.curButton.button;
-        groundButton.gameObject.SetActive(true);
+        groundButton.menu.gameObject.SetActive(true);
         groundButton.image.sprite = groundButton.pressed;
-
-        for (int i = 0; i < PlayerCard.instance.cards.Length; i++)
-        {
-            PlayerCard.instance.cards[i].level = 0;
-        }
 
         for(int i = 0; i < StageManager.instance.stages.Length; i++)
         {
@@ -132,34 +132,31 @@ public class DataManager : MonoBehaviour
             StageManager.instance.bossStages[i].clear.SetActive(false);
         }
 
-        for(int i = 0; i < Inventory.instance.slots.Length; i++)
+        foreach(var slot in Inventory.instance.slots.Where(slot => slot.card != null))
         {
-            if (Inventory.instance.slots[i].card != null)
+            if(slot.isCheck == true)
             {
-                Inventory.instance.slots[i].card = null;
-                Inventory.instance.slots[i].gameObject.SetActive(false);
+                Inventory.instance.RemoveSlot(slot.card);
+                slot.isCheck = false;
             }
+            slot.card = null;
+            slot.gameObject.SetActive(false);
         }
 
-        for(int i = 0; i < UpGradeManager.instance.slots.Length; i++)
+        foreach(var slot in UpGradeManager.instance.slots.Where(slot => slot.card != null))
         {
-            if (UpGradeManager.instance.slots[i].card != null)
+            if(slot.card.cardType == CardType.Mercenary)
             {
-                UpGradeManager.instance.slots[i].card = null;
-                UpGradeManager.instance.slots[i].gameObject.SetActive(false);
+                Card curCard = slot.card;
+
+                while(curCard != null)
+                {
+                    curCard.level = 0;
+                    curCard = curCard.nextCard;
+                }
             }
-        }
-
-        var emptySlot = Inventory.instance.playerSlot.FirstOrDefault(slot => slot.card != null);
-        if (emptySlot != null)
-        {
-            Inventory.instance.RemoveSlot(emptySlot.card);
-        }
-
-        var emptySpecialSlot = Inventory.instance.specialSlot.FirstOrDefault(slot => slot.card != null);
-        if (emptySpecialSlot != null)
-        {
-            Inventory.instance.RemoveSlot(emptySpecialSlot.card);
+            slot.card = null;
+            slot.gameObject.SetActive(false);
         }
     }
 }

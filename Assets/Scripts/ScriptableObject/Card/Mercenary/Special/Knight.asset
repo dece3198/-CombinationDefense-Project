@@ -16,9 +16,9 @@ MonoBehaviour:
   cardName: "\uAE30\uC0AC"
   rating: 5
   typeImage: {fileID: 2003567520, guid: 69936fa59d132954b83f13ed05a18933, type: 3}
-  atk: 250
-  hp: 1000
-  def: 4
+  atk: 25
+  hp: 250
+  def: 20
   prefab: {fileID: 4918275685447026255, guid: c7ab6cce2758bf24ab9eeef8d165bc96, type: 3}
   nextCard: {fileID: 0}
   ratingColor: {r: 1, g: 0.7254902, b: 0, a: 1}

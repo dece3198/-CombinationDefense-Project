@@ -16,7 +16,7 @@ MonoBehaviour:
   cardName: "\uC911\uAE09 \uC274\uB354"
   rating: 4
   typeImage: {fileID: 1274829247, guid: 26343f575f180b54287c43a606619dcc, type: 3}
-  atk: 10
+  atk: 25
   hp: 10
   def: 4
   prefab: {fileID: 1731926989791797840, guid: 6e40549256e7c5e4eac041124e71aadb, type: 3}
