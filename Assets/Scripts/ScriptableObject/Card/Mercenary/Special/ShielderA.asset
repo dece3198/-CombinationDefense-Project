@@ -23,6 +23,6 @@ MonoBehaviour:
   nextCard: {fileID: 0}
   ratingColor: {r: 0.3254902, g: 0.36862746, b: 1, a: 1}
   type: 6
-  cardType: 0
+  cardType: 2
   gold: 0
   level: 0

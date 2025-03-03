@@ -1144,7 +1144,7 @@ MonoBehaviour:
   maxShieldHp: 0
   atk: 0
   def: 0
-  atkCool: 2
+  atkCool: 1
 --- !u!114 &5478386094466214801
 MonoBehaviour:
   m_ObjectHideFlags: 0

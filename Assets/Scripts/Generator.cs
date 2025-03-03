@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Generator : MonoBehaviour
@@ -14,7 +15,7 @@ public class Generator : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < cards.Length; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             for (int j = 0; j < 5; j++)
             {
@@ -26,19 +27,10 @@ public class Generator : MonoBehaviour
 
     public void ExitCard(Card card)
     {
-        int count = 0;
 
-        for (int i = 0; i < mercenaryList.Count; i++)
+        if (mercenaryList == null || !mercenaryList.Any(m => m.GetComponent<Mercenary>().card == card))
         {
-            if(card == mercenaryList[i].GetComponent<Mercenary>().card)
-            {
-                count++;
-            }
-        }
-
-        if(count <= 0)
-        {
-            Refill(card,5);
+            Refill(card, 5);
         }
 
         for (int i = 0; i < mercenaryList.Count; i++)

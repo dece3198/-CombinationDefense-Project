@@ -49,41 +49,48 @@ public class ViewDetector : MonoBehaviour
     public void FindMinTarget()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, radiu, layerMask);
-        float min = Mathf.Infinity;
+        float min = -1f;
+        GameObject minTarget = null;
 
         foreach (Collider collider in targets)
         {
-            if (collider.GetComponent<Mercenary>().Hp < min)
+            Mercenary mercenary = collider.GetComponent<Mercenary>();
+            if(mercenary != null)
             {
-                min = collider.GetComponent<Mercenary>().Hp;
-                target = collider.gameObject;
+                float hitHp = (mercenary.maxHp - mercenary.Hp);
+                if (hitHp > min)
+                {
+                    min = hitHp;
+                    minTarget = collider.gameObject;
+                }
             }
         }
 
-        if (targets.Length <= 0)
-        {
-            target = null;
-        }
+        target = minTarget;
     }
 
     public void FindMinAtkTarget()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, atkRadiu, layerMask);
-        float min = Mathf.Infinity;
+        float min = -1f;
+        GameObject minTarget = null;
 
         foreach (Collider collider in targets)
         {
-            if (collider.GetComponent<Mercenary>().Hp < min)
+
+            Mercenary mercenary = collider.GetComponent<Mercenary>();
+            if (mercenary != null)
             {
-                min = collider.GetComponent<Mercenary>().Hp;
-                atkTarget = collider.gameObject;
-            }    
+                float hitHp = (mercenary.maxHp - mercenary.Hp);
+                if (hitHp > min)
+                {
+                    min = hitHp;
+                    minTarget = collider.gameObject;
+                }
+            }
         }
 
-        if (targets.Length <= 0)
-        {
-            atkTarget = null;
-        }
+        atkTarget = minTarget;
     }
 
     public void FindAttackTarget()

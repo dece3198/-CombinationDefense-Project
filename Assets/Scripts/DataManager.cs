@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ public class PlayerData
     public List<int> bossStarCount = new List<int>();
     public List<int> inventoryCard = new List<int>();
     public List<int> playerCard = new List<int>();
+    public List<int> playerSpecialCard = new List<int>();
     public List<int> upGradeCard = new List<int>();
     public List<int> cardLevel = new List<int>();
 }
@@ -36,6 +38,7 @@ public class DataManager : MonoBehaviour
     public PlayerData curData = new PlayerData();
     public string path;
     public TextMeshProUGUI continueText;
+    [SerializeField] private MenuButton groundButton;
 
     private void Awake()
     {
@@ -51,7 +54,7 @@ public class DataManager : MonoBehaviour
 
         path = Application.persistentDataPath + "/";
 
-        if(File.Exists(path + "GuardTheCastle"))
+        if(File.Exists(path + "Guarding the Castle With Luck"))
         {
             continueText.color = Color.white;
         }
@@ -64,7 +67,7 @@ public class DataManager : MonoBehaviour
     public void SaveData()
     {
         string data = JsonUtility.ToJson(curData);
-        File.WriteAllText(path + "GuardTheCastle", data);
+        File.WriteAllText(path + "Guarding the Castle With Luck", data);
     }
 
     public void DeleteData(string name)
@@ -74,9 +77,9 @@ public class DataManager : MonoBehaviour
 
     public void LoadData()
     {
-        if(File.Exists(path + "GuardTheCastle"))
+        if(File.Exists(path + "Guarding the Castle With Luck"))
         {
-            string data = File.ReadAllText(path + "GuardTheCastle");
+            string data = File.ReadAllText(path + "Guarding the Castle With Luck");
             curData = JsonUtility.FromJson<PlayerData>(data);
         }
     }
@@ -91,6 +94,20 @@ public class DataManager : MonoBehaviour
         curData.upGradeCard.Add(1);
         curData.cardLevel.Add(0);
         curData.cardLevel.Add(0);
+
+        SoundManager.instance.bgValue = -30f;
+        SoundManager.instance.sfxValue = -30f;
+        SoundManager.instance.ResetSlider();
+
+        ButtonManager.instance.curButton.menu.SetActive(false);
+        ButtonManager.instance.curButton.image.sprite = ButtonManager.instance.curButton.button;
+        groundButton.gameObject.SetActive(true);
+        groundButton.image.sprite = groundButton.pressed;
+
+        for (int i = 0; i < PlayerCard.instance.cards.Length; i++)
+        {
+            PlayerCard.instance.cards[i].level = 0;
+        }
 
         for(int i = 0; i < StageManager.instance.stages.Length; i++)
         {
@@ -133,12 +150,16 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < Inventory.instance.playerSlot.Length; i++)
+        var emptySlot = Inventory.instance.playerSlot.FirstOrDefault(slot => slot.card != null);
+        if (emptySlot != null)
         {
-            if(Inventory.instance.playerSlot[i].card != null)
-            {
-                Inventory.instance.playerSlot[i].card = null;
-            }
+            Inventory.instance.RemoveSlot(emptySlot.card);
+        }
+
+        var emptySpecialSlot = Inventory.instance.specialSlot.FirstOrDefault(slot => slot.card != null);
+        if (emptySpecialSlot != null)
+        {
+            Inventory.instance.RemoveSlot(emptySpecialSlot.card);
         }
     }
 }

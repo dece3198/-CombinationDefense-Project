@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -85,20 +86,34 @@ public class SlotManager : MonoBehaviour
         }
     }
 
-    public void LuckyDip()
+    public void LuckyDipA()
     {
-        if(GameManager.instance.gold >= 2)
+        audioSource.PlayOneShot(audioClips[5]);
+        if (PlayerCard.instance.cardList.Count == 0 || GameManager.instance.gold >= 2)
         {
             audioSource.PlayOneShot(audioClips[3]);
             GameManager.instance.gold -= 2;
             int rand = Random.Range(0, PlayerCard.instance.cardList.Count);
-            for (int i = 0; i < slots.Length; i++)
+            var emptySlot = slots.FirstOrDefault(slot => slot.card == null);
+            if(emptySlot != null)
             {
-                if (slots[i].card == null)
-                {
-                    slots[i].AddCard(PlayerCard.instance.cardList[rand]);
-                    return;
-                }
+                emptySlot.AddCard(PlayerCard.instance.cardList[rand]);
+            }
+        }
+    }
+
+    public void LuckyDipB()
+    {
+        audioSource.PlayOneShot(audioClips[5]);
+        if (PlayerCard.instance.specialCardList.Count == 0 || GameManager.instance.gold >= 5)
+        {
+            audioSource.PlayOneShot(audioClips[3]);
+            GameManager.instance.gold -= 5;
+            int rand = Random.Range(0, PlayerCard.instance.specialCardList.Count);
+            var emptySlot = slots.FirstOrDefault(slot => slot.card == null);
+            if (emptySlot != null)
+            {
+                emptySlot.AddCard(PlayerCard.instance.specialCardList[rand]);
             }
         }
     }

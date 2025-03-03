@@ -5,6 +5,7 @@ public class PlayerCard : MonoBehaviour
 {
     public static PlayerCard instance;
     public List<Card> cardList = new List<Card>();
+    public List<Card> specialCardList = new List<Card>();
     public Card[] cards;
     public Dictionary<Card, int> cardDic = new Dictionary<Card, int>();
     public Dictionary<int, Card> cardNumberDic = new Dictionary<int, Card>();

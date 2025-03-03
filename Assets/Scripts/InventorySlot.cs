@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 public class InventorySlot : MonoBehaviour
 {
@@ -53,22 +54,39 @@ public class InventorySlot : MonoBehaviour
 
     public void ClickCard()
     {
+
         Inventory.instance.clickSound();
         if(card != null)
         {
+
             isCheck = !isCheck;
 
             if (isCheck)
             {
+                if (card.cardType == CardType.Mercenary)
+                {
+                    if (Inventory.instance.playerSlot.All(Slot => Slot.card != null))
+                    {
+                        isCheck = false;
+                        return;
+                    }
+                }
+                else
+                {
+                    if (Inventory.instance.specialSlot.All(Slot => Slot.card != null))
+                    {
+                        isCheck = false;
+                        return;
+                    }
+                }
+
                 checkImage.SetActive(true);
                 Inventory.instance.AddSlot(card);
-                PlayerCard.instance.cardList.Add(card);
             }
             else
             {
                 checkImage.SetActive(false);
                 Inventory.instance.RemoveSlot(card);
-                PlayerCard.instance.cardList.Remove(card);
             }
         }
     }

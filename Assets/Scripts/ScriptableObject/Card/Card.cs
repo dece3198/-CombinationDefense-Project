@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum CardType
 {
-    Mercenary, Monster
+    Mercenary, Monster, Special
 }
 
 [CreateAssetMenu(fileName = "New Card", menuName = "New Card/Card")]

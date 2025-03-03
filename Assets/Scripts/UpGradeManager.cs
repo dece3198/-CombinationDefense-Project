@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class UpGradeManager : MonoBehaviour
@@ -16,10 +17,13 @@ public class UpGradeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Transform cardPos;
     private bool isCard = true;
+    [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] private AudioSource audioSource;
 
     private void Awake()
     {
         instance = this;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -81,26 +85,30 @@ public class UpGradeManager : MonoBehaviour
 
     public void UpButton()
     {
-        if(curSlot.card.level >= 100)
+        if(curSlot != null)
         {
-            return;
-        }
-        
-        if(GameManager.instance.money >= (curSlot.card.level + 1))
-        {
-            curSlot.card.level += 1;
-            curSlot.card.nextCard.level += 1;
-            curSlot.card.nextCard.nextCard.level += 1;
-            curSlot.LevelUp();
-            for(int i = 0; i < Inventory.instance.slots.Length;i++)
+            if (curSlot.card.level >= 100)
             {
-                if (Inventory.instance.slots[i].card == curSlot.card)
-                {
-                    Inventory.instance.slots[i].LevelUp();
-                }
+                return;
             }
-            GameManager.instance.money -= (curSlot.card.level + 1);
-            TextReset();
+
+            if (GameManager.instance.money >= (curSlot.card.level + 1))
+            {
+                GameManager.instance.money -= (curSlot.card.level + 1);
+                curSlot.card.level += 1;
+                curSlot.card.nextCard.level += 1;
+                curSlot.card.nextCard.nextCard.level += 1;
+                curSlot.LevelUp();
+                for (int i = 0; i < Inventory.instance.slots.Length; i++)
+                {
+                    if (Inventory.instance.slots[i].card == curSlot.card)
+                    {
+                        Inventory.instance.slots[i].LevelUp();
+                    }
+                }
+                audioSource.PlayOneShot(audioClips[0]);
+                TextReset();
+            }
         }
     }
 

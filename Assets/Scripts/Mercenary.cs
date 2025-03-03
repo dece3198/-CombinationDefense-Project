@@ -14,7 +14,7 @@ public enum MercenaryState
     Idle, Wlak, Attack, Hit, Die
 }
 
-public enum MecenaryType
+public enum MercenaryType
 {
     Mercenary, Monster
 }
@@ -99,10 +99,22 @@ public class WalkState : BaseState<Mercenary>
         }
 
 
-        if (mercenary.viewDetector.AtkTarget != null)
+
+        if (mercenary.weaponType == WeaponType.Shielder || mercenary.weaponType == WeaponType.Healer)
         {
-            mercenary.StartCoroutine(AtkCo(mercenary));
+            if (mercenary.viewDetector.Target == mercenary.viewDetector.AtkTarget)
+            {
+                mercenary.StartCoroutine(AtkCo(mercenary));
+            }
         }
+        else
+        {
+            if (mercenary.viewDetector.AtkTarget != null)
+            {
+                mercenary.StartCoroutine(AtkCo(mercenary));
+            }
+        }
+
     }
 
     private IEnumerator AtkCo(Mercenary mercenary)
@@ -236,7 +248,7 @@ public class DieState : BaseState<Mercenary>
     public override void Enter(Mercenary mercenary)
     {
         mercenary.agent.ResetPath();
-        if(mercenary.mecenaryType == MecenaryType.Monster)
+        if(mercenary.mecenaryType == MercenaryType.Monster)
         {
             GameManager.instance.gold += mercenary.card.gold;
         }
@@ -259,12 +271,12 @@ public class DieState : BaseState<Mercenary>
         mercenary.gameObject.layer = mercenary.curLayer;
         mercenary.Hp = mercenary.maxHp;
         mercenary.hpBar.value = mercenary.Hp / mercenary.maxHp;
-        if (mercenary.mecenaryType == MecenaryType.Mercenary)
+        if (mercenary.mecenaryType == MercenaryType.Mercenary)
         {
             GameManager.instance.mecrenary.Remove(mercenary.gameObject);
             Generator.instance.EnterCard(mercenary.gameObject);
         }
-        else if (mercenary.mecenaryType == MecenaryType.Monster)
+        else if (mercenary.mecenaryType == MercenaryType.Monster)
         {
             GameManager.instance.monster.Remove(mercenary.gameObject);
             MonsterGenerator.instance.EnterMonster(mercenary.gameObject);
@@ -286,7 +298,7 @@ public class Mercenary : MonoBehaviour
     public Card card;
     public WeaponType weaponType;
     public MercenaryState state;
-    public MecenaryType mecenaryType;
+    public MercenaryType mecenaryType;
     public int curLayer;
 
 

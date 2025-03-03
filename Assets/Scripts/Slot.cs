@@ -116,7 +116,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IB
         {
             if(tempCard.nextCard != null)
             {
-                if(GameManager.instance.isMix)
+                if(DataManager.instance.curData.isMix)
                 {
                     SlotManager.instance.audioSource.PlayOneShot(SlotManager.instance.audioClips[0]);
                     AddCard(tempCard.nextCard);

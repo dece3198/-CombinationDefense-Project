@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: 1-4
   m_EditorClassIdentifier: 
   monsters:
-  - {fileID: 11400000, guid: 71a4152d60c0a494aa5482874deec2dd, type: 2}
-  - {fileID: 11400000, guid: e9269fdfefc350f4a991f8a283e839c2, type: 2}
+  - {fileID: 11400000, guid: c4b2757493a752546820c6504bfe4f79, type: 2}
+  - {fileID: 11400000, guid: 9c2d7508fd3f41748ae2845050baae7b, type: 2}
   monsterCount: 10
   startGold: 6
-  money: 100
+  money: 10
   crystal: 0
   stageNumber: 14
   compensationCard: {fileID: 0}
   stageImage: {fileID: 21300000, guid: 4b06c5b577297af4dadf5884ad062437, type: 3}
   stageText: "\uC790\uC791\n1 - 4"
-  compensation: "\uBCF4\uC0C1 : 100\uC6D0"
+  compensation: "\uBCF4\uC0C1 : 10\uC6D0"
   stageType: 0

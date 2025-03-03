@@ -77,16 +77,13 @@ public class RandomCard : MonoBehaviour
             {
                 GameManager.instance.money += gold;
             }
-            else if(card.type == WeaponType.Nothing)
-            {
-                
-            }
             else
             {
                 Inventory.instance.AcquireCard(card);
                 UpGradeManager.instance.AcquireCard(card);
+                
             }
-
+            GameManager.instance.SaveData();
             verso.SetActive(true);
             transform.parent.gameObject.SetActive(false);
         }

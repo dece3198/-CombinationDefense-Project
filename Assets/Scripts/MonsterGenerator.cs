@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MonsterGenerator : MonoBehaviour
@@ -27,17 +28,8 @@ public class MonsterGenerator : MonoBehaviour
 
     public void ExitMonster(Card card)
     {
-        int count = 0;
-        
-        for (int i = 0; i < monsterList.Count; i++)
-        {
-            if (card == monsterList[i].GetComponent<Mercenary>().card)
-            {
-                count++;
-            }
-        }
 
-        if (count <= 0)
+        if(monsterList == null || !monsterList.Any(m => m.GetComponent<Mercenary>().card == card))
         {
             Refill(card, 5);
         }
