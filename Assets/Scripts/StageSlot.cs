@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     public Stage stage;
+    public Dungeon dungeon;
     public StageSlot nextStage;
     public StageSlot bossStage;
     public Image image;
@@ -30,9 +31,14 @@ public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandle
             {
                 if(stage.stageType != StageType.Tutorial)
                 {
-                    StageMenu.instance.AddStage(this);
+                    StageManager.instance.curStage = this;
+                    StageMenu.instance.AddStage(stage);
                     StageManager.instance.ClickSound(0);
                 }
+            }
+            else
+            {
+
             }
         }
     }
@@ -43,7 +49,7 @@ public class StageSlot : MonoBehaviour, IPointerClickHandler, IPointerDownHandle
         {
             if (stage.stageType != StageType.Tutorial)
             {
-                StageMenu.instance.AddStage(this);
+                StageMenu.instance.AddStage(stage);
                 StageManager.instance.ClickSound(0);
             }
         }

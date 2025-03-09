@@ -66,9 +66,9 @@ public class RandomSelect : MonoBehaviour
 
     public void SelectCard()
     {
-        if(GameManager.instance.crystal > price)
+        if(GameManager.instance.Crystal > price)
         {
-            GameManager.instance.crystal -= price;
+            GameManager.instance.Crystal -= price;
             curCard = RandomCardSelect();
             randCard.SetActive(true);
             RandomCard.instance.AddCard(curCard.card);

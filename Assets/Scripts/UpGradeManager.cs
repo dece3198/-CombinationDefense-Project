@@ -90,7 +90,7 @@ public class UpGradeManager : MonoBehaviour
 
         int upgrade = curSlot.card.level + 1;
 
-        if (GameManager.instance.money >= (curSlot.card.level + 1)) return;
+        if (GameManager.instance.Money >= (curSlot.card.level + 1)) return;
 
         Card curCard = curSlot.card;
         while(curSlot != null)

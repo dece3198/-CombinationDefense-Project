@@ -1,4 +1,4 @@
-using DG.Tweening.Plugins.Core.PathCore;
+Ôªøusing DG.Tweening.Plugins.Core.PathCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,29 +10,101 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public int count = 0;
-    public int gold = 0;
-    public int money = 0;
-    public int crystal = 0;
-    public int curStageCount = 0;
-
-    private int prevGold, prevMoney, prevCrystal;
-
-    public List<GameObject> monster = new List<GameObject>();
-    public List<GameObject> mecrenary = new List<GameObject>();
+    [SerializeField] private int gold;
+    [SerializeField] private int money;
+    [SerializeField] private int crystal;
+    [SerializeField] private int key;
+    [SerializeField] private int ticket;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI crystalText;
+    [SerializeField] private TextMeshProUGUI keyText;
+    [SerializeField] private TextMeshProUGUI ticketText;
+
+    public int Gold
+    {
+        get => gold;
+
+        set
+        {
+            if (gold != value)
+            {
+                gold = value;
+                goldText.text = gold.ToString();
+            }
+        }
+    }
+
+    public int Money
+    {
+        get => money;
+        set
+        {
+            if (money != value)
+            {
+                money = value;
+                moneyText.text = money.ToString();
+            }
+        }
+    }
+
+    public int Crystal
+    {
+        get => crystal;
+        set
+        {
+            if (crystal != value)
+            {
+                crystal = value;
+                crystalText.text = crystal.ToString();
+            }
+        }
+    }
+
+    public int Key
+    {
+        get => key;
+        set
+        {
+            if (key != value)
+            {
+                key = value;
+                keyText.text = key.ToString();
+            }
+        }
+    }
+
+    public int Ticket
+    {
+        get => ticket;
+        set
+        {
+            if (ticket != value)
+            {
+                ticket = value;
+                ticketText.text = key.ToString();
+            }
+        }
+    }
+
+    public List<GameObject> monster = new List<GameObject>();
+    public List<GameObject> mecrenary = new List<GameObject>();
     [SerializeField] private GameObject mainMenu;
-    public bool isGame = false;
     [SerializeField] private AudioClip[] audioClips;
     private AudioSource audioSource;
     [SerializeField] private GameObject newGameButton;
     [SerializeField] private GameObject loadButton;
     [SerializeField] private GameObject basicButton;
     [SerializeField] private GameObject specialButton;
+    [SerializeField] private GameObject DefenseMap;
+    [SerializeField] private GameObject DungeonMap;
     [SerializeField] private AdmobManager[] admobs;
+    [SerializeField] private AttendanceManager attendanceManager;
+    [SerializeField] private TextMeshProUGUI dungeonText;
     public StageSlot tutorial;
+    public int days;
+
+    public bool isGame = false;
 
     private void Awake()
     {
@@ -46,40 +118,28 @@ public class GameManager : MonoBehaviour
         {
             newGameButton.SetActive(false);
         }
-    }
 
-    private void Update()
-    {
-        if(gold != prevGold)
-        {
-            goldText.text = gold.ToString();
-            prevGold = gold;
-        }
+        days = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
 
-        if(money != prevMoney)
+        for(int i = 0; i < days; i++)
         {
-            moneyText.text = money.ToString();
-            prevMoney = money;
-        }
-
-        if(crystal != prevCrystal)
-        {
-            crystalText.text = crystal.ToString();
-            prevCrystal = crystal;
+            attendanceManager.slots[i].gameObject.SetActive(true);
         }
     }
 
     public void SaveData()
     {
         var data = DataManager.instance.curData;
-        data.gold = gold;
-        data.money = money;
-        data.crystal = crystal;
+        data.gold = Gold;
+        data.money = Money;
+        data.crystal = Crystal;
+        data.key = Key;
+        data.ticket = Ticket;
         data.BGVolume = SoundManager.instance.bgValue;
         data.SFXVolume = SoundManager.instance.sfxValue;
-        data.lastCheckTIme = DateTime.Now;
+        data.lastCheckTimeString = DateTime.Now.ToString("O");
 
-        //¿Œ∫•≈‰∏Æ ƒ´µÂ ¿˙¿Â
+        //Ïù∏Î≤§ÌÜ†Î¶¨ Ïπ¥Îìú Ï†ÄÏû•
         data.inventoryCard.Clear();
         foreach(var slot in Inventory.instance.slots)
         {
@@ -89,7 +149,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //«ˆ¿Á ¿Â¬¯¡ﬂ¿Œ ƒ´µÂ ¿˙¿Â
+        //ÌòÑÏû¨ Ïû•Ï∞©Ï§ëÏù∏ Ïπ¥Îìú Ï†ÄÏû•
         data.playerCard.Clear();
         foreach(var card in PlayerCard.instance.cardList)
         {
@@ -108,7 +168,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //æ˜±◊∑π¿ÃµÂ ƒ´µÂ ¿˙¿Â
+        //ÏóÖÍ∑∏Î†àÏù¥Îìú Ïπ¥Îìú Ï†ÄÏû•
         data.upGradeCard.Clear();
         data.cardLevel.Clear();
         foreach(var slot in UpGradeManager.instance.slots)
@@ -120,7 +180,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //«ˆ¿Á ≈¨∏ÆæÓ«— Ω∫≈◊¿Ã¡ˆ¿« ∫∞∞≥ºˆ∏¶ ¿˙¿Â
+        //ÌòÑÏû¨ ÌÅ¥Î¶¨Ïñ¥Ìïú Ïä§ÌÖåÏù¥ÏßÄÏùò Î≥ÑÍ∞úÏàòÎ•º Ï†ÄÏû•
         data.stageStarCount.Clear();
         foreach(var stage in StageManager.instance.stages)
         {
@@ -130,7 +190,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //«ˆ¿Á ≈¨∏ÆæÓ«— ∫∏Ω∫Ω∫≈◊¿Ã¡ˆ¿« ∫∞∞≥ºˆ∏¶ ¿˙¿Â
+        //ÌòÑÏû¨ ÌÅ¥Î¶¨Ïñ¥Ìïú Î≥¥Ïä§Ïä§ÌÖåÏù¥ÏßÄÏùò Î≥ÑÍ∞úÏàòÎ•º Ï†ÄÏû•
         data.bossStarCount.Clear();
         foreach(var stage in StageManager.instance.bossStages)
         {
@@ -140,11 +200,21 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //±§∞Ì ∞≥ºˆ ¿˙¿Â
+        //Í¥ëÍ≥† Í∞úÏàò Ï†ÄÏû•
         data.admobCount.Clear();
         foreach(var ad in admobs)
         {
             data.admobCount.Add(ad.count);
+        }
+
+
+        //Ï∂úÏÑùÏ≤¥ÌÅ¨ Ï†ÄÏû•
+        data.attendance.Clear();
+        data.attendanceCheck.Clear();
+        foreach(var slot in attendanceManager.slots)
+        {
+            data.attendance.Add(slot.isAttendance);
+            data.attendanceCheck.Add(slot.isCheck);
         }
 
         DataManager.instance.SaveData();
@@ -154,9 +224,11 @@ public class GameManager : MonoBehaviour
     {
         DataManager.instance.LoadData();
         var data = DataManager.instance.curData;
-        gold = data.gold;
-        money = data.money;
-        crystal = data.crystal;
+        Gold = data.gold;
+        Money = data.money;
+        Crystal = data.crystal;
+        Key = data.key;
+        Ticket = data.ticket;
         SoundManager.instance.bgValue = data.BGVolume;
         SoundManager.instance.sfxValue = data.SFXVolume;
         PlayerCard.instance.cardList.Clear();
@@ -164,7 +236,7 @@ public class GameManager : MonoBehaviour
         SoundManager.instance.ResetSlider();
 
 
-        //≈¨∑Ø¿Ã«— Ω∫≈◊¿Ã¡ˆ ∑ŒµÂ
+        //ÌÅ¥Îü¨Ïù¥Ìïú Ïä§ÌÖåÏù¥ÏßÄ Î°úÎìú
         for (int i = 0; i < data.clearCount; i++)
         {
             StageManager.instance.stages[i].gameObject.SetActive(true);
@@ -172,19 +244,19 @@ public class GameManager : MonoBehaviour
         }
         StageManager.instance.stages[data.clearCount].gameObject.SetActive(true);
 
-        //≈¨∏ÆæÓ«— ∫∏Ω∫Ω∫≈◊¿Ã¡ˆ ∑ŒµÂ(∫∏Ω∫ Ω∫≈◊¿Ã¡ˆ¥¬ 3º∫ ¥ﬁº∫Ω√ ≈¨∏ÆæÓ)
+        //ÌÅ¥Î¶¨Ïñ¥Ìïú Î≥¥Ïä§Ïä§ÌÖåÏù¥ÏßÄ Î°úÎìú(Î≥¥Ïä§ Ïä§ÌÖåÏù¥ÏßÄÎäî 3ÏÑ± Îã¨ÏÑ±Ïãú ÌÅ¥Î¶¨Ïñ¥)
         for (int i = 0; i < data.bossCount; i++)
         {
             StageManager.instance.bossStages[i].gameObject.SetActive(true);
         }
 
-        //¿˙¿Â«— ƒ´µÂ ¿Œ∫•≈‰∏Æø° ∑ŒµÂ
+        //Ï†ÄÏû•Ìïú Ïπ¥Îìú Ïù∏Î≤§ÌÜ†Î¶¨Ïóê Î°úÎìú
         for(int i = 0; i < data.inventoryCard.Count; i++)
         {
             Inventory.instance.AcquireCard(PlayerCard.instance.cardNumberDic[data.inventoryCard[i]]);
         }
 
-        //¿˙¿Â«— ƒ´µÂ æ˜±◊∑π¿ÃµÂø° ∑ŒµÂ
+        //Ï†ÄÏû•Ìïú Ïπ¥Îìú ÏóÖÍ∑∏Î†àÏù¥ÎìúÏóê Î°úÎìú
         for(int i = 0; i < data.upGradeCard.Count; i++)
         {
             UpGradeManager.instance.AcquireCard(PlayerCard.instance.cardNumberDic[data.upGradeCard[i]]);
@@ -192,7 +264,7 @@ public class GameManager : MonoBehaviour
             UpGradeManager.instance.slots[i].LevelUp();
         }
 
-        //¿Â¬¯«ﬂ¥¯ ƒ´µÂµÈ ∑ŒµÂ
+        //Ïû•Ï∞©ÌñàÎçò Ïπ¥ÎìúÎì§ Î°úÎìú
         for (int i = 0; i < data.playerCard.Count; i++)
         {
             var emptySlot = Inventory.instance.slots.FirstOrDefault(slot => slot.card == PlayerCard.instance.cardNumberDic[DataManager.instance.curData.playerCard[i]]);
@@ -217,7 +289,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //≈¨∏ÆæÓ«— Ω∫≈◊¿Ã¡ˆ¿« ∫∞∞≥ºˆ ∑ŒµÂ
+        //ÌÅ¥Î¶¨Ïñ¥Ìïú Ïä§ÌÖåÏù¥ÏßÄÏùò Î≥ÑÍ∞úÏàò Î°úÎìú
         for (int i = 0; i < data.stageStarCount.Count; i++)
         {
             StageManager.instance.stages[i].star = data.stageStarCount[i];
@@ -241,7 +313,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        //≈¨∏ÆæÓ«— ∫∏Ω∫Ω∫≈◊¿Ã¡ˆ¿« ∫∞∞≥ºˆø° µ˚∂Û ∑ŒµÂ
+        //ÌÅ¥Î¶¨Ïñ¥Ìïú Î≥¥Ïä§Ïä§ÌÖåÏù¥ÏßÄÏùò Î≥ÑÍ∞úÏàòÏóê Îî∞Îùº Î°úÎìú
         for (int i = 0; i < data.bossStarCount.Count; i++)
         {
             StageManager.instance.bossStages[i].star = data.bossStarCount[i];
@@ -254,21 +326,16 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //ªÛ¡° lockπˆ∆∞ ∑ŒµÂ
-        for(int i = 0; i < StageManager.instance.stages.Length; i++)
+        //ÏÉÅÏ†ê lockÎ≤ÑÌäº Î°úÎìú
+        foreach(var stage in StageManager.instance.stages)
         {
-            if (!StageManager.instance.stages[i].isFirst)
+            if(!stage.isFirst && stage.compensation != null)
             {
-                switch (StageManager.instance.stages[i].stage.stageNumber)
-                {
-                    case 14: StageManager.instance.stages[i].compensation.SetActive(false); break;
-                    case 15: StageManager.instance.stages[i].compensation.SetActive(false); break;
-                    case 16: StageManager.instance.stages[i].compensation.SetActive(false); break;
-                }
+                stage.compensation.SetActive(false);
             }
         }
 
-        //±§∞Ì ∞≥ºˆ ∑ŒµÂ
+        //Í¥ëÍ≥† Í∞úÏàò Î°úÎìú
         if(data.admobCount.Count != 0)
         {
             for (int i = 0; i < admobs.Length; i++)
@@ -276,9 +343,31 @@ public class GameManager : MonoBehaviour
                 admobs[i].ResetText(data.admobCount[i]);
             }
         }
+
+        //Ï∂úÏÑùÏ≤¥ÌÇ§ Î°úÎìú
+        for(int i = 0; i < data.attendanceCheck.Count; i++)
+        {
+            if (data.attendanceCheck[i] == true)
+            {
+                attendanceManager.slots[i].isCheck = true;
+                attendanceManager.slots[i].isAttendance = false;
+                attendanceManager.slots[i].checkImage.SetActive(true);
+                attendanceManager.slots[i].outline.effectColor = Color.white;
+            }
+            else
+            {
+                if (data.attendance[i] == true)
+                {
+                    attendanceManager.check.SetActive(true);
+                    attendanceManager.slots[i].isAttendance = true;
+                    attendanceManager.slots[i].outline.effectColor = Color.white;
+                }
+            }
+        }
+
     }
 
-    //Ω∫≈◊¿Ã¡ˆ Ω√¿€Ω√ πˆ∆∞
+    //Ïä§ÌÖåÏù¥ÏßÄ ÏãúÏûëÏãú Î≤ÑÌäº
     public void StartButton()
     {
         if (PlayerCard.instance.specialCardList.Count == 0)
@@ -298,16 +387,31 @@ public class GameManager : MonoBehaviour
         MapManager.instance.map.SetActive(false);
         MapManager.instance.animator.Play("Close");
         StageMenu.instance.XButton();
-        gold = StageManager.instance.curStage.stage.startGold;
+        Gold = StageManager.instance.curStage.stage.startGold;
         audioSource.Stop();
         audioSource.PlayOneShot(audioClips[0]);
     }
 
-    //∞‘¿”Ω√¿€ πˆ∆∞
+    //ÎçòÏ†Ñ ÏãúÏûëÎ≤ÑÌäº
+    public void DungeonStartButton()
+    {
+        isGame = true;
+        DungeonManager.instance.DungeonButtonClick();
+        Fade.instance.FadeInOut();
+        StartCoroutine(FadeCo(3));
+        MapManager.instance.map.SetActive(false);
+        MapManager.instance.animator.Play("Close");
+        StageMenu.instance.XButton();
+        DungeonManager.instance.waitingRoom.gameObject.SetActive(true);
+        DungeonManager.instance.dungeonTeleport.transform.position = DungeonManager.instance.waitingRoom.teleportPos.position;
+    }
+
+    //Í≤åÏûÑÏãúÏûë Î≤ÑÌäº
     public void NewGameButton()
     {
         newGameButton.SetActive(false);
         StageManager.instance.curStage = tutorial;
+        DataManager.instance.curData.lastCheckTimeString = DateTime.Now.ToString("O");
         DataManager.instance.SaveData();
         LoadData();
         StartCoroutine(CheckTimeCo());
@@ -329,7 +433,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         LoadData();
-        if(DataManager.instance.curData.isFirstTutorial)
+        StartCoroutine(CheckTimeCo());
+        if (DataManager.instance.curData.isFirstTutorial)
         {
             newGameButton.SetActive(false);
             StageManager.instance.curStage = tutorial;
@@ -349,7 +454,6 @@ public class GameManager : MonoBehaviour
         loadButton.SetActive(false);
         Fade.instance.FadeInOut();
         StartCoroutine(FadeCo(0));
-        StartCoroutine(CheckTimeCo());
         StageManager.instance.audioSource.PlayOneShot(StageManager.instance.audioClips[0]);
     }
 
@@ -404,7 +508,7 @@ public class GameManager : MonoBehaviour
             StageManager.instance.StartCo();
             MapManager.instance.mapParent.SetActive(false);
         }
-        else
+        else if(number == 2)
         {
             MapManager.instance.animator.Play("Close");
             newGameButton.SetActive(true);
@@ -417,46 +521,67 @@ public class GameManager : MonoBehaviour
             File.Delete(DataManager.instance.path + "Guarding the Castle With Luck");
             DataManager.instance.ClearData();
         }
+        else
+        {
+            DefenseMap.SetActive(false);
+            DungeonMap.SetActive(true);
+            dungeonText.text = DungeonManager.instance.curDungeon.dungeonName;
+            dungeonText.gameObject.SetActive(true);
+            DungeonManager.instance.curDungeonMap = DungeonManager.instance.waitingRoom;
+            DungeonManager.instance.GameStart();
+        }
     }
 
-    //InvokeRepeating¿∏∑Œ 1∫–∏∂¥Ÿ »Æ¿Œ¡ﬂ¿∏∑Œ 12Ω√∞° ≥—æÓ∞°∏È ∫∏ªÛ»ƒ √ ±‚»≠
+    //InvokeRepeatingÏúºÎ°ú 1Î∂ÑÎßàÎã§ ÌôïÏù∏Ï§ëÏúºÎ°ú 12ÏãúÍ∞Ä ÎÑòÏñ¥Í∞ÄÎ©¥ Î≥¥ÏÉÅÌõÑ Ï¥àÍ∏∞Ìôî
     private void CheckTime()
     {
-        if(!DataManager.instance.curData.isTimeCompensation)
+
+        if(DataManager.instance.curData.isTimeCompensation)
         {
-            for(int i = 0; i < admobs.Length; i++)
+            for (int i = 0; i < admobs.Length; i++)
             {
                 admobs[i].ResetText(5);
-                DataManager.instance.curData.isTimeCompensation = true;
-                SaveData();
+                DataManager.instance.curData.isTimeCompensation = false;
             }
+
+            var emptySlot = attendanceManager.slots.FirstOrDefault(slot => slot.isCheck == false);
+            if (emptySlot != null)
+            {
+                attendanceManager.check.SetActive(true);
+                emptySlot.outline.effectColor = Color.white;
+                emptySlot.isAttendance = true;
+            }
+
+            SaveData();
         }
     }
 
     private IEnumerator CheckTimeCo()
     {
-        while(true)
+        var curData = DataManager.instance.curData;
+        while (true)
         {
             DateTime now = DateTime.Now;
-            DateTime lastCheckTime = DataManager.instance.curData.lastCheckTIme;
-            DateTime todayReseTIme = now.Date;
-            DateTime nextDay = now.AddDays(1);
-
-            if(lastCheckTime < todayReseTIme)
+            DateTime lastCheckTime = Convert.ToDateTime(curData.lastCheckTimeString);
+            DateTime todayReseTime = now.Date;
+            DateTime nextDay = todayReseTime.AddDays(1);
+            
+            if (lastCheckTime < todayReseTime)
             {
-                DataManager.instance.curData.isTimeCompensation = false;
+                DataManager.instance.curData.isTimeCompensation = true;
                 SaveData();
             }
 
-            if(!DataManager.instance.curData.isTimeCompensation)
+            if(curData.isTimeCompensation)
             {
                 CheckTime();
             }
 
-            TimeSpan timeUntilReset = nextDay - now;
-            yield return new WaitForSeconds((float)timeUntilReset.TotalSeconds);
+            TimeSpan timeUntilReset = nextDay - DateTime.Now;
+            yield return new WaitForSecondsRealtime((float)timeUntilReset.TotalSeconds);
+            curData.isTimeCompensation = true;
+            SaveData();
 
-            CheckTime();
         }
     }
 }

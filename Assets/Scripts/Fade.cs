@@ -13,6 +13,7 @@ public class Fade : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        panel = GetComponent<Image>();
     }
 
     public void FadeInOut()

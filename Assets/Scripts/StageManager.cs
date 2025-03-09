@@ -91,7 +91,7 @@ public class StageManager : MonoBehaviour
             DataManager.instance.curData.bossCount++;
             curStage.bossStage.gameObject.SetActive(true);
         }
-        GameManager.instance.money += curStage.stage.money;
+        
         curCount = 0;
 
         StarCheck();
@@ -104,6 +104,7 @@ public class StageManager : MonoBehaviour
         {
             if (curStage.isStage)
             {
+                GameManager.instance.Money += curStage.stage.money;
                 switch (curStage.stage.stageNumber)
                 {
                     case 11:
@@ -120,10 +121,11 @@ public class StageManager : MonoBehaviour
                 {
                     slot.gameObject.SetActive(true);
                     slot.AddCard(curStage.stage.compensationCard);
+                    
                     Inventory.instance.AcquireCard(curStage.stage.compensationCard);
                     UpGradeManager.instance.AcquireCard(curStage.stage.compensationCard);
                 }
-                GameManager.instance.crystal += curStage.stage.crystal;
+                GameManager.instance.Crystal += curStage.stage.crystal;
                 curStage.isStage = false;
                 return;
             }
@@ -156,7 +158,8 @@ public class StageManager : MonoBehaviour
             {
                 curStage.compensation.gameObject.SetActive(false);
             }
-
+            castle.Hp = castle.maxHp;
+            castle.hpBar.value = castle.hp / castle.maxHp;
             curStage = null;
             GameManager.instance.SaveData();
         }

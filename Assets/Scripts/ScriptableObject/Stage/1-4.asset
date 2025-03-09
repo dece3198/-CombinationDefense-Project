@@ -23,5 +23,5 @@ MonoBehaviour:
   compensationCard: {fileID: 0}
   stageImage: {fileID: 21300000, guid: 4b06c5b577297af4dadf5884ad062437, type: 3}
   stageText: "\uC790\uC791\n1 - 4"
-  compensation: "\uBCF4\uC0C1 : 10\uC6D0"
+  compensation: "3\uC2A4\uD0C0 \uBCF4\uC0C1 : 10\uC6D0"
   stageType: 0

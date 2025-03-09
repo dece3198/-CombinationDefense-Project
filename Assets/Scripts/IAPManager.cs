@@ -48,7 +48,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         var product = purchaseEvent.purchasedProduct;
         if(product.definition.id == crystal10)
         {
-            GameManager.instance.crystal += count;
+            GameManager.instance.Crystal += count;
             for (int i = 0; i < count; i++)
             {
                 coins[i].target = target;

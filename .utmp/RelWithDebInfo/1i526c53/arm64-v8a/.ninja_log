@@ -1,19 +1,19 @@
 # ninja log v5
-175	2175	7626129487756430	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	79281fd4e3b5893f
-49	2173	7626129487741429	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2fb9489c4b5e7b77
-288	2236	7626129488971643	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	1fcbe7fc614efb67
-249	2171	7626129488071487	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	ee5a7e5184ef9141
-22	2292	7626129489481735	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	2660571c4302f88c
-58	2169	7626129487736426	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	704c7e06e7c948ab
-3015	3444	7626129500983758	C:/Users/dece3/Guarding the Castle With Luck/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i526c53/obj/arm64-v8a/libgame.so	c0c621b4c6b7bb12
-166	2665	7626129493217392	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	2756e2f3cd6365e
-39	3015	7626129496793021	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	f36e1657f0fb5ed0
 26	1255	7626695662665922	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	79281fd4e3b5893f
-31	1357	7626695663506062	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	ee5a7e5184ef9141
-13	1361	7626695663361036	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2fb9489c4b5e7b77
-16	1378	7626695663941135	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	704c7e06e7c948ab
 43	1408	7626695664281191	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	1fcbe7fc614efb67
+13	1361	7626695663361036	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2fb9489c4b5e7b77
 8	1471	7626695664896305	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	2660571c4302f88c
+31	1357	7626695663506062	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	ee5a7e5184ef9141
+16	1378	7626695663941135	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	704c7e06e7c948ab
+1802	2311	7626695673347780	C:/Users/dece3/Guarding the Castle With Luck/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i526c53/obj/arm64-v8a/libgame.so	c0c621b4c6b7bb12
 38	1674	7626695666946655	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	2756e2f3cd6365e
 21	1802	7626695668256898	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	f36e1657f0fb5ed0
-1802	2311	7626695673347780	C:/Users/dece3/Guarding the Castle With Luck/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i526c53/obj/arm64-v8a/libgame.so	c0c621b4c6b7bb12
+9	1516	7629270765557627	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2fb9489c4b5e7b77
+35	1518	7629270765537623	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	79281fd4e3b5893f
+63	1839	7629270768718337	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	1fcbe7fc614efb67
+45	1848	7629270769058408	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	ee5a7e5184ef9141
+57	1934	7629270769998618	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	2756e2f3cd6365e
+17	2022	7629270770588764	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	704c7e06e7c948ab
+29	2056	7629270771278914	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	2660571c4302f88c
+24	2194	7629270772379308	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	f36e1657f0fb5ed0
+2195	2602	7629270776500236	C:/Users/dece3/Guarding the Castle With Luck/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1i526c53/obj/arm64-v8a/libgame.so	c0c621b4c6b7bb12

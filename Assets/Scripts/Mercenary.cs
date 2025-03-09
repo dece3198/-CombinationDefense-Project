@@ -250,7 +250,7 @@ public class DieState : BaseState<Mercenary>
         mercenary.agent.ResetPath();
         if(mercenary.mecenaryType == MercenaryType.Monster)
         {
-            GameManager.instance.gold += mercenary.card.gold;
+            GameManager.instance.Gold += mercenary.card.gold;
         }
         mercenary.gameObject.layer = 0;
         mercenary.animator.Play("Die");

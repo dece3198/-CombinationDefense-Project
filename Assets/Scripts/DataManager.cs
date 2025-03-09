@@ -11,12 +11,14 @@ public class PlayerData
     public int gold = 0;
     public int money = 0;
     public int crystal = 0;
+    public int key = 0;
+    public int ticket = 0;
     public int clearCount = 0;
     public int bossCount = 0;
     public float BGVolume = -20;
     public float SFXVolume = -20;
 
-    public DateTime lastCheckTIme;
+    public string lastCheckTimeString;
 
     public string tutorialState;
 
@@ -32,6 +34,8 @@ public class PlayerData
     public List<int> upGradeCard = new List<int>();
     public List<int> cardLevel = new List<int>();
     public List<int> admobCount = new List<int>();
+    public List<bool> attendance = new List<bool>();
+    public List<bool> attendanceCheck = new List<bool>();
 }
 
 public class DataManager : MonoBehaviour

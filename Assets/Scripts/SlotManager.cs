@@ -89,10 +89,10 @@ public class SlotManager : MonoBehaviour
     public void LuckyDipA()
     {
         audioSource.PlayOneShot(audioClips[5]);
-        if (PlayerCard.instance.cardList.Count == 0 || GameManager.instance.gold >= 2)
+        if (PlayerCard.instance.cardList.Count == 0 || GameManager.instance.Gold >= 2)
         {
             audioSource.PlayOneShot(audioClips[3]);
-            GameManager.instance.gold -= 2;
+            GameManager.instance.Gold -= 2;
             int rand = Random.Range(0, PlayerCard.instance.cardList.Count);
             var emptySlot = slots.FirstOrDefault(slot => slot.card == null);
             if(emptySlot != null)
@@ -105,10 +105,10 @@ public class SlotManager : MonoBehaviour
     public void LuckyDipB()
     {
         audioSource.PlayOneShot(audioClips[5]);
-        if (PlayerCard.instance.specialCardList.Count == 0 || GameManager.instance.gold >= 5)
+        if (PlayerCard.instance.specialCardList.Count == 0 || GameManager.instance.Gold >= 5)
         {
             audioSource.PlayOneShot(audioClips[3]);
-            GameManager.instance.gold -= 5;
+            GameManager.instance.Gold -= 5;
             int rand = Random.Range(0, PlayerCard.instance.specialCardList.Count);
             var emptySlot = slots.FirstOrDefault(slot => slot.card == null);
             if (emptySlot != null)

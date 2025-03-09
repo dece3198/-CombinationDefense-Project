@@ -22,14 +22,13 @@ public class StageMenu : MonoBehaviour
         instance = this; 
     }
 
-    public void AddStage(StageSlot stageSlot)
+    public void AddStage(Stage stage)
     {
         menu.SetActive(true);
-        characterImage.sprite = stageSlot.stage.stageImage;
-        stageText.text = stageSlot.stage.stageText;
-        goldText.text = stageSlot.stage.money.ToString();
-        compensationText.text = stageSlot.stage.compensation;
-        StageManager.instance.curStage = stageSlot;
+        characterImage.sprite = stage.stageImage;
+        stageText.text = stage.stageText;
+        goldText.text = stage.money.ToString();
+        compensationText.text = stage.compensation;
         for (int i = 0; i < stars.Length; i++)
         {
             if ((StageManager.instance.curStage.star - 1) >= i)
@@ -42,9 +41,9 @@ public class StageMenu : MonoBehaviour
             }
         }
 
-        for(int k = 0; k < stageSlot.stage.monsters.Length; k++)
+        for(int k = 0; k < stage.monsters.Length; k++)
         {
-            slots[k].AddCard(stageSlot.stage.monsters[k]);
+            slots[k].AddCard(stage.monsters[k]);
         }
 
         for (int j = 0; j < slots.Length; j++)

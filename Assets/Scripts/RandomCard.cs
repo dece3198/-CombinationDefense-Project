@@ -75,7 +75,7 @@ public class RandomCard : MonoBehaviour
         {
             if(card.type == WeaponType.Money)
             {
-                GameManager.instance.money += gold;
+                GameManager.instance.Money += gold;
             }
             else
             {
